@@ -1,0 +1,143 @@
+{
+  "summary": {
+    "sourceId": "fit-exhibitions",
+    "source": "fit",
+    "parser": "fit-exhibitions",
+    "generatedAt": "2026-06-26T03:57:44.757Z",
+    "stagingNotes": "Official Museum at FIT current and upcoming long-card sections only, and only cards with official exhibition detail links. Closure notices, lobby-only cards without official exhibition pages, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope for this first slice.",
+    "verification": {
+      "status": "verified_live",
+      "verifiedAt": "2026-06-26T03:58:00.000Z",
+      "notes": "Live staging artifact matched the fixture-backed review artifact for fit-exhibitions; verified against data/staging/fit-exhibitions.live.json."
+    },
+    "pagesFetched": 1,
+    "sourcePages": [
+      {
+        "url": "https://www.fitnyc.edu/museum/exhibitions/index.php",
+        "pageRole": "configured",
+        "fetchMode": "fixture",
+        "fixtureFile": "scripts/exhibit-ingest/fixtures/fit-exhibitions.html"
+      }
+    ],
+    "incomingRecords": 1,
+    "creates": 1,
+    "updates": 0,
+    "possibleDuplicates": 0,
+    "conflicts": 0,
+    "unchanged": 0,
+    "incomingByType": {
+      "exhibition": 1
+    }
+  },
+  "items": [
+    {
+      "id": "stage:fit-exhibitions:exhibition:fit:doll-dressing:create",
+      "proposalType": "create",
+      "reviewStatus": "pending",
+      "source": {
+        "url": "https://www.fitnyc.edu/museum/exhibitions/doll-dressing/index.php",
+        "sourceType": "official_venue",
+        "reliability": "high",
+        "parser": "fit-exhibitions",
+        "notes": "Official Museum at FIT current and upcoming long-card sections only, and only cards with official exhibition detail links. Closure notices, lobby-only cards without official exhibition pages, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope for this first slice."
+      },
+      "canonicalId": null,
+      "before": null,
+      "proposed": {
+        "id": "exhibition:fit:doll-dressing",
+        "type": "exhibition",
+        "source": "fit",
+        "title": "Doll Dressing",
+        "venue": "The Museum at FIT",
+        "startDate": "2026-09-16",
+        "endDate": "2027-01-03",
+        "dateText": "September 16, 2026 – January 3, 2027",
+        "description": "Doll Dressing centers on the longstanding connections between dolls and high fashion. Historically, dolls operated as miniature fashion models—they were shipped around Europe and abroad, communicating the latest styles in three-dimensional detail. By the early twentieth century, dolls were not merely sharing the latest trends, but setting them. Curated by Dr. Colleen Hill, senior curator of costume, the exhibition explores the ways in which dolls have influenced fashion and dressed appearance. Doll dressing takes many forms, ranging from the appeal of youthful baby doll dresses, to the 2D quality of \"paper doll\" looks, to the influence of creepy dolls on fashion. It encompasses clothing and accessories, hair and makeup, and even movement and gestures that take their cue from dolls. Beginning with a brief history of fashion dolls from the eighteenth century to the present, Doll Dressing continues with designs from Marc Jacobs, Patrick Kelly, Lanvin, Jeremy Scott for Moschino, Martin Margiela, Anna Sui, and many others.",
+        "artists": [],
+        "curators": [],
+        "venueAddress": "227 West 27th Street, New York, NY 10001-5992",
+        "neighborhood": "Chelsea",
+        "borough": "Manhattan",
+        "city": "New York",
+        "imageUrl": "https://www.fitnyc.edu/museum/images/dolls-dressing-mfit-moschino.jpg",
+        "exhibitionUrl": "https://www.fitnyc.edu/museum/exhibitions/doll-dressing/index.php",
+        "sourceUrl": "https://www.fitnyc.edu/museum/exhibitions/doll-dressing/index.php",
+        "openingReceptionDate": null,
+        "tags": [
+          "upcoming"
+        ],
+        "sourceConfidence": "high",
+        "reviewStatus": "needs_review",
+        "lastCheckedAt": null,
+        "sourceNotes": "Parsed from the Museum at FIT official current and upcoming long-card sections, but only for cards that expose an official exhibition detail link. Closure notices, lobby-only cards without official exhibition pages, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope for this first staging-only slice."
+      },
+      "changedFields": [
+        "artists",
+        "borough",
+        "city",
+        "curators",
+        "dateText",
+        "description",
+        "endDate",
+        "exhibitionUrl",
+        "id",
+        "imageUrl",
+        "lastCheckedAt",
+        "neighborhood",
+        "openingReceptionDate",
+        "reviewStatus",
+        "source",
+        "sourceConfidence",
+        "sourceNotes",
+        "sourceUrl",
+        "startDate",
+        "tags",
+        "title",
+        "type",
+        "venue",
+        "venueAddress"
+      ],
+      "dedupe": {
+        "status": "no_match",
+        "confidence": 0,
+        "matchedRecordIds": [],
+        "notes": "Compared against existing canonical exhibition records; no likely match found."
+      },
+      "conflict": null,
+      "extractedAt": "2026-06-26T03:57:44.757Z",
+      "reviewerNotes": null
+    }
+  ],
+  "creates": [
+    {
+      "id": "exhibition:fit:doll-dressing",
+      "type": "exhibition",
+      "source": "fit",
+      "title": "Doll Dressing",
+      "venue": "The Museum at FIT",
+      "startDate": "2026-09-16",
+      "endDate": "2027-01-03",
+      "dateText": "September 16, 2026 – January 3, 2027",
+      "description": "Doll Dressing centers on the longstanding connections between dolls and high fashion. Historically, dolls operated as miniature fashion models—they were shipped around Europe and abroad, communicating the latest styles in three-dimensional detail. By the early twentieth century, dolls were not merely sharing the latest trends, but setting them. Curated by Dr. Colleen Hill, senior curator of costume, the exhibition explores the ways in which dolls have influenced fashion and dressed appearance. Doll dressing takes many forms, ranging from the appeal of youthful baby doll dresses, to the 2D quality of \"paper doll\" looks, to the influence of creepy dolls on fashion. It encompasses clothing and accessories, hair and makeup, and even movement and gestures that take their cue from dolls. Beginning with a brief history of fashion dolls from the eighteenth century to the present, Doll Dressing continues with designs from Marc Jacobs, Patrick Kelly, Lanvin, Jeremy Scott for Moschino, Martin Margiela, Anna Sui, and many others.",
+      "artists": [],
+      "curators": [],
+      "venueAddress": "227 West 27th Street, New York, NY 10001-5992",
+      "neighborhood": "Chelsea",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://www.fitnyc.edu/museum/images/dolls-dressing-mfit-moschino.jpg",
+      "exhibitionUrl": "https://www.fitnyc.edu/museum/exhibitions/doll-dressing/index.php",
+      "sourceUrl": "https://www.fitnyc.edu/museum/exhibitions/doll-dressing/index.php",
+      "openingReceptionDate": null,
+      "tags": [
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "needs_review",
+      "lastCheckedAt": null,
+      "sourceNotes": "Parsed from the Museum at FIT official current and upcoming long-card sections, but only for cards that expose an official exhibition detail link. Closure notices, lobby-only cards without official exhibition pages, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope for this first staging-only slice."
+    }
+  ],
+  "updates": [],
+  "unchangedIds": []
+}

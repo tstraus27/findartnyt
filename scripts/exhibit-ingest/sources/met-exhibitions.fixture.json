@@ -1,0 +1,19 @@
+{
+  "id": "met-exhibitions",
+  "source": "met",
+  "sourceType": "official_venue",
+  "reliability": "medium",
+  "parser": "met-exhibitions",
+  "verification": {
+    "status": "pending_live_verification",
+    "verifiedAt": "2026-06-29T19:04:00.000Z",
+    "notes": "Browser-assisted compact snapshot captured from https://www.metmuseum.org/exhibitions on 2026-06-29 after Node fetch and browser-like fetch returned Vercel 429 security checkpoint responses. This is staging-only and requires human review against the live official page before promotion."
+  },
+  "stagingNotes": "Official Met featured, recently opened, closing soon, more temporary, and upcoming exhibition cards from a browser-assisted compact snapshot. Direct automated backend fetch is currently blocked by Vercel 429, so this source is not a fully automated live ingestion path.",
+  "pages": [
+    {
+      "url": "https://www.metmuseum.org/exhibitions",
+      "file": "../fixtures/met-exhibitions.browser-2026-06-29.html"
+    }
+  ]
+}

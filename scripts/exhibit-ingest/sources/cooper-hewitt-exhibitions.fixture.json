@@ -1,0 +1,23 @@
+{
+  "id": "cooper-hewitt-exhibitions",
+  "source": "cooper-hewitt",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "cooper-hewitt-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-26T13:06:33.076Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for cooper-hewitt-exhibitions; verified against data/staging/cooper-hewitt-exhibitions.live.json."
+  },
+  "stagingNotes": "Official Cooper Hewitt current and upcoming exhibition pages only. The first slice stages the visible main exhibition blocks plus Learn more links, while sponsor-logo sections, donor/funding tails after the main exhibition copy, photo-credit blocks, previous/traveling/digital routes, and detail-page enrichment remain out of scope.",
+  "pages": [
+    {
+      "url": "https://www.cooperhewitt.org/exhibitions/",
+      "file": "../fixtures/cooper-hewitt-exhibitions-current.html"
+    },
+    {
+      "url": "https://www.cooperhewitt.org/exhibitions/upcoming/",
+      "file": "../fixtures/cooper-hewitt-exhibitions-upcoming.html"
+    }
+  ]
+}

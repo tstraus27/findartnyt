@@ -1,0 +1,21 @@
+{
+  "id": "icp-exhibitions",
+  "source": "icp",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "icp-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-24T02:20:00.000Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for icp-exhibitions; verified against data/staging/icp-exhibitions.live.json."
+  },
+  "stagingNotes": "Official ICP exhibitions index page plus linked official exhibition detail pages. Stages current and upcoming exhibition cards only from the main exhibitions page; past exhibitions and the separate future-exhibitions landing page stay out of scope for this slice.",
+  "pages": [
+    {
+      "url": "https://www.icp.org/exhibitions",
+      "file": "../fixtures/icp-exhibitions.html",
+      "followRecordUrls": true,
+      "followRecordUrlFixtureDirectory": "../fixtures/icp-exhibitions-details"
+    }
+  ]
+}

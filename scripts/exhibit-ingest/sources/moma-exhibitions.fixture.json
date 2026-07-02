@@ -1,0 +1,19 @@
+{
+  "id": "moma-exhibitions",
+  "source": "moma",
+  "sourceType": "official_venue",
+  "reliability": "medium",
+  "parser": "moma-exhibitions",
+  "verification": {
+    "status": "pending_live_verification",
+    "verifiedAt": "2026-06-29T18:17:00.000Z",
+    "notes": "Browser-assisted snapshot captured from https://www.moma.org/calendar/exhibitions on 2026-06-29 after Node fetch and browser-like fetch returned Cloudflare 403. This is staging-only and requires human review against the live official page before promotion."
+  },
+  "stagingNotes": "Official MoMA current/upcoming exhibitions from a browser-assisted HTML snapshot. Direct automated backend fetch is currently blocked by Cloudflare 403, so this source is not a fully automated live ingestion path.",
+  "pages": [
+    {
+      "url": "https://www.moma.org/calendar/exhibitions",
+      "file": "../fixtures/moma-exhibitions.browser-2026-06-29.html"
+    }
+  ]
+}

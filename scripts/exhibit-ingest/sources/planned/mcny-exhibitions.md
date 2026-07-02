@@ -1,0 +1,23 @@
+# Museum of the City of New York Exhibitions Discovery Notes
+
+- Candidate source: `https://www.mcny.org/exhibitions`
+- Source status as of 2026-06-25: implemented in staging-only form with fixture/live source configs, a checked-in fixture, parser/test coverage, staged reviewer artifacts, and `verified_live` source metadata.
+- Why this source was chosen next:
+  - official NYC museum page
+  - the main exhibitions route returned fetchable `HTTP 200` HTML in this environment on 2026-06-25
+  - the page exposes separate visible `Exhibitions On View` and `Upcoming Exhibitions` sections before the mixed `Online Exhibitions` and `Traveling Exhibitions` blocks
+- Observed on 2026-06-25:
+  - `https://www.mcny.org/exhibitions` returned normal server-rendered HTML with a stable page title of `Exhibitions | Museum of the City of New York`
+  - the `Exhibitions On View` section appears first and includes card rows with title, exhibition URL, teaser image, and reviewer-facing date text
+  - the `Upcoming Exhibitions` section appears next and uses the same card structure
+  - the same page later includes `Online Exhibitions` and `Traveling Exhibitions`, so those should stay excluded from the first parser slice
+- Why this source is safer than nearby alternatives right now:
+  - Neue Galerie is fetchable, but the exhibitions page is much more JS-heavy here and is a less conservative first parser target than MCNY's visible card sections
+  - Brooklyn Museum still returned a Vercel security checkpoint from this environment on 2026-06-25
+  - Tenement Museum returned a challenge page from this environment on 2026-06-25
+- Implemented slice:
+  - captured `scripts/exhibit-ingest/fixtures/mcny-exhibitions.html`
+  - added `mcny-exhibitions` fixture/live source configs, parser/test coverage, source-specific staging/review/live-verification package scripts, and checked-in staging artifacts
+  - generated fixture-backed plus live staging artifacts, confirmed `added=0 removed=0 changed=0`, and marked both MCNY source configs `verified_live` at `2026-06-25T16:56:00.000Z`
+- Remaining source-specific decision:
+  - keep the verified-live MCNY source staging-only; the current reviewer inbox stages 11 creates from the visible `on view` plus `upcoming` cards, but it remains below the minimum review contract at `startDate=2/11`, so the next MCNY decision is whether another official-source path can recover exact start dates for long-running current shows or whether that gap should remain explicit for human review

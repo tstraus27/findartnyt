@@ -1,0 +1,26 @@
+# The Frick Collection Exhibitions Source Notes
+
+- Candidate source: `https://www.frick.org/exhibitions`
+- Source status as of 2026-06-25: discovery and fixture capture complete; parser/config work has not started yet.
+- Why this source was chosen: official NYC museum page, fetchable `HTTP 200` HTML in this environment, and the page exposes clearly separated `Current` and `Upcoming` exhibition sections directly in server-rendered markup without the challenge pages currently blocking MoMA and Brooklyn Museum.
+- Observed on 2026-06-25:
+  - The page returns normal HTML in this environment and the checked-in fixture now lives at `scripts/exhibit-ingest/fixtures/frick-exhibitions.html`.
+  - The official page includes a `Current` section and a separate `Upcoming` section, each rendered as visible exhibition cards on the same page.
+  - The current/upcoming cards already expose:
+    - title
+    - detail URL
+    - date text such as `April 1 to August 3, 2026`
+    - description text
+    - image URL
+  - The page also contains separate `Past` and `Virtual Exhibitions` entry points, which should stay out of the first slice until their review treatment is chosen separately.
+- Why this source is safer than nearby alternatives right now:
+  - MCNY is fetchable, but the same page also blends `Online Exhibitions` and `Traveling Exhibitions` into the main flow, which makes the first review slice less conservative than Frick.
+  - Morgan is fetchable, but `Current` and `Upcoming` are split across different routes, so Frick is the smaller one-page parser target.
+  - MoMA and Brooklyn Museum still return challenge responses from this environment.
+- Implemented first slice:
+  - Captured the official exhibitions page fixture from `https://www.frick.org/exhibitions`.
+  - Confirmed the checked-in HTML contains stable `#current` and `#upcoming` section anchors plus card bodies with title, date text, description, and `Read More` links.
+- Next safe slice:
+  - Add fixture/live source configs for the Frick exhibitions page.
+  - Build a staging-only parser for only the visible `Current` and `Upcoming` card blocks.
+  - Keep `Past` and `Virtual Exhibitions` excluded, and defer detail-page enrichment unless the list-page fixture proves insufficient.

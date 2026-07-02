@@ -1,0 +1,19 @@
+{
+  "id": "frick-exhibitions",
+  "source": "frick",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "frick-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-25T14:31:07.133Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for frick-exhibitions; verified against data/staging/frick-exhibitions.live.json."
+  },
+  "stagingNotes": "Official The Frick Collection exhibitions page current and upcoming card blocks only. Past exhibitions, virtual exhibitions, and any detail-page enrichment remain out of scope for this first slice.",
+  "pages": [
+    {
+      "url": "https://www.frick.org/exhibitions",
+      "file": "../fixtures/frick-exhibitions.html"
+    }
+  ]
+}

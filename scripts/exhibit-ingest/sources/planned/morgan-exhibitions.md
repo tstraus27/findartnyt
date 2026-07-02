@@ -1,0 +1,33 @@
+# The Morgan Library & Museum Exhibitions Source Notes
+
+- Candidate source: `https://www.themorgan.org/exhibitions/current` plus `https://www.themorgan.org/exhibitions/upcoming`
+- Source status as of 2026-06-25: initial staging-and-review slice is complete and `verified_live`; this source is now staging-only while the next-source queue moves to MCNY.
+- Why this source was chosen next:
+  - official NYC museum pages
+  - both `current` and `upcoming` routes returned fetchable `HTTP 200` HTML in this environment on 2026-06-25
+  - the route split is explicit and conservative, which makes a two-page current/upcoming staging slice safer than MCNY's blended `online` and `traveling` exhibition flow
+- Observed on 2026-06-25:
+  - `https://www.themorgan.org/exhibitions` redirects to the official `current` route
+  - `current`, `upcoming`, `past`, and `online` are separate official pages
+  - the checked-in fixtures now live at:
+    - `scripts/exhibit-ingest/fixtures/morgan-exhibitions-current.html`
+    - `scripts/exhibit-ingest/fixtures/morgan-exhibitions-upcoming.html`
+  - both fixtures expose stable server-rendered listing rows with:
+    - title
+    - detail URL
+    - date text such as `May 22 through October 25, 2026`
+    - teaser image URL
+  - the current page also includes a second `Collection Spotlight` listing block; the implemented first slice now excludes that block so the reviewer inbox stays limited to the main exhibition listings only
+- Why this source is safer than nearby alternatives right now:
+  - MCNY is fetchable, but its exhibitions page still blends `Online Exhibitions` and `Traveling Exhibitions` into the main surface
+  - Rubin is fetchable, but the exhibitions page now reflects a broader project/exhibitions program rather than a single stable NYC venue surface
+  - the Met listing route returned `HTTP 429` from this environment on 2026-06-25
+- Implemented first slice:
+  - captured the official Morgan `current` and `upcoming` page fixtures from the official source routes
+  - added fixture/live source configs covering exactly the `current` and `upcoming` routes
+  - built a staging-only parser for the main exhibition listing rows on those two pages and excluded the separate `Collection Spotlight` block
+  - generated fixture-backed plus live staging artifacts, confirmed `added=0 removed=0 changed=0`, and marked both Morgan source configs `verified_live` at `2026-06-25T16:46:41.034Z`
+- Next safe slice:
+  - keep the current source staging-only and do not promote anything to canonical without human approval
+  - decide whether `J. Pierpont Morgan's Library` should remain an `Ongoing` minimum-field blocker or whether a later official-source slice should recover a start date
+  - decide separately whether any future Morgan detail-page enrichment is worth adding for optional `description` coverage

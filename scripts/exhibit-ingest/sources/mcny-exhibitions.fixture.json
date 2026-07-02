@@ -1,0 +1,19 @@
+{
+  "id": "mcny-exhibitions",
+  "source": "mcny",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "mcny-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-25T16:56:00.000Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for mcny-exhibitions; verified against data/staging/mcny-exhibitions.live.json."
+  },
+  "stagingNotes": "Official Museum of the City of New York exhibitions page on-view and upcoming card sections only. Online exhibitions, traveling exhibitions, past exhibitions, and any detail-page enrichment remain out of scope for this first slice.",
+  "pages": [
+    {
+      "url": "https://www.mcny.org/exhibitions",
+      "file": "../fixtures/mcny-exhibitions.html"
+    }
+  ]
+}

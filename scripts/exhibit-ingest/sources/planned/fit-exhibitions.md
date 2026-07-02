@@ -1,0 +1,21 @@
+# Museum at FIT Exhibitions Discovery Notes
+
+- Candidate source: `https://www.fitnyc.edu/museum/exhibitions/index.php`
+- Source status as of 2026-06-25: discovery note complete; this is the next focused source after MCNY.
+- Why this source was chosen next:
+  - official NYC museum page
+  - the main exhibitions route returned fetchable `HTTP 200` HTML in this environment on 2026-06-25
+  - the page exposes explicit `Current` and `Upcoming` exhibition sections on the same route with stable long-card markup, image URLs, venue/location text, and reviewer-facing date text
+- Observed on 2026-06-25:
+  - `https://www.fitnyc.edu/museum/exhibitions/index.php` returned normal server-rendered HTML with a stable page title of `Exhibitions`
+  - the page includes a `Show Current or Upcoming Exhibits` radio toggle, but both section blocks are present in the server-rendered HTML
+  - current cards use `.section.excard-long.current` and upcoming cards use `.section.excard-long.upcoming`
+  - upcoming cards already expose detail-page links in the visible markup, while some current cards may be gallery closures or lobby shows and need a first-slice scope decision
+- Why this source is safer than nearby alternatives right now:
+  - Neue Galerie is fetchable, but the exhibitions route is much more JS-heavy and includes a very large Next.js payload, making FIT the more conservative first parser target
+  - Brooklyn Museum still returned a Vercel security checkpoint from this environment on 2026-06-25
+  - El Museo scan was slower and less clear than FIT during this run, so FIT is the tighter next step
+- Next safe slice:
+  - capture a checked-in fixture snapshot of `https://www.fitnyc.edu/museum/exhibitions/index.php`
+  - add fixture/live source configs for a `fit-exhibitions` source
+  - build a staging-only parser that starts with the visible `Current` and `Upcoming` long cards while deciding whether non-gallery cards like `Galleries Closed` belong in the first reviewer inbox

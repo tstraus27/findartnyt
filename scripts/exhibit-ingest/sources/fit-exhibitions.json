@@ -1,0 +1,18 @@
+{
+  "id": "fit-exhibitions",
+  "source": "fit",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "fit-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-26T03:58:00.000Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for fit-exhibitions; verified against data/staging/fit-exhibitions.live.json."
+  },
+  "stagingNotes": "Official Museum at FIT current and upcoming long-card sections only, and only cards with official exhibition detail links. Closure notices, lobby-only cards without official exhibition pages, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope for this first slice.",
+  "pages": [
+    {
+      "url": "https://www.fitnyc.edu/museum/exhibitions/index.php"
+    }
+  ]
+}

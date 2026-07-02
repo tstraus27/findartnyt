@@ -1,0 +1,25 @@
+# Neue Galerie Exhibitions Discovery Notes
+
+- Candidate source: `https://www.neuegalerie.org/exhibitions`
+- Source status as of 2026-06-26: discovery-plus-fixture slice complete; this is the next focused source after Poster House.
+- Why this source was chosen next:
+  - official NYC museum page
+  - the exhibitions route returned fetchable `HTTP 200` HTML in this environment on 2026-06-26
+  - the checked-in fixture's `__NEXT_DATA__` resolves to `props.pageProps.data.page.slices[0]` as an `exhibitions_grid_module`
+  - that page-specific module currently exposes 71 embedded exhibition `events`, which is a tighter parser boundary than scraping broad HTML or unrelated site settings payloads
+  - after Poster House, this is the lightest remaining checked-in source candidate that already has a fixture and an official exhibitions route reachable from this environment
+- Observed on 2026-06-26:
+  - `https://www.neuegalerie.org/exhibitions` returned normal HTML with the page title `Exhibitions | Neue Galerie New York`
+  - the checked-in fixture now lives at `scripts/exhibit-ingest/fixtures/neue-galerie-exhibitions.html`
+  - the response is a large Next.js page payload rather than a simple server-rendered exhibition-card grid
+  - the checked-in fixture's `__NEXT_DATA__` resolves to `props.pageProps.data.page`, where `slices[0]` is an `exhibitions_grid_module`
+  - that module currently contains 71 embedded `events`; each event is a page-scoped exhibition record with a `slug`, `title`, parent `exhibitions` page context, nested `event.start_datetime` / `event.end_datetime`, `summary`, and image/media assets
+  - a fresh `curl -I -L` check on 2026-06-26 still returned `HTTP 200`, so the official route remains fetchable in this environment after the Poster House completion run
+- Why this source is safer than nearby alternatives right now:
+  - Poster House is already complete enough for the current staging/review milestone, so the next safe move is a new institution rather than widening its parser
+  - El Museo returned `HTTP 403` bot protection in this environment on 2026-06-26
+  - Brooklyn Museum continued to return a Vercel challenge in this environment on 2026-06-26
+- Next safe slice:
+  - extract only `props.pageProps.data.page.slices[*]` entries with `_type="exhibitions_grid_module"` and ignore the rest of the site settings payload
+  - inspect whether the embedded `events` array mixes current, upcoming, and historical exhibitions or whether the page exposes a tighter first-slice subset
+  - add fixture/live source configs for a `neue-galerie-exhibitions` source once the first reviewer scope is chosen, likely as a page-payload parser instead of HTML-card scraping

@@ -1,0 +1,18 @@
+{
+  "id": "david-zwirner-exhibitions",
+  "source": "david-zwirner",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "david-zwirner-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-23T15:00:00.000Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for david-zwirner-exhibitions; verified against data/staging/david-zwirner-exhibitions.live.json."
+  },
+  "stagingNotes": "Official David Zwirner exhibitions index page. Parser stages NYC exhibition listings for human review and ignores non-NYC listings.",
+  "pages": [
+    {
+      "url": "https://www.davidzwirner.com/exhibitions"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "whitney-exhibitions",
+  "source": "whitney",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "whitney-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-23T18:29:00.000Z",
+    "notes": "Live Whitney exhibitions index-plus-detail staging matched the fixture-backed artifact on 2026-06-23 with added=0 removed=0 changed=0."
+  },
+  "stagingNotes": "Official Whitney exhibitions index page plus linked exhibition detail pages. Stages current and upcoming in-person exhibition cards only; online and public-art sections are intentionally excluded until the review model for those sections is clarified.",
+  "pages": [
+    {
+      "url": "https://whitney.org/exhibitions",
+      "followRecordUrls": true
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "bronx-museum-exhibitions",
+  "source": "bronx-museum",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "bronx-museum-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-26T04:00:00.000Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for bronx-museum-exhibitions; verified against data/staging/bronx-museum-exhibitions.live.json."
+  },
+  "stagingNotes": "Official Bronx Museum exhibitions archive current exhibition-card grid only. The featured-show hero is excluded to avoid duplicate staging, Upcoming and Archive filters remain out of scope, and youth-program cards are currently included when they appear in the same official Current grid.",
+  "pages": [
+    {
+      "url": "https://bronxmuseum.org/exhibitions/",
+      "file": "../fixtures/bronx-museum-exhibitions.html"
+    }
+  ]
+}

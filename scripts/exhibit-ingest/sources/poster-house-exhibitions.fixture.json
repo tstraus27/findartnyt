@@ -1,0 +1,19 @@
+{
+  "id": "poster-house-exhibitions",
+  "source": "poster-house",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "poster-house-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-26T19:10:45.280Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for poster-house-exhibitions; verified against data/staging/poster-house-exhibitions.live.json."
+  },
+  "stagingNotes": "Official Poster House exhibitions page current On View and Upcoming Exhibitions sections only. The first slice stages visible exhibition cards for exact dates, URLs, and images, enriches them with the same page's embedded official exhibition payload for descriptions, excludes Past Exhibitions, and does not follow detail pages.",
+  "pages": [
+    {
+      "url": "https://www.posterhouse.org/exhibitions/",
+      "file": "../fixtures/poster-house-exhibitions.html"
+    }
+  ]
+}

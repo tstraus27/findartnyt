@@ -1,0 +1,24 @@
+{
+  "id": "margot-nielsen-2026-06-16-david-zwirner-artists",
+  "source": "david-zwirner",
+  "parser": "david-zwirner-artist",
+  "sourceEmail": {
+    "from": "Margot Nielsen <mnielsen@siaedu.onmicrosoft.com>",
+    "messageId": "19ed281c90e9a4dd",
+    "receivedAt": "2026-06-16T19:43:34Z"
+  },
+  "pages": [
+    {
+      "artistName": "Liu Ye",
+      "url": "https://www.davidzwirner.com/artists/liu-ye"
+    },
+    {
+      "artistName": "Victor Man",
+      "url": "https://www.davidzwirner.com/artists/victor-man"
+    },
+    {
+      "artistName": "Emma McIntyre",
+      "url": "https://www.davidzwirner.com/artists/emma-mcintyre"
+    }
+  ]
+}

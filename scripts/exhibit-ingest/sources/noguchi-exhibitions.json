@@ -1,0 +1,18 @@
+{
+  "id": "noguchi-exhibitions",
+  "source": "noguchi",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "noguchi-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-25T14:52:00.000Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for noguchi-exhibitions; verified against data/staging/noguchi-exhibitions.live.json."
+  },
+  "stagingNotes": "Official The Noguchi Museum Current & Upcoming exhibitions page listing cards before the first explicit offsite entry only. Desktop/mobile duplicates are deduped by exhibition URL, and offsite listings plus any detail-page enrichment remain out of scope for this first slice.",
+  "pages": [
+    {
+      "url": "https://www.noguchi.org/museum/exhibitions/"
+    }
+  ]
+}

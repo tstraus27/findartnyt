@@ -1,0 +1,28 @@
+# Poster House Exhibitions Discovery Notes
+
+- Candidate source: `https://www.posterhouse.org/exhibitions/`
+- Source status as of 2026-06-26: discovery-and-fixture slice complete; this is the next focused source after Cooper Hewitt.
+- Why this source was chosen next:
+  - official NYC museum page
+  - the exhibitions route returned fetchable `HTTP 200` HTML in this environment on 2026-06-26
+  - the page exposes an embedded `panel-exhibitions-container` payload with `content_type="exhibition"` and `data-total-items="4"`
+  - that payload currently includes reviewer-useful exhibition fields such as title, slug, and long-form official body copy without requiring separate detail-page fetches for a first slice
+- Observed on 2026-06-26:
+  - `https://www.posterhouse.org/exhibitions/` returned a WordPress-rendered page titled `Exhibitions | Poster House`
+  - the visible exhibition index includes an embedded `data-query` JSON blob under `.panel-exhibitions-container`
+  - the current embedded exhibition payload lists 4 official exhibition records:
+    - `Act Black: Posters from Black American Stage & Screen`
+    - `Love & Fury: New York’s Fight Against AIDS`
+    - `From Monarchy to Modernity: Travel, Identity, & the Czechoslovak First Republic (1918–1938)`
+    - `Reading Under Fire: Arming Minds & Hearts During Wartime`
+  - the page likely also includes rendered card markup below the payload, but the embedded JSON is the tighter first parser target because it is already exhibition-scoped and avoids theme-level HTML noise
+- Why this source is safer than nearby alternatives right now:
+  - New-York Historical returned `HTTP 202` with an AWS WAF challenge in this environment on 2026-06-26
+  - Neue Galerie is fetchable, but its exhibitions route currently ships a much larger Next.js payload with broader site data mixed into the response
+  - Poster House appears to expose the smallest official exhibition-only slice among the currently reachable next-source candidates checked on 2026-06-26
+- Fixture capture completed on 2026-06-26:
+  - `scripts/exhibit-ingest/fixtures/poster-house-exhibitions.html`
+- Next safe slice:
+  - add fixture/live source configs for a `poster-house-exhibitions` source that starts with the official exhibitions page only
+  - build a staging-only parser for the embedded official exhibition payload inside `.panel-exhibitions-container`
+  - decide whether the first reviewer inbox should trust the embedded payload alone or also read the rendered exhibition-card markup for exact date strings and image URLs when those fields appear outside the embedded records

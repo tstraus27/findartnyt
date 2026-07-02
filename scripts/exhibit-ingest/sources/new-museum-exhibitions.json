@@ -1,0 +1,18 @@
+{
+  "id": "new-museum-exhibitions",
+  "source": "new-museum",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "new-museum-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-22T00:00:00.000Z",
+    "notes": "Live staging command was verified in this workspace on 2026-06-22."
+  },
+  "stagingNotes": "Official New Museum exhibitions page. Parser reads embedded Next/Apollo data and stages exhibition candidates for human review.",
+  "pages": [
+    {
+      "url": "https://www.newmuseum.org/exhibitions/"
+    }
+  ]
+}

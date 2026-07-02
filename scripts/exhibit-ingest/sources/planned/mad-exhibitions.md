@@ -1,0 +1,21 @@
+# Museum of Arts and Design Exhibitions Source Notes
+
+- Candidate source: `https://madmuseum.org/exhibitions`
+- Source status as of 2026-06-24: implemented in staging-only form with fixture/live source configs, a checked-in fixture, parser/test coverage, staged reviewer artifacts, and `verified_live` source metadata.
+- Why this source was chosen: official NYC museum page, fetchable `HTTP 200` HTML in this environment, and the page exposes clearly separated current and upcoming exhibition cards directly in server-rendered markup.
+- Observed on 2026-06-24:
+  - The page returns normal HTML without the access challenges currently seen from some larger museum sites.
+  - The official page includes a `Current Exhibitions` grid and a separate `Upcoming` grid with visible exhibition cards.
+  - The current/upcoming cards already expose:
+    - title
+    - detail URL
+    - date text such as `Through Aug 16, 2026` or `Opens Sep 12, 2026`
+    - image URL
+  - The page also contains an `Installations` section, which should stay out of the first slice until its review treatment is decided separately.
+- Implemented first slice:
+  - Captured a fixture snapshot of `https://madmuseum.org/exhibitions`.
+  - Added fixture/live source configs plus a staging-only parser for only the visible `Current Exhibitions` and `Upcoming` grids.
+  - Preserved list-page `dateText`, resolved relative detail URLs against `https://madmuseum.org/`, and kept detail-page enrichment plus `Installations` out of scope.
+- Current follow-up gaps:
+  - Current cards still use `Through ...` and `Ongoing` text, so the checked-in reviewer artifact is `verified_live` but not minimum-ready: `startDate=1/6` and `description=0/6`.
+  - The `Installations` section still looks structurally similar to exhibitions but may represent a different review bucket; it should stay excluded until explicitly scoped.

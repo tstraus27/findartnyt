@@ -1,0 +1,18 @@
+{
+  "id": "jewish-museum-exhibitions",
+  "source": "jewish-museum",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "jewish-museum-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-24T17:25:23.527Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for jewish-museum-exhibitions; verified against data/staging/jewish-museum-exhibitions.live.json."
+  },
+  "stagingNotes": "Official The Jewish Museum exhibitions page server-rendered cards only. Stages the visible on-view and coming-soon exhibition cards before the client-side schedule calendar; React calendar content and detail-page enrichment remain out of scope for this first slice.",
+  "pages": [
+    {
+      "url": "https://thejewishmuseum.org/exhibitions/"
+    }
+  ]
+}

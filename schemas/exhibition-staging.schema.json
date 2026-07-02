@@ -1,0 +1,386 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://art-exhibition-discovery.local/schemas/exhibition-staging.schema.json",
+  "title": "Exhibition Staging Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "summary",
+    "items"
+  ],
+  "properties": {
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceId",
+        "source",
+        "parser",
+        "generatedAt",
+        "verification",
+        "pagesFetched",
+        "sourcePages",
+        "incomingRecords",
+        "creates",
+        "updates",
+        "possibleDuplicates",
+        "conflicts",
+        "unchanged"
+      ],
+      "properties": {
+        "sourceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parser": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "stagingNotes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "verifiedAt",
+            "notes"
+          ],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "verified_live",
+                "pending_live_verification",
+                "unknown"
+              ]
+            },
+            "verifiedAt": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            },
+            "notes": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "pagesFetched": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sourcePages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "url",
+              "pageRole",
+              "fetchMode",
+              "fixtureFile"
+            ],
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "pageRole": {
+                "type": "string",
+                "enum": [
+                  "configured",
+                  "followed"
+                ]
+              },
+              "fetchMode": {
+                "type": "string",
+                "enum": [
+                  "live",
+                  "fixture"
+                ]
+              },
+              "fixtureFile": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "incomingRecords": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "creates": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "updates": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "possibleDuplicates": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "conflicts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unchanged": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "incomingByType": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/stagedItem"
+      }
+    },
+    "creates": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "updates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "before",
+          "after"
+        ],
+        "properties": {
+          "before": {
+            "type": "object"
+          },
+          "after": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "unchangedIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "stagedItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "proposalType",
+        "reviewStatus",
+        "source",
+        "proposed",
+        "extractedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "proposalType": {
+          "type": "string",
+          "enum": [
+            "create",
+            "update",
+            "possibleDuplicate",
+            "conflict"
+          ]
+        },
+        "reviewStatus": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "approved",
+            "rejected",
+            "needs_revision"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/stagingSource"
+        },
+        "canonicalId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "before": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "proposed": {
+          "type": "object"
+        },
+        "changedFields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "dedupe": {
+          "$ref": "#/$defs/dedupeNotes"
+        },
+        "conflict": {
+          "$ref": "#/$defs/conflictNotes"
+        },
+        "extractedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reviewerNotes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "stagingSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "sourceType",
+        "reliability",
+        "parser"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "sourceType": {
+          "type": "string",
+          "enum": [
+            "official_venue",
+            "gallery",
+            "museum",
+            "press",
+            "newsletter",
+            "aggregator",
+            "other"
+          ]
+        },
+        "reliability": {
+          "type": "string",
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "unknown"
+          ]
+        },
+        "parser": {
+          "type": "string"
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "dedupeNotes": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "confidence",
+        "matchedRecordIds",
+        "notes"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "not_checked",
+            "no_match",
+            "likely_match",
+            "possible_match"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "matchedRecordIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "conflictNotes": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "field",
+        "canonicalValue",
+        "proposedValue",
+        "notes"
+      ],
+      "properties": {
+        "field": {
+          "type": "string"
+        },
+        "canonicalValue": {},
+        "proposedValue": {},
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

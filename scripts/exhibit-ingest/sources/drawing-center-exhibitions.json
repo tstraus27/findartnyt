@@ -1,0 +1,18 @@
+{
+  "id": "drawing-center-exhibitions",
+  "source": "drawing-center",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "drawing-center-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-24T19:20:56.320Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for drawing-center-exhibitions; verified against data/staging/drawing-center-exhibitions.live.json."
+  },
+  "stagingNotes": "Official The Drawing Center exhibitions page server-rendered on-view and upcoming listing modules only. Past exhibitions and any detail-page enrichment remain out of scope for this first slice.",
+  "pages": [
+    {
+      "url": "https://drawingcenter.org/exhibitions"
+    }
+  ]
+}

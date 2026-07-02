@@ -1,0 +1,21 @@
+# The Jewish Museum Exhibitions Discovery Notes
+
+- Candidate source: `https://thejewishmuseum.org/exhibitions/`
+- Why this source next: official NYC museum page, fetchable HTML in this environment, exhibition cards already expose title, date text, detail URL, and image on the main index, and the page avoids the current Vercel challenge blocking some other NYC museum candidates.
+- Observed on 2026-06-24:
+  - The page returns `HTTP 200` in this environment and renders a server-side exhibitions landing page.
+  - Featured and listing cards link to official exhibition detail pages under `/exhibitions/.../`.
+  - Repeated exhibition cards appear directly in the page HTML as linked blocks with:
+    - detail URL in the wrapping `<a href>`
+    - title in `<p class="text-card-title ...">`
+    - date text in `<div class="... text-card-datetime ...">`
+    - image URL in the child `<img data-src>`
+  - The page also mounts a client-side `#react-exhibitions-calendar`, so any later expansion beyond the visible server-rendered cards should be treated as a separate slice.
+- Smallest safe next slice:
+  - Capture a fixture snapshot of `https://thejewishmuseum.org/exhibitions/`.
+  - Add fixture/live source configs plus a staging-only parser for the server-rendered exhibition cards already present in the HTML.
+  - Keep detail-page enrichment and any React calendar data out of the first slice unless the minimum exhibition contract needs exact dates that are not present on the index page.
+- Known caveats:
+  - The current page appears to mix featured and listing cards rather than exposing a clean `current` and `upcoming` section split like Whitney or ICP, so the first parser may need conservative inclusion rules and reviewer-facing scope notes.
+  - Detail pages likely remain the safest path for richer metadata such as exact start and end dates, but that should remain a later staging-only follow-up if required.
+  - `https://www.metmuseum.org/exhibitions` and `https://www.brooklynmuseum.org/exhibitions` currently return `HTTP 429` challenge responses in this environment, so they are weaker next-source candidates right now despite being official NYC institutions.

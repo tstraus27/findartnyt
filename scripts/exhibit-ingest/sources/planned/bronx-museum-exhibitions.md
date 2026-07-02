@@ -1,0 +1,26 @@
+# Bronx Museum Exhibitions Discovery Notes
+
+- Candidate source: `https://bronxmuseum.org/exhibitions/`
+- Source status as of 2026-06-26: first staging-and-review slice complete; fixture/live source configs, parser/tests, staging artifacts, and live-parity verification now exist.
+- Why this source was chosen next:
+  - official NYC museum page
+  - the main exhibitions archive returned fetchable `HTTP 200` HTML in this environment on 2026-06-26
+  - the page exposes explicit `Current`, `Upcoming`, and `Archive` filter links plus visible exhibition-card markup with title, date text, image, and official detail URLs
+- Observed on 2026-06-26:
+  - `https://bronxmuseum.org/exhibitions/` returned normal server-rendered HTML with a stable page title of `Exhibitions - The Bronx Museum`
+  - the page includes a featured-show block above the card grid, followed by visible filter links for `Current`, `Upcoming`, and `Archive`
+  - current cards render as `<article class="exhibition-card">` blocks with `.exhibition-title`, `.exhibition-date`, image markup, and an official exhibition detail link
+  - the current slice appears to include youth-program exhibitions such as `Teen Council Spring 2026 Exhibition: 'Museum of the Self'`, so the first-slice scope may need to distinguish core museum shows from program-specific cards
+- Why this source is safer than nearby alternatives right now:
+  - El Museo del Barrio currently returns a `403` bot-check page in this environment on 2026-06-26
+  - MoMA currently returns `403` here as well
+  - Neue Galerie is fetchable, but the exhibitions route ships a much larger Next.js payload with broader site data mixed into the response, making Bronx Museum the cleaner first parser target
+- Completed first slice on 2026-06-26:
+  - checked-in fixture snapshot: `scripts/exhibit-ingest/fixtures/bronx-museum-exhibitions.html`
+  - fixture/live source configs: `scripts/exhibit-ingest/sources/bronx-museum-exhibitions.fixture.json` and `scripts/exhibit-ingest/sources/bronx-museum-exhibitions.json`
+  - staging-only parser/tests: `scripts/exhibit-ingest/parsers/bronx-museum-exhibitions.mjs` and `scripts/exhibit-ingest/parsers/bronx-museum-exhibitions.test.mjs`
+  - staged reviewer artifacts: `data/staging/bronx-museum-exhibitions.json` and `data/staging/bronx-museum-exhibitions.live.json`
+- Remaining follow-up:
+  - keep the verified-live source staging-only
+  - decide later whether `Upcoming`, `Archive`, or official detail-page enrichment should become separate Bronx-specific slices
+  - decide later whether youth-program exhibition cards should remain in the same reviewer inbox or split into a different source treatment

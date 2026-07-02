@@ -1,0 +1,22 @@
+# Guggenheim Exhibitions Discovery Notes
+
+- Candidate source: `https://www.guggenheim.org/exhibitions`
+- Why this source next: official NYC museum page, fetchable `HTTP 200` HTML in this environment, and the page embeds structured exhibition metadata for on-view and upcoming exhibitions directly in the initial page bootstrap.
+- Observed on 2026-06-24:
+  - The page returns normal HTML without the challenge response currently seen from some other NYC museum sites.
+  - The source includes an inline `const bootstrap = ...` payload with `featuredExhibitions.on_view.items` and `featuredExhibitions.upcoming.items`.
+  - Embedded exhibition items already expose:
+    - title
+    - slug
+    - `dates.start` and `dates.end`
+    - excerpt
+    - featured image source URL
+  - The same payload also contains `past.items`, which should stay out of the first slice.
+- Smallest safe next slice:
+  - Capture a fixture snapshot of `https://www.guggenheim.org/exhibitions`.
+  - Add fixture/live source configs plus a staging-only parser that reads only the embedded `on_view` and `upcoming` exhibition items from the bootstrap payload.
+  - Resolve relative exhibition and image URLs against `https://www.guggenheim.org/`, and keep any venue-level special cases or detail-page enrichment out of the first slice.
+- Known caveats:
+  - The page appears to mix visible markup with large serialized bootstrap objects, so the parser should prefer the embedded structured data over brittle display-only HTML selectors.
+  - Some on-view entries may represent collection-focus or long-running installations; keep the first slice narrowly aligned with what the official page itself currently labels as on view or upcoming.
+  - `https://www.metmuseum.org/exhibitions` and `https://www.brooklynmuseum.org/exhibitions` still return challenge responses in this environment, so Guggenheim is the stronger immediate follow-on candidate.

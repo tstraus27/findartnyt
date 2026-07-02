@@ -1,0 +1,19 @@
+{
+  "id": "mad-exhibitions",
+  "source": "mad",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "mad-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-25T14:30:30.000Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for mad-exhibitions; verified against data/staging/mad-exhibitions.live.json."
+  },
+  "stagingNotes": "Official Museum of Arts and Design exhibitions page current and upcoming listing grids plus linked official exhibition detail pages. Installations and past exhibitions remain out of scope for this source slice.",
+  "pages": [
+    {
+      "url": "https://madmuseum.org/exhibitions",
+      "followRecordUrls": true
+    }
+  ]
+}

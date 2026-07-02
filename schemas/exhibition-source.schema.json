@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://art-exhibition-discovery.local/schemas/exhibition-source.schema.json",
+  "title": "Exhibition Source Config",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "id",
+    "source",
+    "parser",
+    "pages"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parser": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reliability": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stagingNotes": {
+      "type": "string"
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "verifiedAt",
+        "notes"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "verified_live",
+            "pending_live_verification",
+            "unknown"
+          ]
+        },
+        "verifiedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "sourceEmail": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "messageId",
+        "receivedAt"
+      ],
+      "properties": {
+        "from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "messageId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "receivedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "file": {
+            "type": "string",
+            "minLength": 1
+          },
+          "followRecordUrls": {
+            "type": "boolean"
+          },
+          "followRecordUrlFixtureDirectory": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "followRecordUrls": {
+                  "const": true
+                }
+              },
+              "required": [
+                "file",
+                "followRecordUrls"
+              ]
+            },
+            "then": {
+              "required": [
+                "followRecordUrlFixtureDirectory"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

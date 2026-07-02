@@ -1,0 +1,31 @@
+# Cooper Hewitt Exhibitions Discovery Notes
+
+- Candidate source: `https://www.cooperhewitt.org/exhibitions/`
+- Supporting route: `https://www.cooperhewitt.org/exhibitions/upcoming/`
+- Source status as of 2026-06-26: first staging-and-review slice complete; fixture/live source configs, parser/tests, checked-in staging artifacts, and live-vs-fixture verification now exist in the main backend flow.
+- Why this source was chosen next:
+  - official NYC museum page
+  - both the current and upcoming routes returned fetchable `HTTP 200` HTML in this environment on 2026-06-26
+  - the current route exposes visible exhibition blocks with title, date text, image, description, and official `Learn more` links
+  - the upcoming route is a separate official page with a simpler single-exhibition block and explicit `OPENS ...` date text
+- Observed on 2026-06-26:
+  - `https://www.cooperhewitt.org/exhibitions/` returned a WordPress-rendered page titled `Current Exhibitions`
+  - the current route includes visible exhibition sections inside `.page-body .col-sm-4` columns with `<h1>` title/date text, image markup, description paragraphs, and `Learn more` links under `/channel/...`
+  - `https://www.cooperhewitt.org/exhibitions/upcoming/` returned a separate WordPress-rendered page titled `Upcoming Exhibitions`
+  - the upcoming route currently shows a single visible exhibition block with explicit `OPENS June 26, 2026` date text and a `Learn more` link to `https://www.cooperhewitt.org/channel/design-across-time/`
+  - both routes include extra sponsorship logos and photo-credit blocks after the main exhibition copy, so the first parser slice should stop before those supplemental assets become reviewer noise
+- Why this source is safer than nearby alternatives right now:
+  - MoMA currently returns a Cloudflare `403` challenge in this environment on 2026-06-26
+  - Brooklyn Museum and the Met currently return Vercel `429` challenge responses here
+  - El Museo del Barrio still returns a browser-check page here
+  - Neue Galerie is fetchable, but its exhibitions route ships a much larger Next.js payload with broader site data mixed into the response, making Cooper Hewitt the cleaner first parser target
+- Fixture capture completed on 2026-06-26:
+  - `scripts/exhibit-ingest/fixtures/cooper-hewitt-exhibitions-current.html`
+  - `scripts/exhibit-ingest/fixtures/cooper-hewitt-exhibitions-upcoming.html`
+- Current reviewer state:
+  - the verified-live reviewer inbox now stages 4 pending creates from 2 configured official pages
+  - the first slice carries `description=4/4` and `imageUrl=4/4`
+  - the remaining blocker is `startDate=1/4` because the 3 current exhibitions publish only `On view through ...` text on the official listing pages
+- Follow-up after completion:
+  - keep Cooper Hewitt staging-only until a human explicitly approves anything
+  - decide separately whether an official follow-up source can recover current-show `startDate` values or whether end-date-only current listings should remain below the minimum review contract

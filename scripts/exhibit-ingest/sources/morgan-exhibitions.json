@@ -1,0 +1,21 @@
+{
+  "id": "morgan-exhibitions",
+  "source": "morgan",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "morgan-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-25T16:46:41.034Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for morgan-exhibitions; verified against data/staging/morgan-exhibitions.live.json."
+  },
+  "stagingNotes": "Official The Morgan Library & Museum current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first slice.",
+  "pages": [
+    {
+      "url": "https://www.themorgan.org/exhibitions/current"
+    },
+    {
+      "url": "https://www.themorgan.org/exhibitions/upcoming"
+    }
+  ]
+}

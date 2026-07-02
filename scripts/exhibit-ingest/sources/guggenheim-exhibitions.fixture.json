@@ -1,0 +1,19 @@
+{
+  "id": "guggenheim-exhibitions",
+  "source": "guggenheim",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "guggenheim-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-06-24T19:18:00.000Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for guggenheim-exhibitions; verified against data/staging/guggenheim-exhibitions.live.json."
+  },
+  "stagingNotes": "Official Guggenheim exhibitions index page bootstrap payload. Stages only the embedded on_view and upcoming exhibition items from the official exhibitions page; past items and detail-page enrichment stay out of scope for this first slice.",
+  "pages": [
+    {
+      "url": "https://www.guggenheim.org/exhibitions",
+      "file": "../fixtures/guggenheim-exhibitions.html"
+    }
+  ]
+}

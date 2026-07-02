@@ -1,0 +1,248 @@
+{
+  "summary": {
+    "sourceId": "bronx-museum-exhibitions",
+    "source": "bronx-museum",
+    "parser": "bronx-museum-exhibitions",
+    "generatedAt": "2026-06-26T04:00:33.892Z",
+    "stagingNotes": "Official Bronx Museum exhibitions archive current exhibition-card grid only. The featured-show hero is excluded to avoid duplicate staging, Upcoming and Archive filters remain out of scope, and youth-program cards are currently included when they appear in the same official Current grid.",
+    "verification": {
+      "status": "verified_live",
+      "verifiedAt": "2026-06-26T04:00:00.000Z",
+      "notes": "Live staging artifact matched the fixture-backed review artifact for bronx-museum-exhibitions; verified against data/staging/bronx-museum-exhibitions.live.json."
+    },
+    "pagesFetched": 1,
+    "sourcePages": [
+      {
+        "url": "https://bronxmuseum.org/exhibitions/",
+        "pageRole": "configured",
+        "fetchMode": "live",
+        "fixtureFile": null
+      }
+    ],
+    "incomingRecords": 2,
+    "creates": 2,
+    "updates": 0,
+    "possibleDuplicates": 0,
+    "conflicts": 0,
+    "unchanged": 0,
+    "incomingByType": {
+      "exhibition": 2
+    }
+  },
+  "items": [
+    {
+      "id": "stage:bronx-museum-exhibitions:exhibition:bronx-museum:seventh-aim-biennial:create",
+      "proposalType": "create",
+      "reviewStatus": "pending",
+      "source": {
+        "url": "https://bronxmuseum.org/exhibition/seventh-aim-biennial/",
+        "sourceType": "official_venue",
+        "reliability": "high",
+        "parser": "bronx-museum-exhibitions",
+        "notes": "Official Bronx Museum exhibitions archive current exhibition-card grid only. The featured-show hero is excluded to avoid duplicate staging, Upcoming and Archive filters remain out of scope, and youth-program cards are currently included when they appear in the same official Current grid."
+      },
+      "canonicalId": null,
+      "before": null,
+      "proposed": {
+        "id": "exhibition:bronx-museum:seventh-aim-biennial",
+        "type": "exhibition",
+        "source": "bronx-museum",
+        "title": "The Seventh AIM Biennial: Forms of Connection",
+        "venue": "The Bronx Museum",
+        "startDate": "2026-01-23",
+        "endDate": "2026-09-06",
+        "dateText": "Jan 23 - Sep 6, 2026",
+        "description": null,
+        "artists": [],
+        "curators": [],
+        "venueAddress": "1040 Grand Concourse, Bronx, NY 10456",
+        "neighborhood": "Concourse",
+        "borough": "Bronx",
+        "city": "New York",
+        "imageUrl": "https://bronxmuseum.org/wp-content/uploads/2025/09/2026_01_24_Argenis_Apolinario_BxMA_AIM_INSTALL_3225-copy-4-960x720.jpg",
+        "exhibitionUrl": "https://bronxmuseum.org/exhibition/seventh-aim-biennial/",
+        "sourceUrl": "https://bronxmuseum.org/exhibition/seventh-aim-biennial/",
+        "openingReceptionDate": null,
+        "tags": [
+          "current"
+        ],
+        "sourceConfidence": "high",
+        "reviewStatus": "needs_review",
+        "lastCheckedAt": null,
+        "sourceNotes": "Parsed from The Bronx Museum official exhibitions archive using only the visible Current exhibition-card grid after the filter links. The featured-show hero is ignored to avoid duplicate staging, Upcoming and Archive filters remain out of scope, and youth-program cards are currently staged when they appear in the same official Current grid."
+      },
+      "changedFields": [
+        "artists",
+        "borough",
+        "city",
+        "curators",
+        "dateText",
+        "description",
+        "endDate",
+        "exhibitionUrl",
+        "id",
+        "imageUrl",
+        "lastCheckedAt",
+        "neighborhood",
+        "openingReceptionDate",
+        "reviewStatus",
+        "source",
+        "sourceConfidence",
+        "sourceNotes",
+        "sourceUrl",
+        "startDate",
+        "tags",
+        "title",
+        "type",
+        "venue",
+        "venueAddress"
+      ],
+      "dedupe": {
+        "status": "no_match",
+        "confidence": 0,
+        "matchedRecordIds": [],
+        "notes": "Compared against existing canonical exhibition records; no likely match found."
+      },
+      "conflict": null,
+      "extractedAt": "2026-06-26T04:00:33.892Z",
+      "reviewerNotes": null
+    },
+    {
+      "id": "stage:bronx-museum-exhibitions:exhibition:bronx-museum:teen-council-spring26:create",
+      "proposalType": "create",
+      "reviewStatus": "pending",
+      "source": {
+        "url": "https://bronxmuseum.org/exhibition/teen-council-spring26/",
+        "sourceType": "official_venue",
+        "reliability": "high",
+        "parser": "bronx-museum-exhibitions",
+        "notes": "Official Bronx Museum exhibitions archive current exhibition-card grid only. The featured-show hero is excluded to avoid duplicate staging, Upcoming and Archive filters remain out of scope, and youth-program cards are currently included when they appear in the same official Current grid."
+      },
+      "canonicalId": null,
+      "before": null,
+      "proposed": {
+        "id": "exhibition:bronx-museum:teen-council-spring26",
+        "type": "exhibition",
+        "source": "bronx-museum",
+        "title": "Teen Council Spring 2026 Exhibition: ‘Museum of the Self’",
+        "venue": "The Bronx Museum",
+        "startDate": "2026-06-08",
+        "endDate": "2026-07-12",
+        "dateText": "Jun 8 - Jul 12, 2026",
+        "description": null,
+        "artists": [],
+        "curators": [],
+        "venueAddress": "1040 Grand Concourse, Bronx, NY 10456",
+        "neighborhood": "Concourse",
+        "borough": "Bronx",
+        "city": "New York",
+        "imageUrl": "https://bronxmuseum.org/wp-content/uploads/2026/06/Teen-Council-Spring-2026-Collage-1047x720.png",
+        "exhibitionUrl": "https://bronxmuseum.org/exhibition/teen-council-spring26/",
+        "sourceUrl": "https://bronxmuseum.org/exhibition/teen-council-spring26/",
+        "openingReceptionDate": null,
+        "tags": [
+          "current"
+        ],
+        "sourceConfidence": "high",
+        "reviewStatus": "needs_review",
+        "lastCheckedAt": null,
+        "sourceNotes": "Parsed from The Bronx Museum official exhibitions archive using only the visible Current exhibition-card grid after the filter links. The featured-show hero is ignored to avoid duplicate staging, Upcoming and Archive filters remain out of scope, and youth-program cards are currently staged when they appear in the same official Current grid."
+      },
+      "changedFields": [
+        "artists",
+        "borough",
+        "city",
+        "curators",
+        "dateText",
+        "description",
+        "endDate",
+        "exhibitionUrl",
+        "id",
+        "imageUrl",
+        "lastCheckedAt",
+        "neighborhood",
+        "openingReceptionDate",
+        "reviewStatus",
+        "source",
+        "sourceConfidence",
+        "sourceNotes",
+        "sourceUrl",
+        "startDate",
+        "tags",
+        "title",
+        "type",
+        "venue",
+        "venueAddress"
+      ],
+      "dedupe": {
+        "status": "no_match",
+        "confidence": 0,
+        "matchedRecordIds": [],
+        "notes": "Compared against existing canonical exhibition records; no likely match found."
+      },
+      "conflict": null,
+      "extractedAt": "2026-06-26T04:00:33.892Z",
+      "reviewerNotes": null
+    }
+  ],
+  "creates": [
+    {
+      "id": "exhibition:bronx-museum:seventh-aim-biennial",
+      "type": "exhibition",
+      "source": "bronx-museum",
+      "title": "The Seventh AIM Biennial: Forms of Connection",
+      "venue": "The Bronx Museum",
+      "startDate": "2026-01-23",
+      "endDate": "2026-09-06",
+      "dateText": "Jan 23 - Sep 6, 2026",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "1040 Grand Concourse, Bronx, NY 10456",
+      "neighborhood": "Concourse",
+      "borough": "Bronx",
+      "city": "New York",
+      "imageUrl": "https://bronxmuseum.org/wp-content/uploads/2025/09/2026_01_24_Argenis_Apolinario_BxMA_AIM_INSTALL_3225-copy-4-960x720.jpg",
+      "exhibitionUrl": "https://bronxmuseum.org/exhibition/seventh-aim-biennial/",
+      "sourceUrl": "https://bronxmuseum.org/exhibition/seventh-aim-biennial/",
+      "openingReceptionDate": null,
+      "tags": [
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "needs_review",
+      "lastCheckedAt": null,
+      "sourceNotes": "Parsed from The Bronx Museum official exhibitions archive using only the visible Current exhibition-card grid after the filter links. The featured-show hero is ignored to avoid duplicate staging, Upcoming and Archive filters remain out of scope, and youth-program cards are currently staged when they appear in the same official Current grid."
+    },
+    {
+      "id": "exhibition:bronx-museum:teen-council-spring26",
+      "type": "exhibition",
+      "source": "bronx-museum",
+      "title": "Teen Council Spring 2026 Exhibition: ‘Museum of the Self’",
+      "venue": "The Bronx Museum",
+      "startDate": "2026-06-08",
+      "endDate": "2026-07-12",
+      "dateText": "Jun 8 - Jul 12, 2026",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "1040 Grand Concourse, Bronx, NY 10456",
+      "neighborhood": "Concourse",
+      "borough": "Bronx",
+      "city": "New York",
+      "imageUrl": "https://bronxmuseum.org/wp-content/uploads/2026/06/Teen-Council-Spring-2026-Collage-1047x720.png",
+      "exhibitionUrl": "https://bronxmuseum.org/exhibition/teen-council-spring26/",
+      "sourceUrl": "https://bronxmuseum.org/exhibition/teen-council-spring26/",
+      "openingReceptionDate": null,
+      "tags": [
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "needs_review",
+      "lastCheckedAt": null,
+      "sourceNotes": "Parsed from The Bronx Museum official exhibitions archive using only the visible Current exhibition-card grid after the filter links. The featured-show hero is ignored to avoid duplicate staging, Upcoming and Archive filters remain out of scope, and youth-program cards are currently staged when they appear in the same official Current grid."
+    }
+  ],
+  "updates": [],
+  "unchangedIds": []
+}
