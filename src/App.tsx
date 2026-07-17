@@ -500,52 +500,52 @@ export default function App() {
               </>
             )}
           </section>
-        </section>
-      </div>
 
-      {(featuredContent || featuredHistory.length > 0) && (
-        <section className="featured-footer" aria-label="Featured exhibitions">
-          {featuredContent && (
-            <section className="featured-content" aria-label="Featured exhibition">
-              <div>
-                <p className="featured-label">Featured</p>
-                <h2>{featuredContent.title}</h2>
-                {featuredContent.dek && <p className="featured-dek">{featuredContent.dek}</p>}
-                {featuredContent.bodyMarkdown && <p>{featuredContent.bodyMarkdown}</p>}
-                {featuredContent.ctaUrl && (
-                  <a href={featuredContent.ctaUrl} target="_blank" rel="noreferrer">
-                    More information
-                  </a>
-                )}
-              </div>
-              {featuredContent.imageUrl && <img src={featuredContent.imageUrl} alt="" loading="lazy" />}
-            </section>
-          )}
-
-          {featuredHistory.length > 0 && (
-            <details className="featured-history">
-              <summary>Feature history</summary>
-              <div className="featured-history-list">
-                {featuredHistory.map((entry) => (
-                  <article key={entry.id}>
-                    <strong>{entry.title}</strong>
-                    {entry.dek && <span>{entry.dek}</span>}
-                    <small>
-                      {entry.status}
-                      {entry.publishedAt ? ` · ${new Date(entry.publishedAt).toLocaleDateString()}` : ''}
-                    </small>
-                    {entry.ctaUrl && (
-                      <a href={entry.ctaUrl} target="_blank" rel="noreferrer">
-                        source
+          {(featuredContent || featuredHistory.length > 0) && (
+            <section className="featured-footer" aria-label="Featured exhibitions">
+              {featuredContent && (
+                <section className="featured-content" aria-label="Featured exhibition">
+                  <div>
+                    <p className="featured-label">Featured</p>
+                    <h2>{featuredContent.title}</h2>
+                    {featuredContent.dek && <p className="featured-dek">{featuredContent.dek}</p>}
+                    {featuredContent.bodyMarkdown && <p>{featuredContent.bodyMarkdown}</p>}
+                    {featuredContent.ctaUrl && (
+                      <a href={featuredContent.ctaUrl} target="_blank" rel="noreferrer">
+                        More information
                       </a>
                     )}
-                  </article>
-                ))}
-              </div>
-            </details>
+                  </div>
+                  {featuredContent.imageUrl && <img src={featuredContent.imageUrl} alt="" loading="lazy" />}
+                </section>
+              )}
+
+              {featuredHistory.length > 0 && (
+                <details className="featured-history">
+                  <summary>Feature history</summary>
+                  <div className="featured-history-list">
+                    {featuredHistory.map((entry) => (
+                      <article key={entry.id}>
+                        <strong>{entry.title}</strong>
+                        {entry.dek && <span>{entry.dek}</span>}
+                        <small>
+                          {entry.status}
+                          {entry.publishedAt ? ` · ${new Date(entry.publishedAt).toLocaleDateString()}` : ''}
+                        </small>
+                        {entry.ctaUrl && (
+                          <a href={entry.ctaUrl} target="_blank" rel="noreferrer">
+                            source
+                          </a>
+                        )}
+                      </article>
+                    ))}
+                  </div>
+                </details>
+              )}
+            </section>
           )}
         </section>
-      )}
+      </div>
     </main>
   );
 }
