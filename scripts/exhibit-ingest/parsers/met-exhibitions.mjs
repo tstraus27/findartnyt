@@ -172,11 +172,80 @@ const extractArticles = (html) => String(html || '').match(/<article\b[\s\S]*?<\
 
 const firstMatch = (html, pattern) => String(html || '').match(pattern)?.[1] || null;
 
+const metaContent = (html, name) =>
+  firstMatch(
+    html,
+    new RegExp(`<meta\\b[^>]*(?:property|name)=["']${name}["'][^>]*content=["']([^"']+)["'][^>]*>`, 'i')
+  ) ||
+  firstMatch(
+    html,
+    new RegExp(`<meta\\b[^>]*content=["']([^"']+)["'][^>]*(?:property|name)=["']${name}["'][^>]*>`, 'i')
+  );
+
 const imageFromArticle = (html, pageUrl) => {
   const src = firstMatch(html, /<(?:source|img)\b[^>]*(?:srcset|src)=["']([^"']+)["']/i);
   if (!src) return null;
 
   return absoluteUrl(src.split(',')[0]?.trim().split(/\s+/)[0], pageUrl);
+};
+
+const descriptionFromDetail = (html) => {
+  const descriptionHtml =
+    firstMatch(html, /<div\b[^>]*class=["'][^"']*\boverview\b[^"']*["'][^>]*>([\s\S]*?)<\/div>/i) ||
+    firstMatch(html, /<section\b[^>]*data-met-detail-section=["']overview["'][^>]*>([\s\S]*?)<\/section>/i) ||
+    metaContent(html, 'description') ||
+    metaContent(html, 'og:description');
+  const description = text(descriptionHtml);
+  return description || null;
+};
+
+const dateTextFromDetail = (html) =>
+  text(
+    firstMatch(html, /<p\b[^>]*class=["'][^"']*\bdate\b[^"']*["'][^>]*>([\s\S]*?)<\/p>/i) ||
+      firstMatch(html, /<time\b[^>]*>([\s\S]*?)<\/time>/i) ||
+      firstMatch(html, /\b(Through\s+[A-Za-z]+\s+\d{1,2}(?:,\s+\d{4})?)/i)
+  );
+
+const detailPageRecord = ({ html, pageUrl }) => {
+  const title = text(
+    firstMatch(html, /<h1\b[^>]*>([\s\S]*?)<\/h1>/i) ||
+      metaContent(html, 'og:title') ||
+      firstMatch(html, /<title\b[^>]*>([\s\S]*?)<\/title>/i)
+  ).replace(/\s+-\s+The Metropolitan Museum of Art$/i, '');
+
+  if (!title) return null;
+
+  const dateText = dateTextFromDetail(html);
+  const dateInfo = parseDateText(dateText);
+  const imageUrl = absoluteUrl(metaContent(html, 'og:image'), pageUrl) || imageFromArticle(html, pageUrl);
+
+  return {
+    id: `exhibition:met:${slugFromUrl(pageUrl)}`,
+    type: 'exhibition',
+    source: 'met',
+    title,
+    venue: VENUE,
+    startDate: dateInfo.startDate,
+    endDate: dateInfo.endDate,
+    dateText: dateInfo.dateText,
+    description: descriptionFromDetail(html),
+    artists: [],
+    curators: [],
+    venueAddress: VENUE_ADDRESS,
+    neighborhood: NEIGHBORHOOD,
+    borough: BOROUGH,
+    city: CITY,
+    imageUrl,
+    exhibitionUrl: pageUrl,
+    sourceUrl: pageUrl,
+    openingReceptionDate: null,
+    tags: ['browser-assisted-snapshot', 'seeded-detail-page'],
+    sourceConfidence: 'medium',
+    reviewStatus: 'needs_review',
+    lastCheckedAt: null,
+    sourceNotes:
+      'Parsed from a browser-assisted compact snapshot of an official Met exhibition detail page because direct backend fetch returns Vercel 429. Detail-page seed URLs prevent known official exhibitions from being omitted when the listing snapshot is stale.'
+  };
 };
 
 const parseArticle = ({ articleHtml, sectionLabel, pageUrl }) => {
@@ -231,6 +300,13 @@ export const parseMetExhibitionsPage = ({ html, url }) => {
       if (record && !unique.has(record.exhibitionUrl)) {
         unique.set(record.exhibitionUrl, record);
       }
+    }
+  }
+
+  if (unique.size === 0) {
+    const detailRecord = detailPageRecord({ html, pageUrl: url });
+    if (detailRecord) {
+      unique.set(detailRecord.exhibitionUrl, detailRecord);
     }
   }
 

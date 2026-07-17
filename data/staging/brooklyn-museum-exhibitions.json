@@ -1,0 +1,252 @@
+{
+  "summary": {
+    "sourceId": "brooklyn-museum-exhibitions",
+    "source": "brooklyn-museum",
+    "parser": "brooklyn-museum-exhibitions",
+    "generatedAt": "2026-07-14T17:59:24.745Z",
+    "stagingNotes": "Official Brooklyn Museum exhibitions page included-in-general-admission cards from a browser-assisted compact snapshot. Direct automated backend fetch is currently blocked by Vercel 429, so this source is not a fully automated live ingestion path. Permanent collection galleries, museum spotlights, touring pages, and past exhibitions are out of scope for this first staging slice.",
+    "verification": {
+      "status": "pending_live_verification",
+      "verifiedAt": "2026-07-14T18:15:00.000Z",
+      "notes": "Browser-assisted compact snapshot captured from https://www.brooklynmuseum.org/exhibitions on 2026-07-14 after Node fetch returned Vercel 429 security checkpoint responses. This is staging-only and requires human review against the live official page before promotion."
+    },
+    "pagesFetched": 1,
+    "sourcePages": [
+      {
+        "url": "https://www.brooklynmuseum.org/exhibitions",
+        "pageRole": "configured",
+        "fetchMode": "fixture",
+        "fixtureFile": "scripts/exhibit-ingest/fixtures/brooklyn-museum-exhibitions.browser-2026-07-14.html"
+      }
+    ],
+    "incomingRecords": 2,
+    "creates": 2,
+    "updates": 0,
+    "possibleDuplicates": 0,
+    "conflicts": 0,
+    "unchanged": 0,
+    "incomingByType": {
+      "exhibition": 2
+    }
+  },
+  "items": [
+    {
+      "id": "stage:brooklyn-museum-exhibitions:exhibition:brooklyn-museum:breaking-the-mold:create",
+      "proposalType": "create",
+      "reviewStatus": "pending",
+      "source": {
+        "url": "https://www.brooklynmuseum.org/exhibitions/breaking-the-mold",
+        "sourceType": "official_venue",
+        "reliability": "medium",
+        "parser": "brooklyn-museum-exhibitions",
+        "notes": "Official Brooklyn Museum exhibitions page included-in-general-admission cards from a browser-assisted compact snapshot. Direct automated backend fetch is currently blocked by Vercel 429, so this source is not a fully automated live ingestion path. Permanent collection galleries, museum spotlights, touring pages, and past exhibitions are out of scope for this first staging slice."
+      },
+      "canonicalId": null,
+      "before": null,
+      "proposed": {
+        "id": "exhibition:brooklyn-museum:breaking-the-mold",
+        "type": "exhibition",
+        "source": "brooklyn-museum",
+        "title": "Breaking the Mold: Brooklyn Museum at 200",
+        "venue": "Brooklyn Museum",
+        "startDate": "2025-02-28",
+        "endDate": "2026-09-06",
+        "dateText": "February 28, 2025–September 6, 2026",
+        "description": null,
+        "artists": [],
+        "curators": [],
+        "venueAddress": "200 Eastern Parkway, Brooklyn, NY 11238",
+        "neighborhood": "Prospect Heights",
+        "borough": "Brooklyn",
+        "city": "New York",
+        "imageUrl": null,
+        "exhibitionUrl": "https://www.brooklynmuseum.org/exhibitions/breaking-the-mold",
+        "sourceUrl": "https://www.brooklynmuseum.org/exhibitions/breaking-the-mold",
+        "openingReceptionDate": null,
+        "tags": [
+          "browser-assisted-snapshot",
+          "included-in-general-admission"
+        ],
+        "sourceConfidence": "medium",
+        "reviewStatus": "needs_review",
+        "lastCheckedAt": null,
+        "sourceNotes": "Parsed from a browser-assisted compact snapshot of the Brooklyn Museum official exhibitions page because direct backend fetch returns Vercel 429. Permanent collection galleries, museum spotlights, touring pages, and past exhibitions are out of scope for this first staging slice."
+      },
+      "changedFields": [
+        "artists",
+        "borough",
+        "city",
+        "curators",
+        "dateText",
+        "description",
+        "endDate",
+        "exhibitionUrl",
+        "id",
+        "imageUrl",
+        "lastCheckedAt",
+        "neighborhood",
+        "openingReceptionDate",
+        "reviewStatus",
+        "source",
+        "sourceConfidence",
+        "sourceNotes",
+        "sourceUrl",
+        "startDate",
+        "tags",
+        "title",
+        "type",
+        "venue",
+        "venueAddress"
+      ],
+      "dedupe": {
+        "status": "no_match",
+        "confidence": 0,
+        "matchedRecordIds": [],
+        "notes": "Compared against existing canonical exhibition records; no likely match found."
+      },
+      "conflict": null,
+      "extractedAt": "2026-07-14T17:59:24.745Z",
+      "reviewerNotes": null
+    },
+    {
+      "id": "stage:brooklyn-museum-exhibitions:exhibition:brooklyn-museum:rubin-museum-tibetan-buddhist-shrine-room:create",
+      "proposalType": "create",
+      "reviewStatus": "pending",
+      "source": {
+        "url": "https://www.brooklynmuseum.org/exhibitions/rubin-museum-tibetan-buddhist-shrine-room",
+        "sourceType": "official_venue",
+        "reliability": "medium",
+        "parser": "brooklyn-museum-exhibitions",
+        "notes": "Official Brooklyn Museum exhibitions page included-in-general-admission cards from a browser-assisted compact snapshot. Direct automated backend fetch is currently blocked by Vercel 429, so this source is not a fully automated live ingestion path. Permanent collection galleries, museum spotlights, touring pages, and past exhibitions are out of scope for this first staging slice."
+      },
+      "canonicalId": null,
+      "before": null,
+      "proposed": {
+        "id": "exhibition:brooklyn-museum:rubin-museum-tibetan-buddhist-shrine-room",
+        "type": "exhibition",
+        "source": "brooklyn-museum",
+        "title": "Rubin Museum Tibetan Buddhist Shrine Room",
+        "venue": "Brooklyn Museum",
+        "startDate": "2025-06-11",
+        "endDate": "2031-04-20",
+        "dateText": "June 11, 2025–April 20, 2031",
+        "description": null,
+        "artists": [],
+        "curators": [],
+        "venueAddress": "200 Eastern Parkway, Brooklyn, NY 11238",
+        "neighborhood": "Prospect Heights",
+        "borough": "Brooklyn",
+        "city": "New York",
+        "imageUrl": null,
+        "exhibitionUrl": "https://www.brooklynmuseum.org/exhibitions/rubin-museum-tibetan-buddhist-shrine-room",
+        "sourceUrl": "https://www.brooklynmuseum.org/exhibitions/rubin-museum-tibetan-buddhist-shrine-room",
+        "openingReceptionDate": null,
+        "tags": [
+          "browser-assisted-snapshot",
+          "included-in-general-admission"
+        ],
+        "sourceConfidence": "medium",
+        "reviewStatus": "needs_review",
+        "lastCheckedAt": null,
+        "sourceNotes": "Parsed from a browser-assisted compact snapshot of the Brooklyn Museum official exhibitions page because direct backend fetch returns Vercel 429. Permanent collection galleries, museum spotlights, touring pages, and past exhibitions are out of scope for this first staging slice."
+      },
+      "changedFields": [
+        "artists",
+        "borough",
+        "city",
+        "curators",
+        "dateText",
+        "description",
+        "endDate",
+        "exhibitionUrl",
+        "id",
+        "imageUrl",
+        "lastCheckedAt",
+        "neighborhood",
+        "openingReceptionDate",
+        "reviewStatus",
+        "source",
+        "sourceConfidence",
+        "sourceNotes",
+        "sourceUrl",
+        "startDate",
+        "tags",
+        "title",
+        "type",
+        "venue",
+        "venueAddress"
+      ],
+      "dedupe": {
+        "status": "no_match",
+        "confidence": 0,
+        "matchedRecordIds": [],
+        "notes": "Compared against existing canonical exhibition records; no likely match found."
+      },
+      "conflict": null,
+      "extractedAt": "2026-07-14T17:59:24.745Z",
+      "reviewerNotes": null
+    }
+  ],
+  "creates": [
+    {
+      "id": "exhibition:brooklyn-museum:breaking-the-mold",
+      "type": "exhibition",
+      "source": "brooklyn-museum",
+      "title": "Breaking the Mold: Brooklyn Museum at 200",
+      "venue": "Brooklyn Museum",
+      "startDate": "2025-02-28",
+      "endDate": "2026-09-06",
+      "dateText": "February 28, 2025–September 6, 2026",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "200 Eastern Parkway, Brooklyn, NY 11238",
+      "neighborhood": "Prospect Heights",
+      "borough": "Brooklyn",
+      "city": "New York",
+      "imageUrl": null,
+      "exhibitionUrl": "https://www.brooklynmuseum.org/exhibitions/breaking-the-mold",
+      "sourceUrl": "https://www.brooklynmuseum.org/exhibitions/breaking-the-mold",
+      "openingReceptionDate": null,
+      "tags": [
+        "browser-assisted-snapshot",
+        "included-in-general-admission"
+      ],
+      "sourceConfidence": "medium",
+      "reviewStatus": "needs_review",
+      "lastCheckedAt": null,
+      "sourceNotes": "Parsed from a browser-assisted compact snapshot of the Brooklyn Museum official exhibitions page because direct backend fetch returns Vercel 429. Permanent collection galleries, museum spotlights, touring pages, and past exhibitions are out of scope for this first staging slice."
+    },
+    {
+      "id": "exhibition:brooklyn-museum:rubin-museum-tibetan-buddhist-shrine-room",
+      "type": "exhibition",
+      "source": "brooklyn-museum",
+      "title": "Rubin Museum Tibetan Buddhist Shrine Room",
+      "venue": "Brooklyn Museum",
+      "startDate": "2025-06-11",
+      "endDate": "2031-04-20",
+      "dateText": "June 11, 2025–April 20, 2031",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "200 Eastern Parkway, Brooklyn, NY 11238",
+      "neighborhood": "Prospect Heights",
+      "borough": "Brooklyn",
+      "city": "New York",
+      "imageUrl": null,
+      "exhibitionUrl": "https://www.brooklynmuseum.org/exhibitions/rubin-museum-tibetan-buddhist-shrine-room",
+      "sourceUrl": "https://www.brooklynmuseum.org/exhibitions/rubin-museum-tibetan-buddhist-shrine-room",
+      "openingReceptionDate": null,
+      "tags": [
+        "browser-assisted-snapshot",
+        "included-in-general-admission"
+      ],
+      "sourceConfidence": "medium",
+      "reviewStatus": "needs_review",
+      "lastCheckedAt": null,
+      "sourceNotes": "Parsed from a browser-assisted compact snapshot of the Brooklyn Museum official exhibitions page because direct backend fetch returns Vercel 429. Permanent collection galleries, museum spotlights, touring pages, and past exhibitions are out of scope for this first staging slice."
+    }
+  ],
+  "updates": [],
+  "unchangedIds": []
+}

@@ -1,0 +1,85 @@
+{
+  "source": "met",
+  "minimumExpectedRecords": 24,
+  "listingFixtureMaxAgeDays": 14,
+  "requiredExhibitions": [
+    {
+      "url": "https://www.metmuseum.org/exhibitions/musical-bodies",
+      "title": "Musical Bodies",
+      "reason": "Current official Met featured exhibition on the 2026-07-15 listing.",
+      "addedAt": "2026-07-15T17:46:49.094Z",
+      "status": "active"
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/costume-art",
+      "title": "Costume Art",
+      "reason": "Current official Met featured exhibition on the 2026-07-15 listing.",
+      "addedAt": "2026-07-15T17:46:49.094Z",
+      "status": "active"
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/giacometti-in-the-temple-of-dendur",
+      "title": "Giacometti in the Temple of Dendur",
+      "reason": "Current official Met featured exhibition on the 2026-07-15 listing.",
+      "addedAt": "2026-07-15T17:46:49.094Z",
+      "status": "active"
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/orientalism-between-fact-and-fantasy",
+      "title": "Orientalism: Between Fact and Fantasy",
+      "reason": "User-identified important official Met exhibition that was missed when the listing snapshot was stale.",
+      "addedAt": "2026-07-14T17:37:00.000Z",
+      "status": "active",
+      "fixture": "../fixtures/met-exhibitions-details/orientalism-between-fact-and-fantasy.html"
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/creatures-of-myth-and-imagination-europe-and-the-americas",
+      "title": "Creatures of Myth and Imagination: Europe and the Americas",
+      "reason": "Current official Met featured exhibition on the 2026-07-15 listing.",
+      "addedAt": "2026-07-15T17:46:49.094Z",
+      "status": "active"
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/gothic-by-design-the-dawn-of-architectural-draftsmanship",
+      "title": "Gothic by Design: The Dawn of Architectural Draftsmanship",
+      "reason": "Current official Met featured and closing-soon exhibition on the 2026-07-15 listing.",
+      "addedAt": "2026-07-15T17:46:49.094Z",
+      "status": "active"
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/the-face-of-life-modern-portraits-at-the-met",
+      "title": "The Face of Life: Modern Portraits at The Met",
+      "reason": "Current official Met featured ongoing exhibition on the 2026-07-15 listing.",
+      "addedAt": "2026-07-15T17:46:49.094Z",
+      "status": "active"
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/city-of-memory-nanjing-in-the-17th-century",
+      "title": "City of Memory: Nanjing in the Seventeenth Century",
+      "reason": "Current official Met recently opened exhibition on the 2026-07-15 listing.",
+      "addedAt": "2026-07-15T17:46:49.094Z",
+      "status": "active"
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/lillian-bassman-bazaar-and-beyond",
+      "title": "Lillian Bassman: Bazaar and Beyond",
+      "reason": "Current official Met closing-soon exhibition on the 2026-07-15 listing.",
+      "addedAt": "2026-07-15T17:46:49.094Z",
+      "status": "active"
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/p-s-art-2026-celebrating-the-creative-spirit-of-new-york-city-kids",
+      "title": "P. S. Art 2026: Celebrating the Creative Spirit of New York City Kids",
+      "reason": "Current official Met temporary exhibition on the 2026-07-15 listing.",
+      "addedAt": "2026-07-15T17:46:49.094Z",
+      "status": "active"
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/cottage-industry-the-val-kill-furniture-shop",
+      "title": "Cottage Industry: The Val-Kill Furniture Shop",
+      "reason": "Current official Met upcoming exhibition on the 2026-07-15 listing.",
+      "addedAt": "2026-07-15T17:46:49.094Z",
+      "status": "active"
+    }
+  ]
+}

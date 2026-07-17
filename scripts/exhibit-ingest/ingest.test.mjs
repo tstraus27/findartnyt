@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import path from 'node:path';
 import test from 'node:test';
 import { buildStagingReport, dedupeScore, diffRecords, findDedupeCandidates, mergeIncomingRecords, summarizeByType } from './ingest.mjs';
 
@@ -283,7 +284,7 @@ test('buildStagingReport records fixture-backed source page metadata for review 
     sourceConfig: fixtureSourceConfig,
     incomingRecords: [existingRecord],
     existingRecords: [],
-    sourcePath: '/Users/tobystraus/Documents/New project/scripts/exhibit-ingest/sources/example.fixture.json',
+    sourcePath: path.join(process.cwd(), 'scripts/exhibit-ingest/sources/example.fixture.json'),
     generatedAt: '2026-06-22T21:00:00.000Z'
   });
 

@@ -19,14 +19,14 @@
         "fixtureFile": "scripts/exhibit-ingest/fixtures/guggenheim-exhibitions.html"
       }
     ],
-    "incomingRecords": 6,
-    "creates": 6,
+    "incomingRecords": 5,
+    "creates": 5,
     "updates": 0,
     "possibleDuplicates": 0,
     "conflicts": 0,
     "unchanged": 0,
     "incomingByType": {
-      "exhibition": 6
+      "exhibition": 5
     }
   },
   "items": [
@@ -339,83 +339,6 @@
       "reviewerNotes": null
     },
     {
-      "id": "stage:guggenheim-exhibitions:exhibition:guggenheim:thannhauser-collection:create",
-      "proposalType": "create",
-      "reviewStatus": "pending",
-      "source": {
-        "url": "https://www.guggenheim.org/exhibition/thannhauser-collection",
-        "sourceType": "official_venue",
-        "reliability": "high",
-        "parser": "guggenheim-exhibitions",
-        "notes": "Official Guggenheim exhibitions index page bootstrap payload. Stages only the embedded on_view and upcoming exhibition items from the official exhibitions page; past items and detail-page enrichment stay out of scope for this first slice."
-      },
-      "canonicalId": null,
-      "before": null,
-      "proposed": {
-        "id": "exhibition:guggenheim:thannhauser-collection",
-        "type": "exhibition",
-        "source": "guggenheim",
-        "title": "Thannhauser Collection",
-        "venue": "Solomon R. Guggenheim Museum",
-        "startDate": "2015-09-18",
-        "endDate": "2025-09-09",
-        "dateText": "Ongoing",
-        "description": "Impressionist, Post-Impressionist, and modern French masterpieces from the Guggenheim’s collection, including works by Degas, Manet, Van Gogh, and more.",
-        "artists": [],
-        "curators": [],
-        "venueAddress": "1071 5th Avenue, New York, NY 10128",
-        "neighborhood": "Upper East Side",
-        "borough": "Manhattan",
-        "city": "New York",
-        "imageUrl": "https://www.guggenheim.org/wp-content/uploads/2016/04/installation-srgm-thannhauser-gallery-exh-ph-10.jpg",
-        "exhibitionUrl": "https://www.guggenheim.org/exhibition/thannhauser-collection",
-        "sourceUrl": "https://www.guggenheim.org/exhibition/thannhauser-collection",
-        "openingReceptionDate": null,
-        "tags": [
-          "current"
-        ],
-        "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
-        "lastCheckedAt": null,
-        "sourceNotes": "Parsed from the Guggenheim official exhibitions page bootstrap payload. Stages only the embedded on_view and upcoming exhibition items from the index page; past items and any detail-page enrichment remain out of scope for this first staging-only slice."
-      },
-      "changedFields": [
-        "artists",
-        "borough",
-        "city",
-        "curators",
-        "dateText",
-        "description",
-        "endDate",
-        "exhibitionUrl",
-        "id",
-        "imageUrl",
-        "lastCheckedAt",
-        "neighborhood",
-        "openingReceptionDate",
-        "reviewStatus",
-        "source",
-        "sourceConfidence",
-        "sourceNotes",
-        "sourceUrl",
-        "startDate",
-        "tags",
-        "title",
-        "type",
-        "venue",
-        "venueAddress"
-      ],
-      "dedupe": {
-        "status": "no_match",
-        "confidence": 0,
-        "matchedRecordIds": [],
-        "notes": "Compared against existing canonical exhibition records; no likely match found."
-      },
-      "conflict": null,
-      "extractedAt": "2026-06-24T19:16:37.959Z",
-      "reviewerNotes": null
-    },
-    {
       "id": "stage:guggenheim-exhibitions:exhibition:guggenheim:taryn-simon:create",
       "proposalType": "create",
       "reviewStatus": "pending",
@@ -597,34 +520,6 @@
       "imageUrl": "https://www.guggenheim.org/wp-content/uploads/2025/04/image001-e1753279408942.jpg",
       "exhibitionUrl": "https://www.guggenheim.org/exhibition/collection-in-focus-modern-european-currents",
       "sourceUrl": "https://www.guggenheim.org/exhibition/collection-in-focus-modern-european-currents",
-      "openingReceptionDate": null,
-      "tags": [
-        "current"
-      ],
-      "sourceConfidence": "high",
-      "reviewStatus": "needs_review",
-      "lastCheckedAt": null,
-      "sourceNotes": "Parsed from the Guggenheim official exhibitions page bootstrap payload. Stages only the embedded on_view and upcoming exhibition items from the index page; past items and any detail-page enrichment remain out of scope for this first staging-only slice."
-    },
-    {
-      "id": "exhibition:guggenheim:thannhauser-collection",
-      "type": "exhibition",
-      "source": "guggenheim",
-      "title": "Thannhauser Collection",
-      "venue": "Solomon R. Guggenheim Museum",
-      "startDate": "2015-09-18",
-      "endDate": "2025-09-09",
-      "dateText": "Ongoing",
-      "description": "Impressionist, Post-Impressionist, and modern French masterpieces from the Guggenheim’s collection, including works by Degas, Manet, Van Gogh, and more.",
-      "artists": [],
-      "curators": [],
-      "venueAddress": "1071 5th Avenue, New York, NY 10128",
-      "neighborhood": "Upper East Side",
-      "borough": "Manhattan",
-      "city": "New York",
-      "imageUrl": "https://www.guggenheim.org/wp-content/uploads/2016/04/installation-srgm-thannhauser-gallery-exh-ph-10.jpg",
-      "exhibitionUrl": "https://www.guggenheim.org/exhibition/thannhauser-collection",
-      "sourceUrl": "https://www.guggenheim.org/exhibition/thannhauser-collection",
       "openingReceptionDate": null,
       "tags": [
         "current"

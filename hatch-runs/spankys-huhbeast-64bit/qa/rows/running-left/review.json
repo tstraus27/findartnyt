@@ -1,0 +1,142 @@
+{
+  "ok": true,
+  "frames_root": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/running-left/frames",
+  "states": [
+    "running-left"
+  ],
+  "errors": [],
+  "warnings": [],
+  "rows": [
+    {
+      "state": "running-left",
+      "expected_frames": 8,
+      "actual_frames": 8,
+      "extraction_method": "components",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/running-left/frames/running-left/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 16430,
+          "bbox": [
+            29,
+            5,
+            163,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 284
+        },
+        {
+          "index": 1,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/running-left/frames/running-left/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13709,
+          "bbox": [
+            37,
+            5,
+            155,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 215
+        },
+        {
+          "index": 2,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/running-left/frames/running-left/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 16018,
+          "bbox": [
+            18,
+            5,
+            174,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 274
+        },
+        {
+          "index": 3,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/running-left/frames/running-left/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14740,
+          "bbox": [
+            24,
+            5,
+            168,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 257
+        },
+        {
+          "index": 4,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/running-left/frames/running-left/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14499,
+          "bbox": [
+            30,
+            5,
+            162,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 237
+        },
+        {
+          "index": 5,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/running-left/frames/running-left/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14569,
+          "bbox": [
+            26,
+            5,
+            166,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 276
+        },
+        {
+          "index": 6,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/running-left/frames/running-left/06.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 16867,
+          "bbox": [
+            8,
+            5,
+            184,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 319
+        },
+        {
+          "index": 7,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/running-left/frames/running-left/07.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 16257,
+          "bbox": [
+            24,
+            5,
+            167,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 299
+        }
+      ]
+    }
+  ]
+}

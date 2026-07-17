@@ -72,6 +72,16 @@ const toIsoDate = ({ month, day, year }) => {
 
 const parseDateRange = (value) => {
   const normalized = text(value).replace(/[–—]/g, '—');
+  const openingDate = normalized.match(/^(?:Opening\s+)?(?<month>[A-Za-z]+)\s+(?<day>\d{1,2}),\s+(?<year>\d{4})$/i);
+
+  if (openingDate?.groups) {
+    const { month, day, year } = openingDate.groups;
+    return {
+      startDate: toIsoDate({ month, day, year }),
+      endDate: null
+    };
+  }
+
   const crossMonth = normalized.match(
     /^(?<startMonth>[A-Za-z]+)\s+(?<startDay>\d{1,2})—(?<endMonth>[A-Za-z]+)\s+(?<endDay>\d{1,2}),\s+(?<year>\d{4})$/
   );
@@ -244,17 +254,18 @@ const listingRecord = ({ href, label, pageUrl, listingMetadata }) => {
   }
 
   const parsed = text(label).match(
-    /^(?<title>.+?)\s+(?<location>New York:\s.+?)\s+(?<status>Now Open|Coming Soon):\s+(?<dates>.+?)\s+Learn More$/i
+    /^(?<title>.+?)\s+(?<location>New York:\s.+?)\s+(?:(?<status>Now Open|Coming Soon):\s+(?<dates>.+?)|(?<openingStatus>Opening)\s+(?<openingDate>[A-Za-z]+\s+\d{1,2},\s+\d{4}))\s+Learn More$/i
   );
   if (!parsed?.groups) return null;
 
-  const { title, location, status, dates } = parsed.groups;
-  const { startDate, endDate } = parseDateRange(dates);
+  const { title, location, status, dates, openingStatus, openingDate } = parsed.groups;
+  const dateText = dates || `${openingStatus} ${openingDate}`;
+  const { startDate, endDate } = parseDateRange(dateText);
   if (!title || !startDate) return null;
 
   const slug = slugFromUrl(href);
   const locationInfo = locationMetadata[location] || { venueAddress: null, neighborhood: null, borough: 'Manhattan' };
-  const statusTag = status.toLowerCase() === 'coming soon' ? 'upcoming' : 'current';
+  const statusTag = (status || openingStatus).toLowerCase() === 'now open' ? 'current' : 'upcoming';
   const optionalMetadata = listingMetadata.get(href) || {
     title: null,
     subtitle: null,
@@ -270,7 +281,7 @@ const listingRecord = ({ href, label, pageUrl, listingMetadata }) => {
     venue: `David Zwirner, ${location}`,
     startDate,
     endDate,
-    dateText: dates,
+    dateText,
     description: optionalMetadata.description,
     artists: [],
     curators: [],

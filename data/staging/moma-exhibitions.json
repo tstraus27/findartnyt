@@ -3,7 +3,7 @@
     "sourceId": "moma-exhibitions",
     "source": "moma",
     "parser": "moma-exhibitions",
-    "generatedAt": "2026-06-29T18:21:49.031Z",
+    "generatedAt": "2026-07-14T17:51:22.876Z",
     "stagingNotes": "Official MoMA current/upcoming exhibitions from a browser-assisted HTML snapshot. Direct automated backend fetch is currently blocked by Cloudflare 403, so this source is not a fully automated live ingestion path.",
     "verification": {
       "status": "pending_live_verification",
@@ -19,21 +19,21 @@
         "fixtureFile": "scripts/exhibit-ingest/fixtures/moma-exhibitions.browser-2026-06-29.html"
       }
     ],
-    "incomingRecords": 25,
-    "creates": 25,
+    "incomingRecords": 24,
+    "creates": 24,
     "updates": 0,
     "possibleDuplicates": 0,
     "conflicts": 0,
     "unchanged": 0,
     "incomingByType": {
-      "exhibition": 25
+      "exhibition": 24
     }
   },
   "items": [
     {
       "id": "stage:moma-exhibitions:exhibition:moma:5825:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "rejected",
       "source": {
         "url": "https://www.moma.org/calendar/exhibitions/5825",
         "sourceType": "official_venue",
@@ -67,7 +67,7 @@
           "browser-assisted-snapshot"
         ],
         "sourceConfidence": "medium",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "rejected",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from a browser-assisted snapshot of MoMA current/upcoming exhibitions because direct backend fetch returns Cloudflare 403. Date text is preserved from the listing page; reviewer should confirm against the live official page before promotion."
       },
@@ -104,13 +104,13 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
       "id": "stage:moma-exhibitions:exhibition:moma:5830:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "rejected",
       "source": {
         "url": "https://www.moma.org/calendar/exhibitions/5830",
         "sourceType": "official_venue",
@@ -144,7 +144,7 @@
           "browser-assisted-snapshot"
         ],
         "sourceConfidence": "medium",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "rejected",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from a browser-assisted snapshot of MoMA current/upcoming exhibitions because direct backend fetch returns Cloudflare 403. Date text is preserved from the listing page; reviewer should confirm against the live official page before promotion."
       },
@@ -181,13 +181,13 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
       "id": "stage:moma-exhibitions:exhibition:moma:5755:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.moma.org/calendar/exhibitions/5755",
         "sourceType": "official_venue",
@@ -221,7 +221,7 @@
           "browser-assisted-snapshot"
         ],
         "sourceConfidence": "medium",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from a browser-assisted snapshot of MoMA current/upcoming exhibitions because direct backend fetch returns Cloudflare 403. Date text is preserved from the listing page; reviewer should confirm against the live official page before promotion."
       },
@@ -258,13 +258,13 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
       "id": "stage:moma-exhibitions:exhibition:moma:5919:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.moma.org/calendar/exhibitions/5919",
         "sourceType": "official_venue",
@@ -298,7 +298,7 @@
           "browser-assisted-snapshot"
         ],
         "sourceConfidence": "medium",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from a browser-assisted snapshot of MoMA current/upcoming exhibitions because direct backend fetch returns Cloudflare 403. Date text is preserved from the listing page; reviewer should confirm against the live official page before promotion."
       },
@@ -335,13 +335,13 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
       "id": "stage:moma-exhibitions:exhibition:moma:5820:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.moma.org/calendar/exhibitions/5820",
         "sourceType": "official_venue",
@@ -375,7 +375,7 @@
           "browser-assisted-snapshot"
         ],
         "sourceConfidence": "medium",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from a browser-assisted snapshot of MoMA current/upcoming exhibitions because direct backend fetch returns Cloudflare 403. Date text is preserved from the listing page; reviewer should confirm against the live official page before promotion."
       },
@@ -412,7 +412,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -489,13 +489,13 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
       "id": "stage:moma-exhibitions:exhibition:moma:5890:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "rejected",
       "source": {
         "url": "https://www.moma.org/calendar/exhibitions/5890",
         "sourceType": "official_venue",
@@ -529,7 +529,7 @@
           "browser-assisted-snapshot"
         ],
         "sourceConfidence": "medium",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "rejected",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from a browser-assisted snapshot of MoMA current/upcoming exhibitions because direct backend fetch returns Cloudflare 403. Date text is preserved from the listing page; reviewer should confirm against the live official page before promotion."
       },
@@ -566,13 +566,13 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
       "id": "stage:moma-exhibitions:exhibition:moma:5794:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "rejected",
       "source": {
         "url": "https://www.moma.org/calendar/exhibitions/5794",
         "sourceType": "official_venue",
@@ -606,7 +606,7 @@
           "browser-assisted-snapshot"
         ],
         "sourceConfidence": "medium",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "rejected",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from a browser-assisted snapshot of MoMA current/upcoming exhibitions because direct backend fetch returns Cloudflare 403. Date text is preserved from the listing page; reviewer should confirm against the live official page before promotion."
       },
@@ -643,13 +643,13 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
       "id": "stage:moma-exhibitions:exhibition:moma:5912:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.moma.org/calendar/exhibitions/5912",
         "sourceType": "official_venue",
@@ -683,7 +683,7 @@
           "browser-assisted-snapshot"
         ],
         "sourceConfidence": "medium",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from a browser-assisted snapshot of MoMA current/upcoming exhibitions because direct backend fetch returns Cloudflare 403. Date text is preserved from the listing page; reviewer should confirm against the live official page before promotion."
       },
@@ -720,13 +720,13 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
       "id": "stage:moma-exhibitions:exhibition:moma:5906:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.moma.org/calendar/exhibitions/5906",
         "sourceType": "official_venue",
@@ -760,7 +760,7 @@
           "browser-assisted-snapshot"
         ],
         "sourceConfidence": "medium",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from a browser-assisted snapshot of MoMA current/upcoming exhibitions because direct backend fetch returns Cloudflare 403. Date text is preserved from the listing page; reviewer should confirm against the live official page before promotion."
       },
@@ -797,13 +797,13 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
       "id": "stage:moma-exhibitions:exhibition:moma:5920:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.moma.org/calendar/exhibitions/5920",
         "sourceType": "official_venue",
@@ -837,7 +837,7 @@
           "browser-assisted-snapshot"
         ],
         "sourceConfidence": "medium",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from a browser-assisted snapshot of MoMA current/upcoming exhibitions because direct backend fetch returns Cloudflare 403. Date text is preserved from the listing page; reviewer should confirm against the live official page before promotion."
       },
@@ -874,7 +874,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -951,7 +951,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -1028,7 +1028,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -1105,7 +1105,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -1182,7 +1182,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -1259,7 +1259,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -1336,84 +1336,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
-      "reviewerNotes": null
-    },
-    {
-      "id": "stage:moma-exhibitions:exhibition:moma:5921:create",
-      "proposalType": "create",
-      "reviewStatus": "pending",
-      "source": {
-        "url": "https://www.moma.org/calendar/exhibitions/5921",
-        "sourceType": "official_venue",
-        "reliability": "medium",
-        "parser": "moma-exhibitions",
-        "notes": "Official MoMA current/upcoming exhibitions from a browser-assisted HTML snapshot. Direct automated backend fetch is currently blocked by Cloudflare 403, so this source is not a fully automated live ingestion path."
-      },
-      "canonicalId": null,
-      "before": null,
-      "proposed": {
-        "id": "exhibition:moma:5921",
-        "type": "exhibition",
-        "source": "moma",
-        "title": "MoMA Staff ArtExhibition 2026",
-        "venue": "The Museum of Modern Art",
-        "startDate": null,
-        "endDate": "2026-07-05",
-        "dateText": "Through Jul 5",
-        "description": null,
-        "artists": [],
-        "curators": [],
-        "venueAddress": "11 W 53rd St, New York, NY 10019",
-        "neighborhood": "Midtown",
-        "borough": "Manhattan",
-        "city": "New York",
-        "imageUrl": null,
-        "exhibitionUrl": "https://www.moma.org/calendar/exhibitions/5921",
-        "sourceUrl": "https://www.moma.org/calendar/exhibitions/5921",
-        "openingReceptionDate": null,
-        "tags": [
-          "browser-assisted-snapshot"
-        ],
-        "sourceConfidence": "medium",
-        "reviewStatus": "needs_review",
-        "lastCheckedAt": null,
-        "sourceNotes": "Parsed from a browser-assisted snapshot of MoMA current/upcoming exhibitions because direct backend fetch returns Cloudflare 403. Date text is preserved from the listing page; reviewer should confirm against the live official page before promotion."
-      },
-      "changedFields": [
-        "artists",
-        "borough",
-        "city",
-        "curators",
-        "dateText",
-        "description",
-        "endDate",
-        "exhibitionUrl",
-        "id",
-        "imageUrl",
-        "lastCheckedAt",
-        "neighborhood",
-        "openingReceptionDate",
-        "reviewStatus",
-        "source",
-        "sourceConfidence",
-        "sourceNotes",
-        "sourceUrl",
-        "startDate",
-        "tags",
-        "title",
-        "type",
-        "venue",
-        "venueAddress"
-      ],
-      "dedupe": {
-        "status": "no_match",
-        "confidence": 0,
-        "matchedRecordIds": [],
-        "notes": "Compared against existing canonical exhibition records; no likely match found."
-      },
-      "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -1490,7 +1413,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -1567,7 +1490,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -1644,7 +1567,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -1721,7 +1644,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -1798,7 +1721,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -1875,7 +1798,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     },
     {
@@ -1952,7 +1875,7 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-29T18:21:49.031Z",
+      "extractedAt": "2026-07-14T17:51:22.876Z",
       "reviewerNotes": null
     }
   ],
@@ -2424,34 +2347,6 @@
       "imageUrl": null,
       "exhibitionUrl": "https://www.moma.org/calendar/exhibitions/5916",
       "sourceUrl": "https://www.moma.org/calendar/exhibitions/5916",
-      "openingReceptionDate": null,
-      "tags": [
-        "browser-assisted-snapshot"
-      ],
-      "sourceConfidence": "medium",
-      "reviewStatus": "needs_review",
-      "lastCheckedAt": null,
-      "sourceNotes": "Parsed from a browser-assisted snapshot of MoMA current/upcoming exhibitions because direct backend fetch returns Cloudflare 403. Date text is preserved from the listing page; reviewer should confirm against the live official page before promotion."
-    },
-    {
-      "id": "exhibition:moma:5921",
-      "type": "exhibition",
-      "source": "moma",
-      "title": "MoMA Staff ArtExhibition 2026",
-      "venue": "The Museum of Modern Art",
-      "startDate": null,
-      "endDate": "2026-07-05",
-      "dateText": "Through Jul 5",
-      "description": null,
-      "artists": [],
-      "curators": [],
-      "venueAddress": "11 W 53rd St, New York, NY 10019",
-      "neighborhood": "Midtown",
-      "borough": "Manhattan",
-      "city": "New York",
-      "imageUrl": null,
-      "exhibitionUrl": "https://www.moma.org/calendar/exhibitions/5921",
-      "sourceUrl": "https://www.moma.org/calendar/exhibitions/5921",
       "openingReceptionDate": null,
       "tags": [
         "browser-assisted-snapshot"

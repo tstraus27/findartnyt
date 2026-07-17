@@ -35,6 +35,7 @@ const canonicalFields = [
   'venue',
   'startDate',
   'endDate',
+  'dateText',
   'description',
   'artists',
   'curators',
@@ -117,7 +118,17 @@ export const buildApprovalPlan = async ({ stagingReport, recordsDb, approvedAt =
     }
 
     const canonical = stagedCreateToCanonical({ item, approvedAt });
-    await validateExhibitionRecord(canonical);
+    try {
+      await validateExhibitionRecord(canonical);
+    } catch (error) {
+      skipped.push({
+        stagingId: item.id,
+        recordId: item.proposed.id,
+        reason: `canonical record validation failed: ${error.message}`
+      });
+      continue;
+    }
+
     promoted.push(canonical);
     existingIds.add(canonical.id);
   }

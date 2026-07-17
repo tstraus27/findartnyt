@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "repair": "running-left frame-stability repair",
+  "spriteVersionNumber": 2,
+  "run_dir": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature",
+  "spritesheet": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/final/spritesheet-extended.webp",
+  "installed_spritesheet": "/Users/tobystraus/.codex/pets/kitten/spritesheet.webp",
+  "backup_spritesheet": "/Users/tobystraus/.codex/pets/kitten/spritesheet.before-left-repair-20260715-143322.webp",
+  "validation": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/final/validation-extended.json",
+  "chroma_despill": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/chroma-despill-extended.json",
+  "contact_sheet": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/contact-sheet-extended.png",
+  "repaired_running_left_preview": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/previews-repaired/running-left.gif",
+  "review": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/review-repaired.json"
+}

@@ -1,0 +1,102 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { parseBrooklynMuseumExhibitionsPage } from './parsers/brooklyn-museum-exhibitions.mjs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const projectRoot = path.resolve(__dirname, '../..');
+const defaultOutput = path.join(__dirname, 'fixtures/brooklyn-museum-exhibitions.browser-refresh.html');
+
+const parseArgs = (argv) => {
+  const args = { input: null, output: defaultOutput, minRecords: 8, overwrite: false };
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+    if (arg === '--input') args.input = path.resolve(argv[++i]);
+    else if (arg === '--output') args.output = path.resolve(argv[++i]);
+    else if (arg === '--min-records') args.minRecords = Number.parseInt(argv[++i], 10);
+    else if (arg === '--overwrite') args.overwrite = true;
+    else if (arg === '--help') args.help = true;
+    else throw new Error(`Unknown argument: ${arg}`);
+  }
+  return args;
+};
+
+const escapeHtml = (value) =>
+  String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+const buildFixture = ({ cards, capturedAt }) => {
+  const articles = cards
+    .filter((card) => card.url && card.title)
+    .map(
+      (card) => `        <article>
+          <a href="${escapeHtml(card.url)}">
+            ${card.imageUrl ? `<img src="${escapeHtml(card.imageUrl)}" alt="">\n            ` : ''}<h3>${escapeHtml(card.title)}</h3>
+            <p class="date">${escapeHtml(card.dateText || '')}</p>
+          </a>
+        </article>`
+    )
+    .join('\n');
+
+  return `<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><title>Exhibitions - Brooklyn Museum</title></head>
+  <body>
+    <main data-source="browser-assisted-brooklyn-museum-exhibitions" data-captured-at="${capturedAt}">
+      <section data-brooklyn-section="Included in General Admission">
+${articles}
+      </section>
+    </main>
+  </body>
+</html>
+`;
+};
+
+const readCards = async (inputPath) => {
+  const payload = JSON.parse(await fs.readFile(inputPath, 'utf8'));
+  if (Array.isArray(payload)) return payload;
+  if (Array.isArray(payload.cards)) return payload.cards;
+  throw new Error('Input must be a JSON array of cards or an object with a cards array.');
+};
+
+const usage = () => {
+  console.log(`Usage:
+  node scripts/exhibit-ingest/refresh-brooklyn-museum-fixture.mjs --input /path/to/brooklyn-cards.json --output scripts/exhibit-ingest/fixtures/brooklyn-museum-exhibitions.browser-YYYY-MM-DD.html
+
+Input card fields: url, title, dateText, optional imageUrl.
+Use only official cards from https://www.brooklynmuseum.org/exhibitions rendered in a normal browser session.`);
+};
+
+const run = async () => {
+  const args = parseArgs(process.argv.slice(2));
+  if (args.help || !args.input) {
+    usage();
+    if (!args.help) process.exitCode = 1;
+    return;
+  }
+  if (!args.overwrite) {
+    try {
+      await fs.access(args.output);
+      throw new Error(`Refusing to overwrite existing fixture without --overwrite: ${path.relative(projectRoot, args.output)}`);
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+  }
+  const cards = await readCards(args.input);
+  const fixture = buildFixture({ cards, capturedAt: new Date().toISOString() });
+  const records = parseBrooklynMuseumExhibitionsPage({ html: fixture, url: 'https://www.brooklynmuseum.org/exhibitions' });
+  if (records.length < args.minRecords) {
+    throw new Error(`Refusing to write Brooklyn Museum fixture with ${records.length} records; minimum is ${args.minRecords}.`);
+  }
+  await fs.mkdir(path.dirname(args.output), { recursive: true });
+  await fs.writeFile(args.output, fixture);
+  console.log(`Wrote ${records.length} Brooklyn Museum records to ${path.relative(projectRoot, args.output)}`);
+};
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  run().catch((error) => {
+    console.error(error.message);
+    process.exitCode = 1;
+  });
+}
+
+export { buildFixture };

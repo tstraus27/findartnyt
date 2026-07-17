@@ -1,0 +1,1053 @@
+{
+  "generatedAt": "2026-07-17T15:05:59.508Z",
+  "asOf": "2026-07-17",
+  "canonicalSource": "data/exhibit-records.json",
+  "publicRule": "Public launch data must come from approved canonical records only; staging proposals are not public data.",
+  "totals": {
+    "canonicalRecords": 22,
+    "canonicalExhibitionRecords": 22,
+    "approvedCanonicalExhibitionRecords": 22,
+    "launchReadyRecords": 22,
+    "excludedRecords": 0,
+    "duplicateGroups": 0,
+    "stagingReports": 34,
+    "stagedPendingItems": 174,
+    "stagedApprovedItems": 38
+  },
+  "canonicalStatusCoverage": [
+    {
+      "status": "approved",
+      "count": 22
+    }
+  ],
+  "launchReadyRecords": [
+    {
+      "id": "exhibition:jewish-museum:circa-1776-jews-in-colonial-america",
+      "title": "Focus Gallery: Circa 1776: Jews in Colonial America",
+      "venue": "The Jewish Museum",
+      "source": "The Jewish Museum",
+      "startDate": "2025-10-24",
+      "endDate": "2026-08-09",
+      "dateText": "Oct. 24, 2025 — Aug. 9, 2026",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/circa-1776-jews-in-colonial-america/"
+    },
+    {
+      "id": "exhibition:jewish-museum:collection-exhibition-and-center-for-learning-october-2025",
+      "title": "Identity, Culture, and Community: Stories from the Collection of the Jewish Museum and Pruzan Family Center for Learning",
+      "venue": "The Jewish Museum",
+      "source": "The Jewish Museum",
+      "startDate": "2025-10-24",
+      "endDate": null,
+      "dateText": "Oct. 24, 2025 — Ongoing",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/collection-exhibition-and-center-for-learning-october-2025/"
+    },
+    {
+      "id": "exhibition:jewish-museum:paul-klee-other-possible-worlds",
+      "title": "Paul Klee: Other Possible Worlds",
+      "venue": "The Jewish Museum",
+      "source": "The Jewish Museum",
+      "startDate": "2026-03-20",
+      "endDate": "2026-07-26",
+      "dateText": "Mar. 20 — Jul. 26, 2026",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/paul-klee-other-possible-worlds/"
+    },
+    {
+      "id": "exhibition:jewish-museum:walter-benjamin-and-the-edges-of-photography",
+      "title": "Focus Gallery: Walter Benjamin and the Edges of Photography",
+      "venue": "The Jewish Museum",
+      "source": "The Jewish Museum",
+      "startDate": "2026-05-15",
+      "endDate": "2026-08-09",
+      "dateText": "May 15 — Aug. 9, 2026",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/walter-benjamin-and-the-edges-of-photography/"
+    },
+    {
+      "id": "exhibition:jewish-museum:focus-gallery-oded-halahmy-models-in-wood",
+      "title": "Focus Gallery: Oded Halahmy: Models in Wood",
+      "venue": "The Jewish Museum",
+      "source": "The Jewish Museum",
+      "startDate": "2026-05-29",
+      "endDate": "2027-01-03",
+      "dateText": "May 29, 2026 — Jan. 3, 2027",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/focus-gallery-oded-halahmy-models-in-wood/"
+    },
+    {
+      "id": "exhibition:jewish-museum:women-of-the-wiener-werkstatte",
+      "title": "Modernity and Opulence: Women of the Wiener Werkstätte",
+      "venue": "The Jewish Museum",
+      "source": "The Jewish Museum",
+      "startDate": "2026-07-17",
+      "endDate": "2026-11-15",
+      "dateText": "Jul. 17 — Nov. 15, 2026",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/women-of-the-wiener-werkstatte/"
+    },
+    {
+      "id": "exhibition:jewish-museum:sacred-splendor-jewish-ritual-art-and-christian-treasures-from-st-vitus-cathedral-in-prague",
+      "title": "Sacred Splendor: Jewish Ritual Art and Christian Treasures from St. Vitus Cathedral in Prague",
+      "venue": "The Jewish Museum",
+      "source": "The Jewish Museum",
+      "startDate": "2026-09-18",
+      "endDate": "2027-02-07",
+      "dateText": "Sep. 18, 2026 — Feb. 7, 2027",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/sacred-splendor-jewish-ritual-art-and-christian-treasures-from-st-vitus-cathedral-in-prague/"
+    },
+    {
+      "id": "exhibition:jewish-museum:ruth-patir-motherland",
+      "title": "Ruth Patir: (M)otherland",
+      "venue": "The Jewish Museum",
+      "source": "The Jewish Museum",
+      "startDate": "2026-12-18",
+      "endDate": "2027-06-07",
+      "dateText": "Dec. 18, 2026 — Jun. 7, 2027",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/ruth-patir-motherland/"
+    },
+    {
+      "id": "exhibition:met:orientalism-between-fact-and-fantasy",
+      "title": "Orientalism: Between Fact and Fantasy",
+      "venue": "The Metropolitan Museum of Art",
+      "source": "The Metropolitan Museum of Art",
+      "startDate": null,
+      "endDate": "2027-02-28",
+      "dateText": "Through February 28, 2027",
+      "sourceUrl": "https://www.metmuseum.org/exhibitions/orientalism-between-fact-and-fantasy"
+    },
+    {
+      "id": "exhibition:morgan:ashbery-collection",
+      "title": "Friends Who Came to See Me: Drawings from John Ashbery’s Collection",
+      "venue": "The Morgan Library & Museum",
+      "source": "The Morgan Library & Museum",
+      "startDate": "2026-05-01",
+      "endDate": "2026-10-25",
+      "dateText": null,
+      "sourceUrl": "https://www.themorgan.org/exhibitions/ashbery-collection"
+    },
+    {
+      "id": "exhibition:morgan:hujar-contact",
+      "title": "Hujar:Contact",
+      "venue": "The Morgan Library & Museum",
+      "source": "The Morgan Library & Museum",
+      "startDate": "2026-05-22",
+      "endDate": "2026-10-25",
+      "dateText": null,
+      "sourceUrl": "https://www.themorgan.org/exhibitions/hujar-contact"
+    },
+    {
+      "id": "exhibition:morgan:tarot",
+      "title": "Tarot! Renaissance Symbols, Modern Visions",
+      "venue": "The Morgan Library & Museum",
+      "source": "The Morgan Library & Museum",
+      "startDate": "2026-06-26",
+      "endDate": "2026-10-04",
+      "dateText": null,
+      "sourceUrl": "https://www.themorgan.org/exhibitions/tarot"
+    },
+    {
+      "id": "exhibition:morgan:rembrandts-lions",
+      "title": "Rembrandt’s Lions: Art and Exile in the Dutch Republic",
+      "venue": "The Morgan Library & Museum",
+      "source": "The Morgan Library & Museum",
+      "startDate": "2026-10-23",
+      "endDate": "2027-01-31",
+      "dateText": null,
+      "sourceUrl": "https://www.themorgan.org/exhibitions/rembrandts-lions"
+    },
+    {
+      "id": "exhibition:morgan:johan-tobias-sergel",
+      "title": "Fantasy and Reality: The Art of Johan Tobias Sergel",
+      "venue": "The Morgan Library & Museum",
+      "source": "The Morgan Library & Museum",
+      "startDate": "2026-10-30",
+      "endDate": "2027-01-31",
+      "dateText": null,
+      "sourceUrl": "https://www.themorgan.org/exhibitions/johan-tobias-sergel"
+    },
+    {
+      "id": "exhibition:morgan:blockbooks",
+      "title": "Graphic Devotions: Late Medieval European Blockbooks",
+      "venue": "The Morgan Library & Museum",
+      "source": "The Morgan Library & Museum",
+      "startDate": "2026-11-06",
+      "endDate": "2027-05-16",
+      "dateText": null,
+      "sourceUrl": "https://www.themorgan.org/exhibitions/blockbooks"
+    },
+    {
+      "id": "exhibition:morgan:ragtime",
+      "title": "Ragtime: Cakewalk in Pianoland",
+      "venue": "The Morgan Library & Museum",
+      "source": "The Morgan Library & Museum",
+      "startDate": "2026-11-13",
+      "endDate": "2027-06-13",
+      "dateText": null,
+      "sourceUrl": "https://www.themorgan.org/exhibitions/ragtime"
+    },
+    {
+      "id": "exhibition:morgan:william-blake",
+      "title": "William Blake: Paradise Lost",
+      "venue": "The Morgan Library & Museum",
+      "source": "The Morgan Library & Museum",
+      "startDate": "2027-02-26",
+      "endDate": "2027-05-23",
+      "dateText": null,
+      "sourceUrl": "https://www.themorgan.org/exhibitions/william-blake"
+    },
+    {
+      "id": "exhibition:moma:5912",
+      "title": "Pierre Huyghe: UUmwelt",
+      "venue": "The Museum of Modern Art",
+      "source": "The Museum of Modern Art",
+      "startDate": "2026-07-01",
+      "endDate": "2026-11-29",
+      "dateText": "Jul 1–Nov 29, 2026",
+      "sourceUrl": "https://www.moma.org/calendar/exhibitions/5912"
+    },
+    {
+      "id": "exhibition:moma:5906",
+      "title": "Architects of Liberation:Modernism in Western Africa",
+      "venue": "The Museum of Modern Art",
+      "source": "The Museum of Modern Art",
+      "startDate": "2026-07-05",
+      "endDate": "2027-01-02",
+      "dateText": "Jul 5, 2026–Jan 2, 2027",
+      "sourceUrl": "https://www.moma.org/calendar/exhibitions/5906"
+    },
+    {
+      "id": "exhibition:moma:5820",
+      "title": "Marcel Duchamp",
+      "venue": "The Museum of Modern Art",
+      "source": "The Museum of Modern Art",
+      "startDate": null,
+      "endDate": "2026-08-22",
+      "dateText": "Through Aug 22",
+      "sourceUrl": "https://www.moma.org/calendar/exhibitions/5820"
+    },
+    {
+      "id": "exhibition:moma:5882",
+      "title": "Frida and Diego:The Last Dream",
+      "venue": "The Museum of Modern Art",
+      "source": "The Museum of Modern Art",
+      "startDate": null,
+      "endDate": "2026-09-12",
+      "dateText": "Through Sep 12",
+      "sourceUrl": "https://www.moma.org/calendar/exhibitions/5882"
+    },
+    {
+      "id": "exhibition:moma:5920",
+      "title": "It’s Alive! A Century ofAnimation from the Collection",
+      "venue": "The Museum of Modern Art",
+      "source": "The Museum of Modern Art",
+      "startDate": null,
+      "endDate": null,
+      "dateText": "Aug 1, 2026–Summer 2027",
+      "sourceUrl": "https://www.moma.org/calendar/exhibitions/5920"
+    }
+  ],
+  "launchRecommendation": {
+    "readyForPublicV1": true,
+    "recommendedFirstPublicVenueSet": [
+      "The Jewish Museum",
+      "The Morgan Library & Museum",
+      "The Museum of Modern Art"
+    ],
+    "summary": "22 canonical exhibition record(s) can go public."
+  },
+  "venueCoverage": [
+    {
+      "venue": "The Jewish Museum",
+      "source": "The Jewish Museum",
+      "records": 8,
+      "currentOrUpcoming": 8,
+      "withSourceUrl": 8,
+      "withDates": 8
+    },
+    {
+      "venue": "The Morgan Library & Museum",
+      "source": "The Morgan Library & Museum",
+      "records": 8,
+      "currentOrUpcoming": 8,
+      "withSourceUrl": 8,
+      "withDates": 8
+    },
+    {
+      "venue": "The Museum of Modern Art",
+      "source": "The Museum of Modern Art",
+      "records": 5,
+      "currentOrUpcoming": 5,
+      "withSourceUrl": 5,
+      "withDates": 5
+    },
+    {
+      "venue": "The Metropolitan Museum of Art",
+      "source": "The Metropolitan Museum of Art",
+      "records": 1,
+      "currentOrUpcoming": 1,
+      "withSourceUrl": 1,
+      "withDates": 1
+    }
+  ],
+  "sourceCoverage": [
+    {
+      "name": "The Jewish Museum",
+      "count": 8
+    },
+    {
+      "name": "The Morgan Library & Museum",
+      "count": 8
+    },
+    {
+      "name": "The Museum of Modern Art",
+      "count": 5
+    },
+    {
+      "name": "The Metropolitan Museum of Art",
+      "count": 1
+    }
+  ],
+  "fieldCoverage": {
+    "critical": [
+      {
+        "field": "title",
+        "populated": 22,
+        "total": 22
+      },
+      {
+        "field": "venue",
+        "populated": 22,
+        "total": 22
+      },
+      {
+        "field": "sourceUrl",
+        "populated": 22,
+        "total": 22
+      },
+      {
+        "field": "exhibitionUrl",
+        "populated": 22,
+        "total": 22
+      },
+      {
+        "field": "startDate",
+        "populated": 18,
+        "total": 22
+      },
+      {
+        "field": "endDate",
+        "populated": 20,
+        "total": 22
+      },
+      {
+        "field": "dateText",
+        "populated": 14,
+        "total": 22
+      }
+    ],
+    "recommended": [
+      {
+        "field": "description",
+        "populated": 1,
+        "total": 22
+      },
+      {
+        "field": "imageUrl",
+        "populated": 16,
+        "total": 22
+      },
+      {
+        "field": "venueAddress",
+        "populated": 22,
+        "total": 22
+      },
+      {
+        "field": "city",
+        "populated": 22,
+        "total": 22
+      },
+      {
+        "field": "borough",
+        "populated": 22,
+        "total": 22
+      },
+      {
+        "field": "neighborhood",
+        "populated": 14,
+        "total": 22
+      }
+    ]
+  },
+  "excludedRecords": [],
+  "duplicateGroups": [],
+  "stagingInventoryNotPublic": [
+    {
+      "file": "data/staging/bronx-museum-exhibitions.json",
+      "sourceId": "bronx-museum-exhibitions",
+      "parser": "bronx-museum-exhibitions",
+      "generatedAt": "2026-06-26T04:00:22.600Z",
+      "verificationStatus": "verified_live",
+      "creates": 1,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 1,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "The Bronx Museum",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "data/staging/bronx-museum-exhibitions.live.json",
+      "sourceId": "bronx-museum-exhibitions",
+      "parser": "bronx-museum-exhibitions",
+      "generatedAt": "2026-06-26T04:00:33.892Z",
+      "verificationStatus": "verified_live",
+      "creates": 2,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 2,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "The Bronx Museum",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "data/staging/brooklyn-museum-exhibitions.json",
+      "sourceId": "brooklyn-museum-exhibitions",
+      "parser": "brooklyn-museum-exhibitions",
+      "generatedAt": "2026-07-14T17:59:24.745Z",
+      "verificationStatus": "pending_live_verification",
+      "creates": 2,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 2,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "Brooklyn Museum",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "data/staging/cooper-hewitt-exhibitions.json",
+      "sourceId": "cooper-hewitt-exhibitions",
+      "parser": "cooper-hewitt-exhibitions",
+      "generatedAt": "2026-06-26T13:10:55.039Z",
+      "verificationStatus": "verified_live",
+      "creates": 4,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 4,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "Cooper Hewitt, Smithsonian Design Museum",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "file": "data/staging/cooper-hewitt-exhibitions.live.json",
+      "sourceId": "cooper-hewitt-exhibitions",
+      "parser": "cooper-hewitt-exhibitions",
+      "generatedAt": "2026-06-26T13:11:07.213Z",
+      "verificationStatus": "verified_live",
+      "creates": 4,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 4,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "Cooper Hewitt, Smithsonian Design Museum",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "file": "data/staging/david-zwirner-exhibitions.json",
+      "sourceId": "david-zwirner-exhibitions",
+      "parser": "david-zwirner-exhibitions",
+      "generatedAt": "2026-07-17T15:02:23.241Z",
+      "verificationStatus": "verified_live",
+      "creates": 5,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 5,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "David Zwirner, New York: 19th Street",
+          "count": 3
+        },
+        {
+          "name": "David Zwirner, New York: 20th Street",
+          "count": 1
+        },
+        {
+          "name": "David Zwirner, New York: Tribeca",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "data/staging/david-zwirner-exhibitions.live.json",
+      "sourceId": "david-zwirner-exhibitions",
+      "parser": "david-zwirner-exhibitions",
+      "generatedAt": "2026-07-17T15:02:30.430Z",
+      "verificationStatus": "verified_live",
+      "creates": 5,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 5,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "David Zwirner, New York: 19th Street",
+          "count": 3
+        },
+        {
+          "name": "David Zwirner, New York: 20th Street",
+          "count": 1
+        },
+        {
+          "name": "David Zwirner, New York: Tribeca",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "data/staging/drawing-center-exhibitions.json",
+      "sourceId": "drawing-center-exhibitions",
+      "parser": "drawing-center-exhibitions",
+      "generatedAt": "2026-06-24T19:23:04.295Z",
+      "verificationStatus": "verified_live",
+      "creates": 3,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 3,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "The Drawing Center",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "file": "data/staging/drawing-center-exhibitions.live.json",
+      "sourceId": "drawing-center-exhibitions",
+      "parser": "drawing-center-exhibitions",
+      "generatedAt": "2026-06-24T19:23:50.634Z",
+      "verificationStatus": "verified_live",
+      "creates": 3,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 3,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "The Drawing Center",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "file": "data/staging/fit-exhibitions.json",
+      "sourceId": "fit-exhibitions",
+      "parser": "fit-exhibitions",
+      "generatedAt": "2026-06-26T03:57:44.757Z",
+      "verificationStatus": "verified_live",
+      "creates": 1,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 1,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "The Museum at FIT",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "data/staging/fit-exhibitions.live.json",
+      "sourceId": "fit-exhibitions",
+      "parser": "fit-exhibitions",
+      "generatedAt": "2026-06-26T03:57:44.875Z",
+      "verificationStatus": "verified_live",
+      "creates": 1,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 1,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "The Museum at FIT",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "data/staging/frick-exhibitions.json",
+      "sourceId": "frick-exhibitions",
+      "parser": "frick-exhibitions",
+      "generatedAt": "2026-06-25T14:32:24.846Z",
+      "verificationStatus": "verified_live",
+      "creates": 4,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 0,
+      "approvedItems": 4,
+      "venues": [
+        {
+          "name": "The Frick Collection",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "file": "data/staging/frick-exhibitions.live.json",
+      "sourceId": "frick-exhibitions",
+      "parser": "frick-exhibitions",
+      "generatedAt": "2026-06-25T14:32:25.141Z",
+      "verificationStatus": "verified_live",
+      "creates": 4,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 4,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "The Frick Collection",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "file": "data/staging/guggenheim-exhibitions.json",
+      "sourceId": "guggenheim-exhibitions",
+      "parser": "guggenheim-exhibitions",
+      "generatedAt": "2026-06-24T19:16:37.959Z",
+      "verificationStatus": "verified_live",
+      "creates": 5,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 5,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "Solomon R. Guggenheim Museum",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "file": "data/staging/guggenheim-exhibitions.live.json",
+      "sourceId": "guggenheim-exhibitions",
+      "parser": "guggenheim-exhibitions",
+      "generatedAt": "2026-06-24T19:17:18.105Z",
+      "verificationStatus": "pending_live_verification",
+      "creates": 6,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 6,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "Solomon R. Guggenheim Museum",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "file": "data/staging/icp-exhibitions.json",
+      "sourceId": "icp-exhibitions",
+      "parser": "icp-exhibitions",
+      "generatedAt": "2026-06-24T19:12:28.404Z",
+      "verificationStatus": "verified_live",
+      "creates": 3,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 3,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "International Center of Photography",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "file": "data/staging/icp-exhibitions.live.json",
+      "sourceId": "icp-exhibitions",
+      "parser": "icp-exhibitions",
+      "generatedAt": "2026-06-24T18:33:02.177Z",
+      "verificationStatus": "verified_live",
+      "creates": 3,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 3,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "International Center of Photography",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "file": "data/staging/jewish-museum-exhibitions.json",
+      "sourceId": "jewish-museum-exhibitions",
+      "parser": "jewish-museum-exhibitions",
+      "generatedAt": "2026-06-24T19:12:52.148Z",
+      "verificationStatus": "verified_live",
+      "creates": 8,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 0,
+      "approvedItems": 8,
+      "venues": [
+        {
+          "name": "The Jewish Museum",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "file": "data/staging/jewish-museum-exhibitions.live.json",
+      "sourceId": "jewish-museum-exhibitions",
+      "parser": "jewish-museum-exhibitions",
+      "generatedAt": "2026-06-24T19:11:34.164Z",
+      "verificationStatus": "verified_live",
+      "creates": 8,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 8,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "The Jewish Museum",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "file": "data/staging/mad-exhibitions.json",
+      "sourceId": "mad-exhibitions",
+      "parser": "mad-exhibitions",
+      "generatedAt": "2026-06-25T14:29:41.833Z",
+      "verificationStatus": "verified_live",
+      "creates": 6,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 6,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "Museum of Arts and Design",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "file": "data/staging/mad-exhibitions.live.json",
+      "sourceId": "mad-exhibitions",
+      "parser": "mad-exhibitions",
+      "generatedAt": "2026-06-25T14:29:52.247Z",
+      "verificationStatus": "verified_live",
+      "creates": 6,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 6,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "Museum of Arts and Design",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "file": "data/staging/mcny-exhibitions.json",
+      "sourceId": "mcny-exhibitions",
+      "parser": "mcny-exhibitions",
+      "generatedAt": "2026-06-25T16:55:18.716Z",
+      "verificationStatus": "verified_live",
+      "creates": 11,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 7,
+      "approvedItems": 4,
+      "venues": [
+        {
+          "name": "Museum of the City of New York",
+          "count": 11
+        }
+      ]
+    },
+    {
+      "file": "data/staging/mcny-exhibitions.live.json",
+      "sourceId": "mcny-exhibitions",
+      "parser": "mcny-exhibitions",
+      "generatedAt": "2026-06-25T16:55:27.384Z",
+      "verificationStatus": "pending_live_verification",
+      "creates": 11,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 11,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "Museum of the City of New York",
+          "count": 11
+        }
+      ]
+    },
+    {
+      "file": "data/staging/met-exhibitions.json",
+      "sourceId": "met-exhibitions",
+      "parser": "met-exhibitions",
+      "generatedAt": "2026-07-15T17:48:45.536Z",
+      "verificationStatus": "pending_live_verification",
+      "creates": 24,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 23,
+      "approvedItems": 1,
+      "venues": [
+        {
+          "name": "The Metropolitan Museum of Art",
+          "count": 24
+        }
+      ]
+    },
+    {
+      "file": "data/staging/moma-exhibitions.json",
+      "sourceId": "moma-exhibitions",
+      "parser": "moma-exhibitions",
+      "generatedAt": "2026-07-14T17:51:22.876Z",
+      "verificationStatus": "pending_live_verification",
+      "creates": 24,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 13,
+      "approvedItems": 7,
+      "venues": [
+        {
+          "name": "The Museum of Modern Art",
+          "count": 24
+        }
+      ]
+    },
+    {
+      "file": "data/staging/morgan-exhibitions.json",
+      "sourceId": "morgan-exhibitions",
+      "parser": "morgan-exhibitions",
+      "generatedAt": "2026-06-25T16:46:27.184Z",
+      "verificationStatus": "verified_live",
+      "creates": 9,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 0,
+      "approvedItems": 8,
+      "venues": [
+        {
+          "name": "The Morgan Library & Museum",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "file": "data/staging/morgan-exhibitions.live.json",
+      "sourceId": "morgan-exhibitions",
+      "parser": "morgan-exhibitions",
+      "generatedAt": "2026-06-25T16:46:41.034Z",
+      "verificationStatus": "pending_live_verification",
+      "creates": 9,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 9,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "The Morgan Library & Museum",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "file": "data/staging/new-museum-exhibitions.json",
+      "sourceId": "new-museum-exhibitions",
+      "parser": "new-museum-exhibitions",
+      "generatedAt": "2026-06-24T14:56:59.585Z",
+      "verificationStatus": "verified_live",
+      "creates": 7,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 7,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "New Museum",
+          "count": 7
+        }
+      ]
+    },
+    {
+      "file": "data/staging/noguchi-exhibitions.json",
+      "sourceId": "noguchi-exhibitions",
+      "parser": "noguchi-exhibitions",
+      "generatedAt": "2026-06-25T14:50:50.104Z",
+      "verificationStatus": "verified_live",
+      "creates": 2,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 2,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "The Noguchi Museum",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "data/staging/noguchi-exhibitions.live.json",
+      "sourceId": "noguchi-exhibitions",
+      "parser": "noguchi-exhibitions",
+      "generatedAt": "2026-06-25T14:51:04.763Z",
+      "verificationStatus": "pending_live_verification",
+      "creates": 2,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 2,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "The Noguchi Museum",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "data/staging/poster-house-exhibitions.json",
+      "sourceId": "poster-house-exhibitions",
+      "parser": "poster-house-exhibitions",
+      "generatedAt": "2026-06-26T19:10:56.005Z",
+      "verificationStatus": "verified_live",
+      "creates": 10,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 4,
+      "approvedItems": 6,
+      "venues": [
+        {
+          "name": "Poster House",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "file": "data/staging/poster-house-exhibitions.live.json",
+      "sourceId": "poster-house-exhibitions",
+      "parser": "poster-house-exhibitions",
+      "generatedAt": "2026-06-26T19:11:16.252Z",
+      "verificationStatus": "verified_live",
+      "creates": 10,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 10,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "Poster House",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "file": "data/staging/whitney-exhibitions.json",
+      "sourceId": "whitney-exhibitions",
+      "parser": "whitney-exhibitions",
+      "generatedAt": "2026-06-24T14:56:59.739Z",
+      "verificationStatus": "verified_live",
+      "creates": 7,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 7,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "Whitney Museum of American Art",
+          "count": 7
+        }
+      ]
+    },
+    {
+      "file": "data/staging/whitney-exhibitions.live.json",
+      "sourceId": "whitney-exhibitions",
+      "parser": "whitney-exhibitions",
+      "generatedAt": "2026-06-24T15:12:13.389Z",
+      "verificationStatus": "verified_live",
+      "creates": 7,
+      "updates": 0,
+      "possibleDuplicates": 0,
+      "conflicts": 0,
+      "pendingItems": 7,
+      "approvedItems": 0,
+      "venues": [
+        {
+          "name": "Whitney Museum of American Art",
+          "count": 7
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    "174 staged item(s) exist but are not public until reviewed and promoted.",
+    "38 staged item(s) are marked approved in staging; run the approval flow before public launch if they should be canonical."
+  ],
+  "risks": [],
+  "nextActions": [
+    "Build the public site against canonical records only.",
+    "Keep staging files out of the public listing until approval.",
+    "Re-run npm run audit:public-launch before each launch/deploy."
+  ]
+}

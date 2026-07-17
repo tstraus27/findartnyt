@@ -1,0 +1,112 @@
+{
+  "ok": true,
+  "frames_root": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/waiting/frames",
+  "states": [
+    "waiting"
+  ],
+  "errors": [],
+  "warnings": [],
+  "rows": [
+    {
+      "state": "waiting",
+      "expected_frames": 6,
+      "actual_frames": 6,
+      "extraction_method": "components",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/waiting/frames/waiting/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 23141,
+          "bbox": [
+            18,
+            5,
+            174,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 264
+        },
+        {
+          "index": 1,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/waiting/frames/waiting/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 23211,
+          "bbox": [
+            16,
+            5,
+            175,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 214
+        },
+        {
+          "index": 2,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/waiting/frames/waiting/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 19688,
+          "bbox": [
+            27,
+            5,
+            165,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 203
+        },
+        {
+          "index": 3,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/waiting/frames/waiting/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 22927,
+          "bbox": [
+            18,
+            5,
+            174,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 342
+        },
+        {
+          "index": 4,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/waiting/frames/waiting/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 20586,
+          "bbox": [
+            25,
+            5,
+            166,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 274
+        },
+        {
+          "index": 5,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/waiting/frames/waiting/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 20510,
+          "bbox": [
+            24,
+            5,
+            167,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 299
+        }
+      ]
+    }
+  ]
+}

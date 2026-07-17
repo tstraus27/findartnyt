@@ -1,0 +1,17 @@
+Create one horizontal animation strip for Codex pet `spanky-s-huhbeast`, state `waving`.
+
+Use the attached canonical base for identity. Use the attached layout guide only for slot count, spacing, centering, and padding; do not draw the guide.
+
+Output exactly 4 full-body frames in one left-to-right row on flat pure blue #0000FF. Treat the row as 4 invisible equal-width slots: one centered complete pose per slot, evenly spaced, with no overlap, clipping, empty slots, labels, or borders.
+
+Identity: same pet in every frame: Base this heavily on the attached real photos of Kitten. Get as close to Kitten as possible while still inventing a tiny original 64-bit mascot creature, not a literal photo portrait. She is mostly grey/silver tabby, not brown; pale cream muzzle and chest; bold dark tabby forehead stripes; green eyes exactly like the photos; orange-pink nose; black lips and dark mouth edges. Most important: massive comical underbite based on Kitten, lower jaw projects far past upper jaw, mouth almost never fully closes, black lips parted, one oversized lower canine sticks upward outside the lip like an ivory hook, several tiny lower teeth always visible. She is cute but naughty and kind of aggressive: hisses, bites, squints, pins or swivels ears, looks ready to swat, but remains small, funny, and lovable. Expression reads suspicious confused '...huh?' mixed with bitey irritation, not a smile. Enormous glossy watery green eyes dominate the face; one ear or brow often higher. Iconic silhouette still includes upright stance, short sturdy legs, thick neck, long striped tail as counterweight, and one tiny paw raised as if bracing, swatting, or testing a surface, but no furniture or scenery. Visual era: late-1990s to early-2000s 64-bit console mascot, chunky low-poly forms, simple shaded polygon planes, bold texture bands, slightly crunchy retro 3D charm; no pixel art, no modern plush rendering. No text, logos, scenery, shadows, detached effects, or props.. Preserve silhouette, face, proportions, markings, palette, material, style, and props.
+Style: Pet-safe sprite: compact full-body mascot, readable in a 192x208 cell, clear silhouette, simple face, stable palette/materials, and crisp edges for chroma-key extraction. Style `auto`: Infer the most appropriate pet-safe style from the user request and reference images, then keep that exact style consistent across every row. User style notes: 64-bit late-90s/early-2000s low-poly mascot version of Kitten: grey/silver tabby, green eyes, black lips, orange nose, massive underbite, naughty hissing-biting cuteness, chunky polygonal forms, bold texture bands, crisp silhouette..
+Animation continuity: keep apparent pet scale and baseline stable within the row unless the state itself intentionally changes vertical position, such as `jumping`. Move the pose within the slot instead of redrawing the pet larger or smaller frame to frame.
+
+State action: Greeting loop: paw or limb down, raised, tilted, and returning in a friendly attention gesture.
+
+State requirements:
+- Show the greeting through paw, hand, wing, or limb pose only.
+- Do not draw wave marks, motion arcs, lines, sparkles, symbols, or floating effects around the gesture.
+
+Clean extraction: crisp opaque edges, safe padding, no scenery, text, guide marks, checkerboard, shadows, glows, motion blur, speed lines, dust, detached effects, stray pixels, or chroma-key colors inside the pet.

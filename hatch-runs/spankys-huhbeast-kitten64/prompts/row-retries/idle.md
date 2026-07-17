@@ -1,0 +1,18 @@
+Create Codex pet row `idle` for `spanky-s-huhbeast`: exactly 6 full-body frames in one horizontal strip on flat pure blue #0000FF.
+
+Use the attached canonical base for identity and the layout guide only for spacing. Same pet in every frame: Base this heavily on the attached real photos of Kitten. Get as close to Kitten as possible while still inventing a tiny original 64-bit mascot creature, not a literal photo portrait. She is mostly grey/silver tabby, not brown; pale cream muzzle and chest; bold dark tabby forehead stripes; green eyes exactly like the photos; orange-pink nose; black lips and dark mouth edges. Most important: massive comical underbite based on Kitten, lower jaw projects far past upper jaw, mouth almost never fully closes, black lips parted, one oversized lower canine sticks upward outside the lip like an ivory hook, several tiny lower teeth always visible. She is cute but naughty and kind of aggressive: hisses, bites, squints, pins or swivels ears, looks ready to swat, but remains small, funny, and lovable. Expression reads suspicious confused '...huh?' mixed with bitey irritation, not a smile. Enormous glossy watery green eyes dominate the face; one ear or brow often higher. Iconic silhouette still includes upright stance, short sturdy legs, thick neck, long striped tail as counterweight, and one tiny paw raised as if bracing, swatting, or testing a surface, but no furniture or scenery. Visual era: late-1990s to early-2000s 64-bit console mascot, chunky low-poly forms, simple shaded polygon planes, bold texture bands, slightly crunchy retro 3D charm; no pixel art, no modern plush rendering. No text, logos, scenery, shadows, detached effects, or props.. Preserve silhouette, face, palette, material, proportions, markings, and props.
+
+Keep apparent pet scale and baseline stable within the row unless the state itself intentionally changes vertical position, such as `jumping`.
+
+Action: Calm low-distraction resting loop: subtle breathing, tiny blink, slight head/body bob, and only quiet persona-preserving motion.
+
+State requirements:
+- CRITICAL: idle is the low-distraction baseline state and the first frame is also used as the reduced-motion static pet.
+- Use only subtle idle motion: gentle breathing, a tiny blink, a slight head or body bob, a very small material sway, or another quiet motion that fits the pet persona.
+- Keep the pet essentially in the same pose, facing direction, silhouette, markings, palette, and prop state across all 6 frames.
+- Idle variation must stay calm but still read as animation; do not repeat effectively identical copies across the loop.
+- Do not show waving, walking, running, jumping, talking, working, reviewing, emotional reactions, large gestures, item interactions, or new props.
+- Feet, base, body, or object anchor should remain planted or nearly planted.
+- The first and last frames should be very close visually so the loop feels calm and does not pop.
+
+One centered complete pose per invisible slot. No text, boxes, guide marks, scenery, shadows, glows, motion blur, speed lines, dust, detached effects, stray pixels, or #0000FF colors in the pet.

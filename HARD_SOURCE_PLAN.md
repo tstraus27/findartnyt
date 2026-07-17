@@ -361,3 +361,654 @@ Next step:
 
 - Brooklyn Museum is the next hard source because `data/staging/brooklyn-museum-exhibitions.json` remains absent and direct backend fetch is still documented as blocked.
 - Later Met improvement: enrich or refresh the browser-assisted fixture from official detail pages if a conservative browser workflow can capture start dates, descriptions, and image URLs without bypassing edge security.
+
+## 2026-07-14 Met Missing Exhibition Patch
+
+Run time: 2026-07-14 12:38 America/Chicago / 2026-07-14T17:38Z.
+
+Problem found:
+
+- The Met staging artifact missed the official exhibition `https://www.metmuseum.org/exhibitions/orientalism-between-fact-and-fantasy`.
+- Root cause: the Met source was only parsing the old browser-assisted listing fixture from 2026-06-29. That fixture did not contain the Orientalism detail URL, so the parser never had a record to create.
+- Direct Node fetches to both the Met exhibitions index and the Orientalism detail URL still returned `429 Too Many Requests` / Vercel checkpoint responses in this environment.
+
+Implemented:
+
+- Added compact official detail fixture:
+  - `scripts/exhibit-ingest/fixtures/met-exhibitions-details/orientalism-between-fact-and-fantasy.html`
+- Updated Met source config so the Orientalism detail page is a configured seed fixture, not dependent on the stale listing snapshot:
+  - `scripts/exhibit-ingest/sources/met-exhibitions.fixture.json`
+- Updated Met parser so it can parse a standalone official detail-page snapshot when a page has no listing sections:
+  - `scripts/exhibit-ingest/parsers/met-exhibitions.mjs`
+- Added a regression test requiring `exhibition:met:orientalism-between-fact-and-fantasy` to parse from the detail fixture:
+  - `scripts/exhibit-ingest/parsers/met-exhibitions.test.mjs`
+- Regenerated Met staging:
+  - `data/staging/met-exhibitions.json`
+
+Commands run:
+
+```sh
+node --test scripts/exhibit-ingest/parsers/met-exhibitions.test.mjs
+npm run ingest:exhibits:met:stage
+npm run review:staging:met:summary
+```
+
+Results:
+
+- Met parser test passed with 3 tests.
+- Met staging now has 24 proposed exhibition records instead of 23.
+- `Orientalism: Between Fact and Fantasy` is now staged as `exhibition:met:orientalism-between-fact-and-fantasy`.
+- The staged Orientalism record preserves the official URL, title, date text `Through February 28, 2027`, end date `2027-02-28`, Met venue metadata, and a compact description from the official detail page.
+- Review summary still reports `needs_attention` because this is fixture-backed, pending live verification, and many Met records still lack exact start dates and images.
+
+Plain-language progress log:
+
+- The missing Met exhibition is now in the review data. Staging means a review area, not the final approved exhibition database.
+- The bug was not that the parser could not understand the exhibition. The bug was that the system only looked at an older saved copy of the Met exhibitions list, and this important exhibition was not in that saved list.
+- To reduce this risk, known important Met exhibition URLs can now be added as official detail-page seed fixtures. A seed fixture is a small saved copy of an official page that the staging system reads directly.
+- This does not fully solve Met automation because the Met site still blocks direct backend fetches from this environment. The next Met improvement should add a regular freshness audit that compares the saved Met fixture against a current browser-rendered official page and flags any missing official exhibition links before staging is treated as complete.
+
+## 2026-07-14 Met Guardrails and Refresh Workflow
+
+Run time: 2026-07-14 12:43 America/Chicago / 2026-07-14T17:43Z.
+
+Goal:
+
+- Move The Met closer to "fixed forever" by making missing required exhibitions, suspiciously low record counts, and stale listing fixtures fail loudly.
+- Keep the work staging-only. No canonical records were promoted or edited.
+- Do not bypass the Met's Vercel/security checkpoint. Direct backend fetch remains blocked from this environment.
+
+Implemented Phase 1 guardrails:
+
+- Added a required Met seed registry:
+  - `scripts/exhibit-ingest/sources/met-required-exhibitions.json`
+  - It currently requires `https://www.metmuseum.org/exhibitions/orientalism-between-fact-and-fantasy`.
+  - It also stores `minimumExpectedRecords: 24` and `listingFixtureMaxAgeDays: 14`.
+- Added a Met audit command:
+  - `npm run audit:met`
+  - It checks required seed URL coverage, minimum record count, and listing fixture age from `data-captured-at`.
+  - It exits with failure when the listing fixture is stale or a required seed URL is missing.
+  - `npm run audit:met -- --allow-stale` keeps the same report but treats known staleness as a warning, useful when testing other guardrails.
+- Added required seed coverage to the test suite:
+  - `scripts/exhibit-ingest/audit-met.test.mjs`
+  - `npm test` now protects the active seed registry without failing only because the known listing fixture is stale.
+- Added optional followed detail fixture support to the generic ingest runner:
+  - `scripts/exhibit-ingest/ingest.mjs`
+  - Met can now ask for detail-page enrichment from `scripts/exhibit-ingest/fixtures/met-exhibitions-details/` without requiring every detail fixture to exist on day one.
+
+Implemented Phase 2 workflow pieces:
+
+- Added a browser-assisted compact fixture builder:
+  - `scripts/exhibit-ingest/refresh-met-fixture.mjs`
+  - `npm run refresh:met:fixture -- --help`
+- This script expects a human/browser-collected JSON list of official Met exhibition cards and writes compact parser-friendly fixture HTML.
+- It validates the output before writing and refuses suspiciously low record counts by default.
+- The Met source config now enables optional detail fixture following for listing records:
+  - `followRecordUrls: true`
+  - `followRecordUrlFixtureDirectory: ../fixtures/met-exhibitions-details`
+  - `followRecordUrlFixtureRequired: false`
+
+Commands run:
+
+```sh
+node --test scripts/exhibit-ingest/parsers/met-exhibitions.test.mjs scripts/exhibit-ingest/audit-met.test.mjs scripts/exhibit-ingest/refresh-met-fixture.test.mjs
+npm run ingest:exhibits:met:stage
+npm run audit:met
+npm run audit:met -- --allow-stale
+npm run refresh:met:fixture -- --help
+npm run review:staging:met:summary
+```
+
+Results:
+
+- Focused Met/audit/refresh tests passed.
+- Met staging regenerated with 24 proposed exhibition records.
+- `Orientalism: Between Fact and Fantasy` remains staged.
+- `npm run audit:met` now fails loudly because the listing fixture was captured on 2026-06-29 and is 15 days old, beyond the 14-day threshold.
+- `npm run audit:met -- --allow-stale` reports seed coverage 1/1 and records 24/24 while warning about staleness.
+- Review summary still reports `needs_attention` because this remains fixture-backed and many records still lack start dates, descriptions, and images.
+
+Future Met refresh procedure:
+
+1. Open `https://www.metmuseum.org/exhibitions` in a normal browser session.
+2. Let the public page render naturally. Do not bypass checkpoints or rate limits.
+3. Copy official exhibition card data into a JSON array with `section`, `url`, `title`, `dateText`, and optional `imageUrl`.
+4. Run:
+
+```sh
+npm run refresh:met:fixture -- --input /path/to/met-cards.json --output scripts/exhibit-ingest/fixtures/met-exhibitions.browser-YYYY-MM-DD.html
+```
+
+5. Point `scripts/exhibit-ingest/sources/met-exhibitions.fixture.json` at the new fixture only after validation passes.
+6. Run:
+
+```sh
+npm run ingest:exhibits:met:stage
+npm run audit:met
+npm run review:staging:met:summary
+npm test
+npm run build
+```
+
+Plain-language progress log:
+
+- The Met system now has alarms. If a known important exhibition URL is missing, if the total record count drops below 24, or if the saved Met listing is too old, the audit command says so clearly.
+- A seed registry is now the place to add must-not-miss Met exhibitions. A registry is a small list of official URLs the system promises to look for.
+- The Met is still not fully automatic because direct backend requests to the Met site are blocked by a security checkpoint from this environment.
+- The next best work is to refresh the browser-assisted Met listing fixture using the new compact fixture builder, then add more detail fixtures for important records so descriptions, images, and better date text can be staged.
+
+## 2026-07-14 MoMA Guardrails and Refresh Workflow
+
+Run time: 2026-07-14 12:51 America/Chicago / 2026-07-14T17:51Z.
+
+Goal:
+
+- Give MoMA the same "fail loudly" guardrails that were added for The Met.
+- Keep the work staging-only. No canonical records were promoted or edited.
+- Do not bypass MoMA's Cloudflare challenge. Direct backend fetch remains blocked from this environment.
+
+Problem:
+
+- MoMA has the same risk shape as The Met: a browser-assisted snapshot from 2026-06-29, `pending_live_verification`, and direct backend fetch blocked by Cloudflare `403`.
+- That means MoMA can miss new or important exhibitions if the saved browser snapshot is stale.
+
+Implemented:
+
+- Added a required MoMA seed registry:
+  - `scripts/exhibit-ingest/sources/moma-required-exhibitions.json`
+  - It currently requires two baseline staged URLs:
+    - `https://www.moma.org/calendar/exhibitions/5825`
+    - `https://www.moma.org/calendar/exhibitions/5906`
+  - It stores `minimumExpectedRecords: 25` and `listingFixtureMaxAgeDays: 14`.
+- Added shared browser-fixture audit utilities:
+  - `scripts/exhibit-ingest/audit-browser-fixture-source.mjs`
+  - The Met audit now uses the same shared logic.
+- Added a MoMA audit command:
+  - `npm run audit:moma`
+  - It checks required seed URL coverage, minimum record count, and listing fixture age.
+  - It exits with failure when the listing fixture is stale or a required seed URL is missing.
+  - `npm run audit:moma -- --allow-stale` reports the same data but treats known staleness as a warning.
+- Added MoMA audit tests:
+  - `scripts/exhibit-ingest/audit-moma.test.mjs`
+  - `npm test` now protects MoMA seed coverage without failing only because the known fixture is stale.
+- Added a browser-assisted compact fixture builder:
+  - `scripts/exhibit-ingest/refresh-moma-fixture.mjs`
+  - `npm run refresh:moma:fixture -- --help`
+
+Commands run:
+
+```sh
+node --test scripts/exhibit-ingest/parsers/moma-exhibitions.test.mjs scripts/exhibit-ingest/audit-moma.test.mjs scripts/exhibit-ingest/refresh-moma-fixture.test.mjs scripts/exhibit-ingest/audit-met.test.mjs
+npm run ingest:exhibits:moma:stage
+npm run audit:moma
+npm run audit:moma -- --allow-stale
+npm run refresh:moma:fixture -- --help
+npm run review:staging:moma:summary
+```
+
+Results:
+
+- Focused MoMA and shared audit tests passed.
+- MoMA staging regenerated with 25 proposed exhibition records.
+- `npm run audit:moma` now fails loudly because the listing fixture was captured on 2026-06-29 and is 16 days old, beyond the 14-day threshold.
+- `npm run audit:moma -- --allow-stale` reports seed coverage 2/2 and records 25/25 while warning about staleness.
+- Review summary still reports `needs_attention` because this is fixture-backed, pending live verification, and many records lack start dates, descriptions, and images.
+
+Future MoMA refresh procedure:
+
+1. Open `https://www.moma.org/calendar/exhibitions` in a normal browser session.
+2. Let the public page render naturally. Do not bypass checkpoints or rate limits.
+3. Copy official exhibition card data into a JSON array with `url`, `title`, `dateText`, and optional `imageUrl`.
+4. Run:
+
+```sh
+npm run refresh:moma:fixture -- --input /path/to/moma-cards.json --output scripts/exhibit-ingest/fixtures/moma-exhibitions.browser-YYYY-MM-DD.html
+```
+
+5. Point `scripts/exhibit-ingest/sources/moma-exhibitions.fixture.json` at the new fixture only after validation passes.
+6. Run:
+
+```sh
+npm run ingest:exhibits:moma:stage
+npm run audit:moma
+npm run review:staging:moma:summary
+npm test
+npm run build
+```
+
+Plain-language progress log:
+
+- MoMA now has alarms like The Met. If the known required URLs disappear, if the record count drops below 25, or if the saved browser snapshot is too old, the audit command says so clearly.
+- The current MoMA audit is supposed to fail because the saved snapshot is stale. That is useful: it means the system no longer quietly treats an old snapshot as complete.
+- The next best MoMA work is to refresh the browser-assisted fixture from a normal browser session and add more must-not-miss seed URLs when important MoMA exhibitions are identified.
+
+## 2026-07-14 Brooklyn Museum Guardrails and First Staging Slice
+
+Run time: 2026-07-14 13:00 America/Chicago / 2026-07-14T18:00Z.
+
+Goal:
+
+- Clone the Met/MoMA guardrail pattern for Brooklyn Museum.
+- Keep the work staging-only. No canonical records were promoted or edited.
+- Use only official Brooklyn Museum exhibition URLs and label browser-assisted data honestly.
+
+Problem:
+
+- Direct backend fetches to `https://www.brooklynmuseum.org/exhibitions`, `https://www.brooklynmuseum.org/sitemap.xml`, and `https://www.brooklynmuseum.org/robots.txt` returned Vercel `429 Too Many Requests` checkpoint responses.
+- The official exhibitions page could still be read in browser/search context, so the honest fallback is a compact browser-assisted fixture, not a live automated source.
+- The first slice intentionally covers the linked "Included in General Admission" exhibition cards. Permanent collection galleries, museum spotlights, touring pages, and past exhibitions are out of scope until the source path is stronger.
+
+Implemented:
+
+- Added a Brooklyn Museum parser:
+  - `scripts/exhibit-ingest/parsers/brooklyn-museum-exhibitions.mjs`
+  - It parses compact official-page cards into staging records with Brooklyn Museum venue metadata.
+- Added a compact browser-assisted fixture:
+  - `scripts/exhibit-ingest/fixtures/brooklyn-museum-exhibitions.browser-2026-07-14.html`
+  - It includes 8 linked official exhibition cards from `https://www.brooklynmuseum.org/exhibitions`.
+- Added a fixture-backed source config:
+  - `scripts/exhibit-ingest/sources/brooklyn-museum-exhibitions.fixture.json`
+  - It marks verification as `pending_live_verification` and documents the Vercel `429` blocker.
+- Added a required seed registry:
+  - `scripts/exhibit-ingest/sources/brooklyn-museum-required-exhibitions.json`
+  - It currently requires:
+    - `https://www.brooklynmuseum.org/exhibitions/christian-marclay`
+    - `https://www.brooklynmuseum.org/exhibitions/everyday-rebellions`
+  - It stores `minimumExpectedRecords: 8` and `listingFixtureMaxAgeDays: 14`.
+- Added Brooklyn audit and refresh helpers:
+  - `scripts/exhibit-ingest/audit-brooklyn-museum.mjs`
+  - `scripts/exhibit-ingest/refresh-brooklyn-museum-fixture.mjs`
+- Added Brooklyn tests:
+  - `scripts/exhibit-ingest/parsers/brooklyn-museum-exhibitions.test.mjs`
+  - `scripts/exhibit-ingest/audit-brooklyn-museum.test.mjs`
+  - `scripts/exhibit-ingest/refresh-brooklyn-museum-fixture.test.mjs`
+- Wired Brooklyn into ingestion and package scripts:
+  - `npm run ingest:exhibits:brooklyn-museum:stage`
+  - `npm run audit:brooklyn-museum`
+  - `npm run refresh:brooklyn-museum:fixture`
+  - `npm run review:staging:brooklyn-museum:summary`
+  - `npm run review-ui:brooklyn-museum`
+- Generated the staging artifact:
+  - `data/staging/brooklyn-museum-exhibitions.json`
+
+Commands run:
+
+```sh
+node --test scripts/exhibit-ingest/parsers/brooklyn-museum-exhibitions.test.mjs scripts/exhibit-ingest/refresh-brooklyn-museum-fixture.test.mjs
+npm run ingest:exhibits:brooklyn-museum:stage
+npm run audit:brooklyn-museum
+node --test scripts/exhibit-ingest/audit-brooklyn-museum.test.mjs
+npm run refresh:brooklyn-museum:fixture -- --help
+npm run review:staging:brooklyn-museum:summary
+```
+
+Results:
+
+- Focused Brooklyn parser and refresh tests passed.
+- Brooklyn staging generated 8 create proposals in `data/staging/brooklyn-museum-exhibitions.json`.
+- `npm run audit:brooklyn-museum` passed:
+  - Records: 8/8 minimum.
+  - Seed coverage: 2/2 present.
+  - Listing fixture age: 0 days old, within the 14-day maximum.
+- Review summary reports `needs_attention` because the source is still fixture-backed and pending live verification.
+- Review summary also warns that descriptions and image URLs are missing for 8/8 records. That is expected for this first slice because the compact listing fixture prioritized official URL/title/date coverage.
+
+Future Brooklyn refresh procedure:
+
+1. Open `https://www.brooklynmuseum.org/exhibitions` in a normal browser session.
+2. Let the public page render naturally. Do not bypass checkpoints or rate limits.
+3. Copy official exhibition card data into a JSON array with `url`, `title`, `dateText`, and optional `imageUrl`.
+4. Run:
+
+```sh
+npm run refresh:brooklyn-museum:fixture -- --input /path/to/brooklyn-cards.json --output scripts/exhibit-ingest/fixtures/brooklyn-museum-exhibitions.browser-YYYY-MM-DD.html
+```
+
+5. Point `scripts/exhibit-ingest/sources/brooklyn-museum-exhibitions.fixture.json` at the new fixture only after validation passes.
+6. Run:
+
+```sh
+npm run ingest:exhibits:brooklyn-museum:stage
+npm run audit:brooklyn-museum
+npm run review:staging:brooklyn-museum:summary
+npm test
+npm run build
+```
+
+Plain-language progress log:
+
+- Brooklyn Museum now has the same basic alarms as The Met and MoMA. If required exhibition URLs disappear, if the record count drops below 8, or if the saved browser snapshot gets older than 14 days, the audit command says so clearly.
+- Staging means a review area, not the live database. The backend database file `data/exhibit-records.json` was not changed.
+- The current Brooklyn path is useful but not fully automatic. The server-side fetch is blocked by a Vercel checkpoint from this environment, so the system uses a compact snapshot from the official page and asks for human review before promotion.
+- The next best Brooklyn work is to add detail-page enrichment for descriptions/images and to refresh the official-page fixture whenever it gets stale.
+
+## 2026-07-15 Public Launch Dataset Readiness
+
+Run time: 2026-07-15 12:23 America/Chicago / 2026-07-15T17:23Z.
+
+Goal:
+
+- Define the first public dataset for launching the exhibitions site.
+- Keep public data restricted to approved canonical records.
+- Do not promote staging records or edit the canonical backend database as part of the audit.
+
+Problem:
+
+- `data/exhibit-records.json` currently contains zero canonical records.
+- That means there are many staged proposals, but no approved backend records that should be shown on the public site yet.
+- Some staging files contain items marked `approved`, but they have not been promoted into `data/exhibit-records.json`; they are not public data until the approval flow is intentionally applied.
+
+Implemented:
+
+- Added a repeatable public launch audit:
+  - `scripts/exhibit-ingest/audit-public-launch-data.mjs`
+  - `npm run audit:public-launch`
+- Added focused tests:
+  - `scripts/exhibit-ingest/audit-public-launch-data.test.mjs`
+- Generated the launch-readiness artifact:
+  - `data/public-launch-readiness.json`
+- The artifact includes:
+  - generated timestamp and `asOf` date;
+  - canonical record counts;
+  - launch-ready record counts;
+  - excluded canonical records and reasons;
+  - venue/source coverage;
+  - critical and recommended field coverage;
+  - duplicate groups;
+  - staging inventory that is explicitly marked not public;
+  - warnings, risks, and next actions.
+
+Commands run:
+
+```sh
+node --test scripts/exhibit-ingest/audit-public-launch-data.test.mjs
+npm run audit:public-launch
+```
+
+Results:
+
+- Canonical records: 0.
+- Launch-ready public records: 0.
+- Recommended first public venue set: empty.
+- Public v1 readiness: not ready from canonical data.
+- Staging inventory: 35 staging report files, 300 pending staged items, and 10 staged items already marked approved but not promoted.
+- The staging inventory count includes both ordinary fixture-backed staging files and `.live.json` verification artifacts. Treat it as review-file inventory, not a deduped public exhibit count.
+
+Public launch interpretation:
+
+- The public site can be built now, but the public listings dataset is empty until records are approved and promoted.
+- The next launch-critical action is not another scraper. It is approving a first public slice from staging, then running the existing promotion flow into `data/exhibit-records.json`.
+- Good first approval candidates are sources with `verified_live` staging and low record counts, then carefully reviewed hard sources like Met, MoMA, and Brooklyn once their fixture-backed warnings are accepted.
+
+Plain-language progress log:
+
+- The audit found the sharp edge: the review pipeline has lots of proposed exhibits, but the public database is empty.
+- A public website should read the public database, not staging. Staging is the workbench; the public database is the shelf visitors see.
+- The project is close to shareable, but the next step is a human approval pass that moves selected staged exhibits into the canonical database.
+- After that approval pass, `npm run audit:public-launch` will tell us exactly what can go online.
+
+## 2026-07-15 Review App Approval Promotion
+
+Run time: 2026-07-15 12:45 America/Chicago / 2026-07-15T17:45Z.
+
+Goal:
+
+- Make the review app match the desired operator workflow: clicking Approve should update the public backend database, not only the staging file.
+
+Implemented:
+
+- Updated `scripts/exhibit-ingest/review-ui.mjs` so an `approved` decision:
+  - marks the staged item approved;
+  - runs the existing validated approval plan;
+  - writes the clicked eligible staged create proposal into `data/exhibit-records.json`;
+  - skips records that already exist in canonical data.
+- Added `--records` support to the review UI for testability and future deployment flexibility.
+- Updated the in-app safety note so it now says approval writes eligible create proposals to the canonical public backend database.
+- Added a regression test proving `applyReviewDecision` promotes approved creates into canonical records:
+  - `scripts/exhibit-ingest/review-ui.test.mjs`
+
+Commands run:
+
+```sh
+node --test scripts/exhibit-ingest/review-ui.test.mjs scripts/exhibit-ingest/approve-staging.test.mjs scripts/exhibit-ingest/audit-public-launch-data.test.mjs
+npm test
+npm run build
+```
+
+Results:
+
+- Focused approval/review tests passed.
+- Full test suite passed: 92 tests.
+- Production build passed.
+- The local review app was restarted at `http://127.0.0.1:8765` with canonical records file `data/exhibit-records.json`.
+
+Plain-language progress log:
+
+- The review app now does the thing a reviewer expects: Approve means "approve and publish this record to the backend database," for eligible new exhibition records.
+- Reject and Needs Revision still only affect staging.
+- The public site should still read from `data/exhibit-records.json`, not staging files.
+- After approving records, run `npm run audit:public-launch` to see what is launch-ready.
+
+## 2026-07-15 Met Link Correction and Approval Guard
+
+Run time: 2026-07-15 12:49 America/Chicago / 2026-07-15T17:49Z.
+
+Goal:
+
+- Fix stale or incorrect Met exhibition links before any Met records can be promoted to the public backend database.
+- Keep Met records staging-only. No Met records were approved or promoted.
+
+Problem:
+
+- The Met staging file still came from `scripts/exhibit-ingest/fixtures/met-exhibitions.browser-2026-06-29.html`.
+- That old fixture still produced 24 records, so a count-only audit looked healthy even though the official Met listing had changed.
+- The live official listing on `https://www.metmuseum.org/exhibitions` now includes current URLs such as:
+  - `https://www.metmuseum.org/exhibitions/orientalism-between-fact-and-fantasy`
+  - `https://www.metmuseum.org/exhibitions/creatures-of-myth-and-imagination-europe-and-the-americas`
+  - `https://www.metmuseum.org/exhibitions/gothic-by-design-the-dawn-of-architectural-draftsmanship`
+  - `https://www.metmuseum.org/exhibitions/the-face-of-life-modern-portraits-at-the-met`
+  - `https://www.metmuseum.org/exhibitions/city-of-memory-nanjing-in-the-17th-century`
+  - `https://www.metmuseum.org/exhibitions/lillian-bassman-bazaar-and-beyond`
+- Old snapshot-only URLs such as `superfine-tailoring-black-style`, `sargent-dazzling-paris`, `caspar-david-friedrich-soul-of-nature`, `city-life-1700s`, and `ps-art-2025` were no longer in the refreshed current/upcoming Met staging set.
+
+Implemented:
+
+- Created a dated source-card artifact from the current official Met listing:
+  - `scripts/exhibit-ingest/fixtures/met-exhibitions.browser-2026-07-15.cards.json`
+- Built a refreshed compact fixture with the existing builder:
+  - `scripts/exhibit-ingest/fixtures/met-exhibitions.browser-2026-07-15.html`
+- Pointed Met source config to the refreshed fixture:
+  - `scripts/exhibit-ingest/sources/met-exhibitions.fixture.json`
+- Regenerated Met staging:
+  - `data/staging/met-exhibitions.json`
+- Expanded required Met seed coverage from 1 URL to 11 active URLs:
+  - `scripts/exhibit-ingest/sources/met-required-exhibitions.json`
+- Added review-app approval protection for Met:
+  - `scripts/exhibit-ingest/review-ui.mjs`
+  - Clicking Approve for a Met staging record now runs the Met audit first.
+  - If the audit fails, the record is not marked approved and is not promoted to `data/exhibit-records.json`.
+  - The error message starts with: `Met approval blocked: source audit failed.`
+- Added regression tests:
+  - Met audit fails when required seed URLs are missing.
+  - Review approval refuses to promote Met records when the Met audit fails.
+  - Review approval still works for Met when the audit passes.
+
+Commands run:
+
+```sh
+npm run refresh:met:fixture -- --input scripts/exhibit-ingest/fixtures/met-exhibitions.browser-2026-07-15.cards.json --output scripts/exhibit-ingest/fixtures/met-exhibitions.browser-2026-07-15.html --min-records 24
+npm run ingest:exhibits:met:stage
+node --test scripts/exhibit-ingest/audit-met.test.mjs scripts/exhibit-ingest/review-ui.test.mjs scripts/exhibit-ingest/parsers/met-exhibitions.test.mjs scripts/exhibit-ingest/refresh-met-fixture.test.mjs
+npm run audit:met
+npm run review:staging:met:summary
+```
+
+Results:
+
+- Met staging now contains 24 current official Met URLs from the refreshed 2026-07-15 listing fixture.
+- `npm run audit:met` passes:
+  - Records: 24/24 minimum.
+  - Required seed coverage: 11/11 present.
+  - Fixture age: within the 14-day maximum.
+- URL sanity check confirmed the required current URLs are present and the sampled stale old fixture URLs are absent.
+- Met review summary still reports `needs_attention` because this source remains `pending_live_verification` and many listing cards lack start dates, descriptions, and images. That is separate from the link-staleness fix.
+
+Plain-language progress log:
+
+- The Met problem was not that the parser made up bad links. The problem was that it was reading an old saved copy of the Met page.
+- The saved copy has now been refreshed from the official Met exhibitions page.
+- The system now checks for a list of specific important Met URLs, not just a total count.
+- The review app now refuses to publish Met records if the Met audit is failing.
+- The next Met improvement is detail-page enrichment for descriptions, images, and better start dates, but the stale-link failure mode is now guarded.
+
+## 2026-07-15 Met Review Preview Fallback
+
+Run time: 2026-07-15 13:00 America/Chicago / 2026-07-15T18:00Z.
+
+Problem:
+
+- The review app embedded source pages through the local `/preview` proxy.
+- Met URLs can return a browser verification page in that embedded server-side preview, which made the review pane show `Failed to verify your browser` instead of useful source context.
+- This should not be bypassed. The review app should route reviewers to the official page in a normal browser tab when the embedded preview is not reliable.
+
+Implemented:
+
+- Added a Met host preview fallback in `scripts/exhibit-ingest/review-ui.mjs`.
+- Met source URLs now show a clear `Source preview unavailable` panel with a direct `Open official source` link instead of loading the broken iframe.
+- The `/preview` route also returns the fallback for Met URLs if opened directly.
+- Added a regression test in `scripts/exhibit-ingest/review-ui.test.mjs` so Met URLs remain classified as embedded-preview blocked.
+
+Plain-language progress log:
+
+- The review app is no longer surprised by the Met verification wall.
+- The official Met link remains one click away for review.
+- This is a reviewer workflow fix, not a scraping bypass or a data promotion.
+
+## 2026-07-15 Closed Exhibition Staging Lifecycle
+
+Run time: 2026-07-15 13:30 America/Chicago / 2026-07-15T18:30Z.
+
+Problem:
+
+- Staging reports are static JSON review inboxes.
+- If an exhibition was staged while active and then its `endDate` passed before review, it remained in the review app as pending clutter.
+- This made closed exhibitions look like current actionable work.
+
+Implemented:
+
+- Added a closed-staging pruning utility:
+  - `scripts/exhibit-ingest/prune-closed-staging.mjs`
+  - `npm run prune:staging:closed`
+- The pruning rule is conservative:
+  - removes only `pending` or `needs_revision` staged exhibition items;
+  - requires a real ISO `proposed.endDate`;
+  - removes only when `endDate` is before the local as-of date;
+  - keeps items ending today, items without an exact end date, and approved/rejected staging history.
+- Wired the review app to prune closed staging items on startup and again when a selected staging file is loaded.
+- Added tests in `scripts/exhibit-ingest/prune-closed-staging.test.mjs`.
+- Updated Brooklyn Museum and MoMA required seed registries so active guardrails no longer require already-closed exhibitions.
+
+Applied cleanup:
+
+- Ran `npm run prune:staging:closed` on 2026-07-15.
+- Removed 17 closed pending staging items across Bronx Museum, Brooklyn Museum, David Zwirner, Guggenheim, MoMA, and New Museum staging files.
+- One old legacy artist staging file was skipped because it does not match the current exhibition staging schema:
+  - `data/staging/margot-nielsen-2026-06-16-david-zwirner-artists.json`
+
+Commands run:
+
+```sh
+npm run prune:staging:closed -- --dry-run
+npm run prune:staging:closed
+node --test scripts/exhibit-ingest/audit-brooklyn-museum.test.mjs scripts/exhibit-ingest/audit-moma.test.mjs scripts/exhibit-ingest/prune-closed-staging.test.mjs
+npm test
+npm run build
+```
+
+Results:
+
+- Focused lifecycle and affected audit tests passed.
+- Full test suite passed with 98 tests.
+- Production build passed.
+
+Plain-language progress log:
+
+- The review app now cleans out closed pending exhibitions instead of letting them pile up.
+- The command can also be run manually before or after ingest refreshes.
+- This only cleans the staging review inbox. It does not delete approved canonical public records.
+
+## 2026-07-15 Public Launch Dataset Refresh
+
+Run time: 2026-07-15 13:45 America/Chicago / 2026-07-15T18:45Z.
+
+Goal:
+
+- Refresh Phase 1, Step 1 after human approvals were made in the review app.
+- Define the first public dataset from canonical approved records only.
+- Do not promote any staging records during this audit.
+
+Implemented:
+
+- Updated the repeatable public-launch audit:
+  - `scripts/exhibit-ingest/audit-public-launch-data.mjs`
+  - `npm run audit:public-launch`
+- The audit now explicitly treats `reviewStatus: approved` as required for public launch.
+- The readiness artifact now includes a concrete `launchReadyRecords` list with id, title, venue, date fields, and official URL.
+- Regenerated:
+  - `data/public-launch-readiness.json`
+
+Current public-launch dataset:
+
+- Canonical records: 17.
+- Approved canonical exhibition records: 17.
+- Launch-ready records: 17.
+- Excluded canonical records: 0.
+- Duplicate groups: 0.
+- Recommended first public venue set:
+  - The Jewish Museum
+  - The Morgan Library & Museum
+- Additional launchable seed:
+  - The Metropolitan Museum of Art: 1 record, `Orientalism: Between Fact and Fantasy`
+
+Coverage:
+
+- Venue/source coverage:
+  - The Jewish Museum: 8 records.
+  - The Morgan Library & Museum: 8 records.
+  - The Metropolitan Museum of Art: 1 record.
+- Critical fields:
+  - title: 17/17.
+  - venue: 17/17.
+  - sourceUrl: 17/17.
+  - exhibitionUrl: 17/17.
+  - at least one date signal: 17/17.
+- Recommended fields:
+  - imageUrl: 16/17.
+  - venueAddress, city, borough: 17/17.
+  - description: 1/17.
+  - neighborhood: 9/17.
+
+Excluded from public launch:
+
+- Staging remains not public unless approved and promoted into `data/exhibit-records.json`.
+- Current staging inventory: 257 pending staged items and 33 staged items marked approved in staging.
+- Those staged records are useful review work, but they are not part of the public launch dataset until the approval flow writes them to canonical data.
+
+Public v1 decision:
+
+- Ready for a public v1 from canonical data.
+- The safest first public slice is The Jewish Museum plus The Morgan Library & Museum, with the approved Met Orientalism record included if the product wants to show all canonical records rather than only venues with three or more records.
+- The site should read from `data/exhibit-records.json` or from `data/public-launch-readiness.json.launchReadyRecords`, not from `data/staging/*.json`.
+
+Commands run:
+
+```sh
+npm run audit:public-launch
+```
+
+Plain-language progress log:
+
+- The public shelf is no longer empty. There are 17 approved exhibition records ready to show on a website.
+- The biggest difference is that approved canonical records are public-ready, while staging records are still just review candidates.
+- The site can launch with a small, honest first dataset now.
+- More museums can be added by approving more staged records in the review app and rerunning `npm run audit:public-launch`.

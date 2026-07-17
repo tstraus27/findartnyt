@@ -88,7 +88,7 @@ test('parseBronxMuseumExhibitionsPage keeps the current exhibition-card grid and
     reviewStatus: 'needs_review',
     lastCheckedAt: null,
     sourceNotes:
-      'Parsed from The Bronx Museum official exhibitions archive using only the visible Current exhibition-card grid after the filter links. The featured-show hero is ignored to avoid duplicate staging, Upcoming and Archive filters remain out of scope, and youth-program cards are currently staged when they appear in the same official Current grid.'
+      'Parsed from The Bronx Museum official exhibitions archive using visible Current and Upcoming exhibition-card grids after the filter links. The featured-show hero is ignored to avoid duplicate staging, Archive filters remain out of scope, and youth-program cards are currently staged when they appear in the same official exhibition grids.'
   });
   assert.equal(records[1].title, 'Teen Council Spring 2026 Exhibition: ‘Museum of the Self’');
   assert.equal(records[1].startDate, '2026-06-08');
@@ -104,4 +104,20 @@ test('parseBronxMuseumExhibitionsPage de-duplicates repeated current cards', () 
   });
 
   assert.equal(records.length, 2);
+});
+
+test('parseBronxMuseumExhibitionsPage stages upcoming filter cards as upcoming', () => {
+  const upcomingHtml = html
+    .replace('href="https://bronxmuseum.org/exhibitions/" class="show-category active"', 'href="https://bronxmuseum.org/exhibitions/" class="show-category "')
+    .replace('href="https://bronxmuseum.org/exhibitions/?date_filter=upcoming" class="show-category "', 'href="https://bronxmuseum.org/exhibitions/?date_filter=upcoming" class="show-category active"')
+    .replaceAll('Jan 23 - Sep 6, 2026', 'Oct 1 - Dec 12, 2026');
+
+  const records = parseBronxMuseumExhibitionsPage({
+    html: upcomingHtml,
+    url: 'https://bronxmuseum.org/exhibitions/?date_filter=upcoming'
+  });
+
+  assert.equal(records.length, 2);
+  assert.deepEqual(records[0].tags, ['upcoming']);
+  assert.equal(records[0].startDate, '2026-10-01');
 });

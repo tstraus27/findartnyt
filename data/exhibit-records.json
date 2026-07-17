@@ -1,3 +1,1442 @@
 {
-  "records": []
+  "records": [
+    {
+      "id": "exhibition:morgan:hujar-contact",
+      "type": "exhibition",
+      "title": "Hujar:Contact",
+      "venue": "The Morgan Library & Museum",
+      "startDate": "2026-05-22",
+      "endDate": "2026-10-25",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "225 Madison Avenue, New York, NY 10016",
+      "neighborhood": null,
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://www.themorgan.org/sites/default/files/exhibitions/teasers/Hujar-Self-portraits_t.jpg",
+      "exhibitionUrl": "https://www.themorgan.org/exhibitions/hujar-contact",
+      "sourceUrl": "https://www.themorgan.org/exhibitions/hujar-contact",
+      "openingReceptionDate": null,
+      "tags": [
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-25T16:46:27.184Z",
+      "sources": [
+        {
+          "url": "https://www.themorgan.org/exhibitions/hujar-contact",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-25T16:46:27.184Z",
+          "notes": "Official The Morgan Library & Museum current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:03:00.874Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:morgan-exhibitions:exhibition:morgan:hujar-contact:create.",
+          "sourceUrl": "https://www.themorgan.org/exhibitions/hujar-contact"
+        }
+      ],
+      "createdAt": "2026-07-15T18:03:00.874Z",
+      "updatedAt": "2026-07-15T18:03:00.874Z"
+    },
+    {
+      "id": "exhibition:morgan:ashbery-collection",
+      "type": "exhibition",
+      "title": "Friends Who Came to See Me: Drawings from John Ashbery’s Collection",
+      "venue": "The Morgan Library & Museum",
+      "startDate": "2026-05-01",
+      "endDate": "2026-10-25",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "225 Madison Avenue, New York, NY 10016",
+      "neighborhood": null,
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://www.themorgan.org/sites/default/files/press/Kitaj_Portrait-of-Ashbery_2019_t.jpg",
+      "exhibitionUrl": "https://www.themorgan.org/exhibitions/ashbery-collection",
+      "sourceUrl": "https://www.themorgan.org/exhibitions/ashbery-collection",
+      "openingReceptionDate": null,
+      "tags": [
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-25T16:46:27.184Z",
+      "sources": [
+        {
+          "url": "https://www.themorgan.org/exhibitions/ashbery-collection",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-25T16:46:27.184Z",
+          "notes": "Official The Morgan Library & Museum current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:03:06.581Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:morgan-exhibitions:exhibition:morgan:ashbery-collection:create.",
+          "sourceUrl": "https://www.themorgan.org/exhibitions/ashbery-collection"
+        }
+      ],
+      "createdAt": "2026-07-15T18:03:06.581Z",
+      "updatedAt": "2026-07-15T18:03:06.581Z"
+    },
+    {
+      "id": "exhibition:morgan:tarot",
+      "type": "exhibition",
+      "title": "Tarot! Renaissance Symbols, Modern Visions",
+      "venue": "The Morgan Library & Museum",
+      "startDate": "2026-06-26",
+      "endDate": "2026-10-04",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "225 Madison Avenue, New York, NY 10016",
+      "neighborhood": null,
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://www.themorgan.org/sites/default/files/exhibitions/teasers/tarot-medieval-modern_t.jpg",
+      "exhibitionUrl": "https://www.themorgan.org/exhibitions/tarot",
+      "sourceUrl": "https://www.themorgan.org/exhibitions/tarot",
+      "openingReceptionDate": null,
+      "tags": [
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-25T16:46:27.184Z",
+      "sources": [
+        {
+          "url": "https://www.themorgan.org/exhibitions/tarot",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-25T16:46:27.184Z",
+          "notes": "Official The Morgan Library & Museum current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:03:35.653Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:morgan-exhibitions:exhibition:morgan:tarot:create.",
+          "sourceUrl": "https://www.themorgan.org/exhibitions/tarot"
+        }
+      ],
+      "createdAt": "2026-07-15T18:03:35.653Z",
+      "updatedAt": "2026-07-15T18:03:35.653Z"
+    },
+    {
+      "id": "exhibition:morgan:rembrandts-lions",
+      "type": "exhibition",
+      "title": "Rembrandt’s Lions: Art and Exile in the Dutch Republic",
+      "venue": "The Morgan Library & Museum",
+      "startDate": "2026-10-23",
+      "endDate": "2027-01-31",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "225 Madison Avenue, New York, NY 10016",
+      "neighborhood": null,
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://www.themorgan.org/sites/default/files/exhibitions/teasers/rembrandt_179931v_0001_t.jpg",
+      "exhibitionUrl": "https://www.themorgan.org/exhibitions/rembrandts-lions",
+      "sourceUrl": "https://www.themorgan.org/exhibitions/rembrandts-lions",
+      "openingReceptionDate": null,
+      "tags": [
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-25T16:46:27.184Z",
+      "sources": [
+        {
+          "url": "https://www.themorgan.org/exhibitions/rembrandts-lions",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-25T16:46:27.184Z",
+          "notes": "Official The Morgan Library & Museum current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:03:40.633Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:morgan-exhibitions:exhibition:morgan:rembrandts-lions:create.",
+          "sourceUrl": "https://www.themorgan.org/exhibitions/rembrandts-lions"
+        }
+      ],
+      "createdAt": "2026-07-15T18:03:40.633Z",
+      "updatedAt": "2026-07-15T18:03:40.633Z"
+    },
+    {
+      "id": "exhibition:morgan:johan-tobias-sergel",
+      "type": "exhibition",
+      "title": "Fantasy and Reality: The Art of Johan Tobias Sergel",
+      "venue": "The Morgan Library & Museum",
+      "startDate": "2026-10-30",
+      "endDate": "2027-01-31",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "225 Madison Avenue, New York, NY 10016",
+      "neighborhood": null,
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://www.themorgan.org/sites/default/files/exhibitions/teasers/Sergel_Sk0357_t.jpg",
+      "exhibitionUrl": "https://www.themorgan.org/exhibitions/johan-tobias-sergel",
+      "sourceUrl": "https://www.themorgan.org/exhibitions/johan-tobias-sergel",
+      "openingReceptionDate": null,
+      "tags": [
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-25T16:46:27.184Z",
+      "sources": [
+        {
+          "url": "https://www.themorgan.org/exhibitions/johan-tobias-sergel",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-25T16:46:27.184Z",
+          "notes": "Official The Morgan Library & Museum current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:03:56.032Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:morgan-exhibitions:exhibition:morgan:johan-tobias-sergel:create.",
+          "sourceUrl": "https://www.themorgan.org/exhibitions/johan-tobias-sergel"
+        }
+      ],
+      "createdAt": "2026-07-15T18:03:56.032Z",
+      "updatedAt": "2026-07-15T18:03:56.032Z"
+    },
+    {
+      "id": "exhibition:morgan:blockbooks",
+      "type": "exhibition",
+      "title": "Graphic Devotions: Late Medieval European Blockbooks",
+      "venue": "The Morgan Library & Museum",
+      "startDate": "2026-11-06",
+      "endDate": "2027-05-16",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "225 Madison Avenue, New York, NY 10016",
+      "neighborhood": null,
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://www.themorgan.org/sites/default/files/exhibitions/teasers/ars-morendi_t.jpg",
+      "exhibitionUrl": "https://www.themorgan.org/exhibitions/blockbooks",
+      "sourceUrl": "https://www.themorgan.org/exhibitions/blockbooks",
+      "openingReceptionDate": null,
+      "tags": [
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-25T16:46:27.184Z",
+      "sources": [
+        {
+          "url": "https://www.themorgan.org/exhibitions/blockbooks",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-25T16:46:27.184Z",
+          "notes": "Official The Morgan Library & Museum current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:04:18.936Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:morgan-exhibitions:exhibition:morgan:blockbooks:create.",
+          "sourceUrl": "https://www.themorgan.org/exhibitions/blockbooks"
+        }
+      ],
+      "createdAt": "2026-07-15T18:04:18.936Z",
+      "updatedAt": "2026-07-15T18:04:18.936Z"
+    },
+    {
+      "id": "exhibition:morgan:ragtime",
+      "type": "exhibition",
+      "title": "Ragtime: Cakewalk in Pianoland",
+      "venue": "The Morgan Library & Museum",
+      "startDate": "2026-11-13",
+      "endDate": "2027-06-13",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "225 Madison Avenue, New York, NY 10016",
+      "neighborhood": null,
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://www.themorgan.org/sites/default/files/exhibitions/teasers/joplin_t2.jpg",
+      "exhibitionUrl": "https://www.themorgan.org/exhibitions/ragtime",
+      "sourceUrl": "https://www.themorgan.org/exhibitions/ragtime",
+      "openingReceptionDate": null,
+      "tags": [
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-25T16:46:27.184Z",
+      "sources": [
+        {
+          "url": "https://www.themorgan.org/exhibitions/ragtime",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-25T16:46:27.184Z",
+          "notes": "Official The Morgan Library & Museum current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:04:26.081Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:morgan-exhibitions:exhibition:morgan:ragtime:create.",
+          "sourceUrl": "https://www.themorgan.org/exhibitions/ragtime"
+        }
+      ],
+      "createdAt": "2026-07-15T18:04:26.081Z",
+      "updatedAt": "2026-07-15T18:04:26.081Z"
+    },
+    {
+      "id": "exhibition:morgan:william-blake",
+      "type": "exhibition",
+      "title": "William Blake: Paradise Lost",
+      "venue": "The Morgan Library & Museum",
+      "startDate": "2027-02-26",
+      "endDate": "2027-05-23",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "225 Madison Avenue, New York, NY 10016",
+      "neighborhood": null,
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://www.themorgan.org/sites/default/files/exhibitions/teasers/Blake_Temptation_Fall_Eve_MFABoston_SC513757_t.jpg",
+      "exhibitionUrl": "https://www.themorgan.org/exhibitions/william-blake",
+      "sourceUrl": "https://www.themorgan.org/exhibitions/william-blake",
+      "openingReceptionDate": null,
+      "tags": [
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-25T16:46:27.184Z",
+      "sources": [
+        {
+          "url": "https://www.themorgan.org/exhibitions/william-blake",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-25T16:46:27.184Z",
+          "notes": "Official The Morgan Library & Museum current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:04:32.248Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:morgan-exhibitions:exhibition:morgan:william-blake:create.",
+          "sourceUrl": "https://www.themorgan.org/exhibitions/william-blake"
+        }
+      ],
+      "createdAt": "2026-07-15T18:04:32.248Z",
+      "updatedAt": "2026-07-15T18:04:32.248Z"
+    },
+    {
+      "id": "exhibition:met:orientalism-between-fact-and-fantasy",
+      "type": "exhibition",
+      "title": "Orientalism: Between Fact and Fantasy",
+      "venue": "The Metropolitan Museum of Art",
+      "startDate": null,
+      "endDate": "2027-02-28",
+      "dateText": "Through February 28, 2027",
+      "description": "This Met exhibition examines 19th-century European and Ottoman images of the East through painting, drawings, photographs, illustrated books, architecture, arms and armor, textiles, garments, glassware, ceramics, and metalwork, bringing together approximately 180 objects from across Met departments and outside loans.",
+      "artists": [],
+      "curators": [],
+      "venueAddress": "1000 Fifth Avenue, New York, NY 10028",
+      "neighborhood": "Upper East Side",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": null,
+      "exhibitionUrl": "https://www.metmuseum.org/exhibitions/orientalism-between-fact-and-fantasy",
+      "sourceUrl": "https://www.metmuseum.org/exhibitions/orientalism-between-fact-and-fantasy",
+      "openingReceptionDate": null,
+      "tags": [
+        "browser-assisted-snapshot",
+        "featured",
+        "seeded-detail-page"
+      ],
+      "sourceConfidence": "medium",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-07-15T17:48:45.536Z",
+      "sources": [
+        {
+          "url": "https://www.metmuseum.org/exhibitions/orientalism-between-fact-and-fantasy",
+          "sourceType": "official_venue",
+          "reliability": "medium",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-07-15T17:48:45.536Z",
+          "notes": "Official Met featured, recently opened, closing soon, more temporary, and upcoming exhibition cards from a browser-assisted compact snapshot, plus explicit official detail-page seed fixtures for known missing exhibitions. Direct automated backend fetch is currently blocked by Vercel 429, so this source is not a fully automated live ingestion path."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:41:26.167Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:met-exhibitions:exhibition:met:orientalism-between-fact-and-fantasy:create.",
+          "sourceUrl": "https://www.metmuseum.org/exhibitions/orientalism-between-fact-and-fantasy"
+        }
+      ],
+      "createdAt": "2026-07-15T18:41:26.167Z",
+      "updatedAt": "2026-07-15T18:41:26.167Z"
+    },
+    {
+      "id": "exhibition:jewish-museum:collection-exhibition-and-center-for-learning-october-2025",
+      "type": "exhibition",
+      "title": "Identity, Culture, and Community: Stories from the Collection of the Jewish Museum and Pruzan Family Center for Learning",
+      "venue": "The Jewish Museum",
+      "startDate": "2025-10-24",
+      "endDate": null,
+      "dateText": "Oct. 24, 2025 — Ongoing",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "1109 5th Avenue, New York, NY 10128",
+      "neighborhood": "Upper East Side",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://thejewishmuseum.org/wp-content/uploads/2025/06/JM101525_125-Resize-to_-Website-Hero-700px-H-72dpi-jpg.jpg",
+      "exhibitionUrl": "https://thejewishmuseum.org/exhibitions/collection-exhibition-and-center-for-learning-october-2025/",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/collection-exhibition-and-center-for-learning-october-2025/",
+      "openingReceptionDate": null,
+      "tags": [
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-24T19:12:52.148Z",
+      "sources": [
+        {
+          "url": "https://thejewishmuseum.org/exhibitions/collection-exhibition-and-center-for-learning-october-2025/",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-24T19:12:52.148Z",
+          "notes": "Official The Jewish Museum exhibitions page server-rendered cards only. Stages the visible on-view and coming-soon exhibition cards before the client-side schedule calendar; React calendar content and detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:50:48.410Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:jewish-museum-exhibitions:exhibition:jewish-museum:collection-exhibition-and-center-for-learning-october-2025:create.",
+          "sourceUrl": "https://thejewishmuseum.org/exhibitions/collection-exhibition-and-center-for-learning-october-2025/"
+        }
+      ],
+      "createdAt": "2026-07-15T18:50:48.410Z",
+      "updatedAt": "2026-07-15T18:50:48.410Z"
+    },
+    {
+      "id": "exhibition:jewish-museum:paul-klee-other-possible-worlds",
+      "type": "exhibition",
+      "title": "Paul Klee: Other Possible Worlds",
+      "venue": "The Jewish Museum",
+      "startDate": "2026-03-20",
+      "endDate": "2026-07-26",
+      "dateText": "Mar. 20 — Jul. 26, 2026",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "1109 5th Avenue, New York, NY 10128",
+      "neighborhood": "Upper East Side",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://thejewishmuseum.org/wp-content/uploads/2026/03/Klee-Paul-Angelus-Novus-1920_B87_0994-Resize-to_-Website-Hero-700px-H-72dpi-jpg-1.jpg",
+      "exhibitionUrl": "https://thejewishmuseum.org/exhibitions/paul-klee-other-possible-worlds/",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/paul-klee-other-possible-worlds/",
+      "openingReceptionDate": null,
+      "tags": [
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-24T19:12:52.148Z",
+      "sources": [
+        {
+          "url": "https://thejewishmuseum.org/exhibitions/paul-klee-other-possible-worlds/",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-24T19:12:52.148Z",
+          "notes": "Official The Jewish Museum exhibitions page server-rendered cards only. Stages the visible on-view and coming-soon exhibition cards before the client-side schedule calendar; React calendar content and detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:51:01.110Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:jewish-museum-exhibitions:exhibition:jewish-museum:paul-klee-other-possible-worlds:create.",
+          "sourceUrl": "https://thejewishmuseum.org/exhibitions/paul-klee-other-possible-worlds/"
+        }
+      ],
+      "createdAt": "2026-07-15T18:51:01.110Z",
+      "updatedAt": "2026-07-15T18:51:01.110Z"
+    },
+    {
+      "id": "exhibition:jewish-museum:walter-benjamin-and-the-edges-of-photography",
+      "type": "exhibition",
+      "title": "Focus Gallery: Walter Benjamin and the Edges of Photography",
+      "venue": "The Jewish Museum",
+      "startDate": "2026-05-15",
+      "endDate": "2026-08-09",
+      "dateText": "May 15 — Aug. 9, 2026",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "1109 5th Avenue, New York, NY 10128",
+      "neighborhood": "Upper East Side",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://thejewishmuseum.org/wp-content/uploads/2026/05/JM_051426_17-Resize-to_-Website-Hero-700px-H-72dpi-jpg.jpg",
+      "exhibitionUrl": "https://thejewishmuseum.org/exhibitions/walter-benjamin-and-the-edges-of-photography/",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/walter-benjamin-and-the-edges-of-photography/",
+      "openingReceptionDate": null,
+      "tags": [
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-24T19:12:52.148Z",
+      "sources": [
+        {
+          "url": "https://thejewishmuseum.org/exhibitions/walter-benjamin-and-the-edges-of-photography/",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-24T19:12:52.148Z",
+          "notes": "Official The Jewish Museum exhibitions page server-rendered cards only. Stages the visible on-view and coming-soon exhibition cards before the client-side schedule calendar; React calendar content and detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:51:10.652Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:jewish-museum-exhibitions:exhibition:jewish-museum:walter-benjamin-and-the-edges-of-photography:create.",
+          "sourceUrl": "https://thejewishmuseum.org/exhibitions/walter-benjamin-and-the-edges-of-photography/"
+        }
+      ],
+      "createdAt": "2026-07-15T18:51:10.652Z",
+      "updatedAt": "2026-07-15T18:51:10.652Z"
+    },
+    {
+      "id": "exhibition:jewish-museum:circa-1776-jews-in-colonial-america",
+      "type": "exhibition",
+      "title": "Focus Gallery: Circa 1776: Jews in Colonial America",
+      "venue": "The Jewish Museum",
+      "startDate": "2025-10-24",
+      "endDate": "2026-08-09",
+      "dateText": "Oct. 24, 2025 — Aug. 9, 2026",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "1109 5th Avenue, New York, NY 10128",
+      "neighborhood": "Upper East Side",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://thejewishmuseum.org/wp-content/uploads/2026/03/tjm-1996-6_1-jarvis-Resize-to_-Website-Hero-700px-H-72dpi-jpg.jpg",
+      "exhibitionUrl": "https://thejewishmuseum.org/exhibitions/circa-1776-jews-in-colonial-america/",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/circa-1776-jews-in-colonial-america/",
+      "openingReceptionDate": null,
+      "tags": [
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-24T19:12:52.148Z",
+      "sources": [
+        {
+          "url": "https://thejewishmuseum.org/exhibitions/circa-1776-jews-in-colonial-america/",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-24T19:12:52.148Z",
+          "notes": "Official The Jewish Museum exhibitions page server-rendered cards only. Stages the visible on-view and coming-soon exhibition cards before the client-side schedule calendar; React calendar content and detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T18:51:17.846Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:jewish-museum-exhibitions:exhibition:jewish-museum:circa-1776-jews-in-colonial-america:create.",
+          "sourceUrl": "https://thejewishmuseum.org/exhibitions/circa-1776-jews-in-colonial-america/"
+        }
+      ],
+      "createdAt": "2026-07-15T18:51:17.846Z",
+      "updatedAt": "2026-07-15T18:51:17.846Z"
+    },
+    {
+      "id": "exhibition:jewish-museum:sacred-splendor-jewish-ritual-art-and-christian-treasures-from-st-vitus-cathedral-in-prague",
+      "type": "exhibition",
+      "title": "Sacred Splendor: Jewish Ritual Art and Christian Treasures from St. Vitus Cathedral in Prague",
+      "venue": "The Jewish Museum",
+      "startDate": "2026-09-18",
+      "endDate": "2027-02-07",
+      "dateText": "Sep. 18, 2026 — Feb. 7, 2027",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "1109 5th Avenue, New York, NY 10128",
+      "neighborhood": "Upper East Side",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://thejewishmuseum.org/wp-content/uploads/2026/01/Fragments-of-Memory_01.png",
+      "exhibitionUrl": "https://thejewishmuseum.org/exhibitions/sacred-splendor-jewish-ritual-art-and-christian-treasures-from-st-vitus-cathedral-in-prague/",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/sacred-splendor-jewish-ritual-art-and-christian-treasures-from-st-vitus-cathedral-in-prague/",
+      "openingReceptionDate": null,
+      "tags": [
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-24T19:12:52.148Z",
+      "sources": [
+        {
+          "url": "https://thejewishmuseum.org/exhibitions/sacred-splendor-jewish-ritual-art-and-christian-treasures-from-st-vitus-cathedral-in-prague/",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-24T19:12:52.148Z",
+          "notes": "Official The Jewish Museum exhibitions page server-rendered cards only. Stages the visible on-view and coming-soon exhibition cards before the client-side schedule calendar; React calendar content and detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T19:01:48.444Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:jewish-museum-exhibitions:exhibition:jewish-museum:sacred-splendor-jewish-ritual-art-and-christian-treasures-from-st-vitus-cathedral-in-prague:create.",
+          "sourceUrl": "https://thejewishmuseum.org/exhibitions/sacred-splendor-jewish-ritual-art-and-christian-treasures-from-st-vitus-cathedral-in-prague/"
+        }
+      ],
+      "createdAt": "2026-07-15T19:01:48.444Z",
+      "updatedAt": "2026-07-15T19:01:48.444Z"
+    },
+    {
+      "id": "exhibition:jewish-museum:ruth-patir-motherland",
+      "type": "exhibition",
+      "title": "Ruth Patir: (M)otherland",
+      "venue": "The Jewish Museum",
+      "startDate": "2026-12-18",
+      "endDate": "2027-06-07",
+      "dateText": "Dec. 18, 2026 — Jun. 7, 2027",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "1109 5th Avenue, New York, NY 10128",
+      "neighborhood": "Upper East Side",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://thejewishmuseum.org/wp-content/uploads/2025/07/Ruth_Patir_Intake.jpg",
+      "exhibitionUrl": "https://thejewishmuseum.org/exhibitions/ruth-patir-motherland/",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/ruth-patir-motherland/",
+      "openingReceptionDate": null,
+      "tags": [
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-24T19:12:52.148Z",
+      "sources": [
+        {
+          "url": "https://thejewishmuseum.org/exhibitions/ruth-patir-motherland/",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-24T19:12:52.148Z",
+          "notes": "Official The Jewish Museum exhibitions page server-rendered cards only. Stages the visible on-view and coming-soon exhibition cards before the client-side schedule calendar; React calendar content and detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T19:01:58.893Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:jewish-museum-exhibitions:exhibition:jewish-museum:ruth-patir-motherland:create.",
+          "sourceUrl": "https://thejewishmuseum.org/exhibitions/ruth-patir-motherland/"
+        }
+      ],
+      "createdAt": "2026-07-15T19:01:58.893Z",
+      "updatedAt": "2026-07-15T19:01:58.893Z"
+    },
+    {
+      "id": "exhibition:jewish-museum:women-of-the-wiener-werkstatte",
+      "type": "exhibition",
+      "title": "Modernity and Opulence: Women of the Wiener Werkstätte",
+      "venue": "The Jewish Museum",
+      "startDate": "2026-07-17",
+      "endDate": "2026-11-15",
+      "dateText": "Jul. 17 — Nov. 15, 2026",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "1109 5th Avenue, New York, NY 10128",
+      "neighborhood": "Upper East Side",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://thejewishmuseum.org/wp-content/uploads/2026/03/wieselthier_Madchenkopf_300dpi-Resizeto_PressImage-3000pxW300dpijpg-scaled-e1774884607448.jpg",
+      "exhibitionUrl": "https://thejewishmuseum.org/exhibitions/women-of-the-wiener-werkstatte/",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/women-of-the-wiener-werkstatte/",
+      "openingReceptionDate": null,
+      "tags": [
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-24T19:12:52.148Z",
+      "sources": [
+        {
+          "url": "https://thejewishmuseum.org/exhibitions/women-of-the-wiener-werkstatte/",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-24T19:12:52.148Z",
+          "notes": "Official The Jewish Museum exhibitions page server-rendered cards only. Stages the visible on-view and coming-soon exhibition cards before the client-side schedule calendar; React calendar content and detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T19:02:25.196Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:jewish-museum-exhibitions:exhibition:jewish-museum:women-of-the-wiener-werkstatte:create.",
+          "sourceUrl": "https://thejewishmuseum.org/exhibitions/women-of-the-wiener-werkstatte/"
+        }
+      ],
+      "createdAt": "2026-07-15T19:02:25.196Z",
+      "updatedAt": "2026-07-15T19:02:25.196Z"
+    },
+    {
+      "id": "exhibition:jewish-museum:focus-gallery-oded-halahmy-models-in-wood",
+      "type": "exhibition",
+      "title": "Focus Gallery: Oded Halahmy: Models in Wood",
+      "venue": "The Jewish Museum",
+      "startDate": "2026-05-29",
+      "endDate": "2027-01-03",
+      "dateText": "May 29, 2026 — Jan. 3, 2027",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "1109 5th Avenue, New York, NY 10128",
+      "neighborhood": "Upper East Side",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://thejewishmuseum.org/wp-content/uploads/2026/05/98-Blue-Party-OAK-Wood-yh-fix-draft-no-platform.jpg",
+      "exhibitionUrl": "https://thejewishmuseum.org/exhibitions/focus-gallery-oded-halahmy-models-in-wood/",
+      "sourceUrl": "https://thejewishmuseum.org/exhibitions/focus-gallery-oded-halahmy-models-in-wood/",
+      "openingReceptionDate": null,
+      "tags": [
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-06-24T19:12:52.148Z",
+      "sources": [
+        {
+          "url": "https://thejewishmuseum.org/exhibitions/focus-gallery-oded-halahmy-models-in-wood/",
+          "sourceType": "official_venue",
+          "reliability": "high",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-06-24T19:12:52.148Z",
+          "notes": "Official The Jewish Museum exhibitions page server-rendered cards only. Stages the visible on-view and coming-soon exhibition cards before the client-side schedule calendar; React calendar content and detail-page enrichment remain out of scope for this first slice."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T19:02:30.829Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:jewish-museum-exhibitions:exhibition:jewish-museum:focus-gallery-oded-halahmy-models-in-wood:create.",
+          "sourceUrl": "https://thejewishmuseum.org/exhibitions/focus-gallery-oded-halahmy-models-in-wood/"
+        }
+      ],
+      "createdAt": "2026-07-15T19:02:30.829Z",
+      "updatedAt": "2026-07-15T19:02:30.829Z"
+    },
+    {
+      "id": "exhibition:moma:5820",
+      "type": "exhibition",
+      "title": "Marcel Duchamp",
+      "venue": "The Museum of Modern Art",
+      "startDate": null,
+      "endDate": "2026-08-22",
+      "dateText": "Through Aug 22",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "11 W 53rd St, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": null,
+      "exhibitionUrl": "https://www.moma.org/calendar/exhibitions/5820",
+      "sourceUrl": "https://www.moma.org/calendar/exhibitions/5820",
+      "openingReceptionDate": null,
+      "tags": [
+        "browser-assisted-snapshot"
+      ],
+      "sourceConfidence": "medium",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-07-14T17:51:22.876Z",
+      "sources": [
+        {
+          "url": "https://www.moma.org/calendar/exhibitions/5820",
+          "sourceType": "official_venue",
+          "reliability": "medium",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-07-14T17:51:22.876Z",
+          "notes": "Official MoMA current/upcoming exhibitions from a browser-assisted HTML snapshot. Direct automated backend fetch is currently blocked by Cloudflare 403, so this source is not a fully automated live ingestion path."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T19:20:49.436Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:moma-exhibitions:exhibition:moma:5820:create.",
+          "sourceUrl": "https://www.moma.org/calendar/exhibitions/5820"
+        }
+      ],
+      "createdAt": "2026-07-15T19:20:49.436Z",
+      "updatedAt": "2026-07-15T19:20:49.436Z"
+    },
+    {
+      "id": "exhibition:moma:5882",
+      "type": "exhibition",
+      "title": "Frida and Diego:The Last Dream",
+      "venue": "The Museum of Modern Art",
+      "startDate": null,
+      "endDate": "2026-09-12",
+      "dateText": "Through Sep 12",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "11 W 53rd St, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": null,
+      "exhibitionUrl": "https://www.moma.org/calendar/exhibitions/5882",
+      "sourceUrl": "https://www.moma.org/calendar/exhibitions/5882",
+      "openingReceptionDate": null,
+      "tags": [
+        "browser-assisted-snapshot"
+      ],
+      "sourceConfidence": "medium",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-07-14T17:51:22.876Z",
+      "sources": [
+        {
+          "url": "https://www.moma.org/calendar/exhibitions/5882",
+          "sourceType": "official_venue",
+          "reliability": "medium",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-07-14T17:51:22.876Z",
+          "notes": "Official MoMA current/upcoming exhibitions from a browser-assisted HTML snapshot. Direct automated backend fetch is currently blocked by Cloudflare 403, so this source is not a fully automated live ingestion path."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T19:20:52.425Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:moma-exhibitions:exhibition:moma:5882:create.",
+          "sourceUrl": "https://www.moma.org/calendar/exhibitions/5882"
+        }
+      ],
+      "createdAt": "2026-07-15T19:20:52.425Z",
+      "updatedAt": "2026-07-15T19:20:52.425Z"
+    },
+    {
+      "id": "exhibition:moma:5912",
+      "type": "exhibition",
+      "title": "Pierre Huyghe: UUmwelt",
+      "venue": "The Museum of Modern Art",
+      "startDate": "2026-07-01",
+      "endDate": "2026-11-29",
+      "dateText": "Jul 1–Nov 29, 2026",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "11 W 53rd St, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": null,
+      "exhibitionUrl": "https://www.moma.org/calendar/exhibitions/5912",
+      "sourceUrl": "https://www.moma.org/calendar/exhibitions/5912",
+      "openingReceptionDate": null,
+      "tags": [
+        "browser-assisted-snapshot"
+      ],
+      "sourceConfidence": "medium",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-07-14T17:51:22.876Z",
+      "sources": [
+        {
+          "url": "https://www.moma.org/calendar/exhibitions/5912",
+          "sourceType": "official_venue",
+          "reliability": "medium",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-07-14T17:51:22.876Z",
+          "notes": "Official MoMA current/upcoming exhibitions from a browser-assisted HTML snapshot. Direct automated backend fetch is currently blocked by Cloudflare 403, so this source is not a fully automated live ingestion path."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T19:21:33.257Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:moma-exhibitions:exhibition:moma:5912:create.",
+          "sourceUrl": "https://www.moma.org/calendar/exhibitions/5912"
+        }
+      ],
+      "createdAt": "2026-07-15T19:21:33.257Z",
+      "updatedAt": "2026-07-15T19:21:33.257Z"
+    },
+    {
+      "id": "exhibition:moma:5906",
+      "type": "exhibition",
+      "title": "Architects of Liberation:Modernism in Western Africa",
+      "venue": "The Museum of Modern Art",
+      "startDate": "2026-07-05",
+      "endDate": "2027-01-02",
+      "dateText": "Jul 5, 2026–Jan 2, 2027",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "11 W 53rd St, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": null,
+      "exhibitionUrl": "https://www.moma.org/calendar/exhibitions/5906",
+      "sourceUrl": "https://www.moma.org/calendar/exhibitions/5906",
+      "openingReceptionDate": null,
+      "tags": [
+        "browser-assisted-snapshot"
+      ],
+      "sourceConfidence": "medium",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-07-14T17:51:22.876Z",
+      "sources": [
+        {
+          "url": "https://www.moma.org/calendar/exhibitions/5906",
+          "sourceType": "official_venue",
+          "reliability": "medium",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-07-14T17:51:22.876Z",
+          "notes": "Official MoMA current/upcoming exhibitions from a browser-assisted HTML snapshot. Direct automated backend fetch is currently blocked by Cloudflare 403, so this source is not a fully automated live ingestion path."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T19:21:43.919Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:moma-exhibitions:exhibition:moma:5906:create.",
+          "sourceUrl": "https://www.moma.org/calendar/exhibitions/5906"
+        }
+      ],
+      "createdAt": "2026-07-15T19:21:43.919Z",
+      "updatedAt": "2026-07-15T19:21:43.919Z"
+    },
+    {
+      "id": "exhibition:moma:5920",
+      "type": "exhibition",
+      "title": "It’s Alive! A Century ofAnimation from the Collection",
+      "venue": "The Museum of Modern Art",
+      "startDate": null,
+      "endDate": null,
+      "dateText": "Aug 1, 2026–Summer 2027",
+      "description": null,
+      "artists": [],
+      "curators": [],
+      "venueAddress": "11 W 53rd St, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": null,
+      "exhibitionUrl": "https://www.moma.org/calendar/exhibitions/5920",
+      "sourceUrl": "https://www.moma.org/calendar/exhibitions/5920",
+      "openingReceptionDate": null,
+      "tags": [
+        "browser-assisted-snapshot"
+      ],
+      "sourceConfidence": "medium",
+      "reviewStatus": "approved",
+      "lastCheckedAt": "2026-07-14T17:51:22.876Z",
+      "sources": [
+        {
+          "url": "https://www.moma.org/calendar/exhibitions/5920",
+          "sourceType": "official_venue",
+          "reliability": "medium",
+          "claimFields": [
+            "title",
+            "venue",
+            "startDate",
+            "endDate",
+            "dateText",
+            "description",
+            "artists",
+            "curators",
+            "venueAddress",
+            "neighborhood",
+            "borough",
+            "city",
+            "imageUrl",
+            "exhibitionUrl",
+            "sourceUrl",
+            "openingReceptionDate",
+            "tags",
+            "sourceConfidence"
+          ],
+          "checkedAt": "2026-07-14T17:51:22.876Z",
+          "notes": "Official MoMA current/upcoming exhibitions from a browser-assisted HTML snapshot. Direct automated backend fetch is currently blocked by Cloudflare 403, so this source is not a fully automated live ingestion path."
+        }
+      ],
+      "changeHistory": [
+        {
+          "changedAt": "2026-07-15T19:21:51.121Z",
+          "changeType": "created",
+          "actor": "staging-approval-script",
+          "summary": "Approved staged create stage:moma-exhibitions:exhibition:moma:5920:create.",
+          "sourceUrl": "https://www.moma.org/calendar/exhibitions/5920"
+        }
+      ],
+      "createdAt": "2026-07-15T19:21:51.121Z",
+      "updatedAt": "2026-07-15T19:21:51.121Z"
+    }
+  ]
 }

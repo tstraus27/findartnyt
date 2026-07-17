@@ -6,14 +6,21 @@
   "parser": "met-exhibitions",
   "verification": {
     "status": "pending_live_verification",
-    "verifiedAt": "2026-06-29T19:04:00.000Z",
-    "notes": "Browser-assisted compact snapshot captured from https://www.metmuseum.org/exhibitions on 2026-06-29 after Node fetch and browser-like fetch returned Vercel 429 security checkpoint responses. This is staging-only and requires human review against the live official page before promotion."
+    "verifiedAt": "2026-07-15T17:46:49.094Z",
+    "notes": "Browser-assisted compact snapshot captured from https://www.metmuseum.org/exhibitions on 2026-07-15 after direct backend fetches remained unsuitable for this source. This is staging-only and requires human review against the live official page before promotion."
   },
-  "stagingNotes": "Official Met featured, recently opened, closing soon, more temporary, and upcoming exhibition cards from a browser-assisted compact snapshot. Direct automated backend fetch is currently blocked by Vercel 429, so this source is not a fully automated live ingestion path.",
+  "stagingNotes": "Official Met featured, recently opened, closing soon, more temporary, and upcoming exhibition cards from a browser-assisted compact snapshot, plus explicit official detail-page seed fixtures for known missing exhibitions. Direct automated backend fetch is currently blocked by Vercel 429, so this source is not a fully automated live ingestion path.",
   "pages": [
     {
       "url": "https://www.metmuseum.org/exhibitions",
-      "file": "../fixtures/met-exhibitions.browser-2026-06-29.html"
+      "file": "../fixtures/met-exhibitions.browser-2026-07-15.html",
+      "followRecordUrls": true,
+      "followRecordUrlFixtureDirectory": "../fixtures/met-exhibitions-details",
+      "followRecordUrlFixtureRequired": false
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/orientalism-between-fact-and-fantasy",
+      "file": "../fixtures/met-exhibitions-details/orientalism-between-fact-and-fantasy.html"
     }
   ]
 }

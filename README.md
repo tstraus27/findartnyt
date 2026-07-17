@@ -1,4 +1,4 @@
-# Tobias Straus Command Center (Web)
+# FindArtNYC
 
 ## Run
 ```bash
@@ -7,6 +7,5 @@ npm run dev
 ```
 
 ## Notes
-- Tasks include TickTick-style fields plus subtasks.
-- Quadrant is derived via `computeQuadrant(task)`.
-- Urgency is inferred from `dueAt` (within 24h) unless `urgencyOverride` is enabled.
+- Public beta for approved NYC exhibition listings with official source links.
+- Includes staging/review tooling for exhibition ingest and Supabase-backed admin workflows.

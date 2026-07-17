@@ -1,0 +1,380 @@
+import { exhibitions as localExhibitions, normalizeExhibitionRecords, type Exhibition } from '../exhibitions';
+import {
+  countStatuses,
+  formatStagedDates,
+  itemUrl,
+  normalizeReviewStatus,
+  reviewSources,
+  type ReviewDecision,
+  type ReviewStatus,
+  type StagedItem
+} from '../stagingReview';
+import { isSupabaseConfigured, supabase } from './supabaseClient';
+
+export type AppRole = 'visitor' | 'reviewer' | 'admin' | 'owner';
+export type ReviewDecisionType = 'looks_good' | 'reject' | 'needs_revision' | 'comment';
+export type StagingStatus =
+  | 'pending'
+  | 'reviewer_approved'
+  | 'rejected'
+  | 'needs_revision'
+  | 'admin_approved'
+  | 'promoted';
+
+export type AuthState = {
+  configured: boolean;
+  signedIn: boolean;
+  role: AppRole | null;
+  displayName: string | null;
+  email: string | null;
+};
+
+export type FeaturedContent = {
+  id: string;
+  status: 'draft' | 'published' | 'archived';
+  exhibitionId: string | null;
+  title: string;
+  dek: string | null;
+  bodyMarkdown: string | null;
+  imageUrl: string | null;
+  ctaUrl: string | null;
+  publishedAt: string | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
+};
+
+export type StagingQueueSource = {
+  id: string;
+  label: string;
+  counts: Partial<Record<ReviewStatus | StagingStatus, number>>;
+  items: StagedItem[];
+};
+
+const localDecisionStorageKey = 'find-art-nyc-review-decisions';
+const localProposalStorageKey = 'find-art-nyc-proposal-edits';
+const sourcePreviewBaseUrl = import.meta.env.VITE_SOURCE_PREVIEW_URL || '';
+
+const toCamelExhibition = (row: Record<string, unknown>): Exhibition | null => {
+  const id = String(row.id || '');
+  const title = String(row.title || '');
+  const venue = String(row.venue_name || row.venue || '');
+  const sourceUrl = String(row.source_url || row.sourceUrl || '');
+  if (!id || !title || !venue || !sourceUrl) return null;
+
+  const neighborhood = stringOrNull(row.neighborhood);
+  const borough = stringOrNull(row.borough);
+  const city = stringOrNull(row.city);
+  const description = stringOrNull(row.description);
+  const venueAddress = stringOrNull(row.venue_address);
+  const dateText = stringOrNull(row.date_text) || 'Dates listed at source';
+  const source = stringOrNull(row.source) || venue;
+  const searchText = [title, venue, source, neighborhood, borough, city, description, venueAddress, dateText]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+
+  return {
+    id,
+    title,
+    venue,
+    source,
+    startDate: stringOrNull(row.start_date),
+    endDate: stringOrNull(row.end_date),
+    dateText,
+    description,
+    venueAddress,
+    neighborhood,
+    borough,
+    city,
+    area: neighborhood ?? borough,
+    imageUrl: stringOrNull(row.image_url),
+    sourceUrl,
+    searchText
+  };
+};
+
+const stringOrNull = (value: unknown) => (typeof value === 'string' && value.trim() ? value : null);
+
+const featuredContentFromRow = (row: Record<string, unknown>): FeaturedContent => ({
+  id: String(row.id),
+  status: row.status as FeaturedContent['status'],
+  exhibitionId: stringOrNull(row.exhibition_id),
+  title: String(row.title || ''),
+  dek: stringOrNull(row.dek),
+  bodyMarkdown: stringOrNull(row.body_markdown),
+  imageUrl: stringOrNull(row.image_url),
+  ctaUrl: stringOrNull(row.cta_url),
+  publishedAt: stringOrNull(row.published_at),
+  createdAt: stringOrNull(row.created_at),
+  updatedAt: stringOrNull(row.updated_at)
+});
+
+const readLocalDecisions = (): Record<string, ReviewDecision> => {
+  try {
+    return JSON.parse(localStorage.getItem(localDecisionStorageKey) || '{}');
+  } catch {
+    return {};
+  }
+};
+
+const writeLocalDecision = (itemId: string, status: ReviewStatus, notes: string) => {
+  const decisions = readLocalDecisions();
+  decisions[itemId] = { status, notes, decidedAt: new Date().toISOString() };
+  localStorage.setItem(localDecisionStorageKey, JSON.stringify(decisions));
+};
+
+const readLocalProposalEdits = (): Record<string, StagedItem['proposed']> => {
+  try {
+    return JSON.parse(localStorage.getItem(localProposalStorageKey) || '{}');
+  } catch {
+    return {};
+  }
+};
+
+const writeLocalProposalEdit = (itemId: string, proposed: StagedItem['proposed']) => {
+  const edits = readLocalProposalEdits();
+  edits[itemId] = proposed;
+  localStorage.setItem(localProposalStorageKey, JSON.stringify(edits));
+};
+
+const localSources = (): StagingQueueSource[] => {
+  const decisions = readLocalDecisions();
+  const proposalEdits = readLocalProposalEdits();
+  return reviewSources.map((source) => ({
+    id: source.id,
+    label: source.label,
+    counts: countStatuses(source.report.items ?? [], decisions),
+    items: (source.report.items ?? []).map((item) => ({
+      ...item,
+      reviewStatus: decisions[item.id]?.status ?? item.reviewStatus,
+      proposed: proposalEdits[item.id] ?? item.proposed
+    }))
+  }));
+};
+
+const dbItemToStagedItem = (row: Record<string, unknown>): StagedItem => ({
+  id: String(row.id),
+  proposalType: stringOrNull(row.proposal_type),
+  reviewStatus: normalizeReviewStatus(String(row.review_status || 'pending')),
+  source: (row.source as StagedItem['source']) ?? null,
+  canonicalId: stringOrNull(row.canonical_id),
+  proposed: (row.proposed as StagedItem['proposed']) ?? {},
+  changedFields: Array.isArray(row.changed_fields) ? (row.changed_fields as string[]) : [],
+  dedupe: (row.dedupe as StagedItem['dedupe']) ?? null,
+  conflict: row.conflict,
+  reviewerNotes: null
+});
+
+export const backend = {
+  configured: isSupabaseConfigured,
+
+  async getAuthState(): Promise<AuthState> {
+    if (!supabase) {
+      return {
+        configured: false,
+        signedIn: true,
+        role: 'admin',
+        displayName: 'Local development admin',
+        email: null
+      };
+    }
+
+    const { data: userData } = await supabase.auth.getUser();
+    const user = userData.user;
+    if (!user) {
+      return { configured: true, signedIn: false, role: null, displayName: null, email: null };
+    }
+
+    const { data: profile, error } = await supabase
+      .from('profiles')
+      .select('display_name, role')
+      .eq('user_id', user.id)
+      .maybeSingle();
+    if (error) throw error;
+
+    return {
+      configured: true,
+      signedIn: true,
+      role: (profile?.role as AppRole | undefined) ?? 'visitor',
+      displayName: profile?.display_name ?? user.email ?? null,
+      email: user.email ?? null
+    };
+  },
+
+  async signIn(email: string, password: string) {
+    if (!supabase) return;
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+  },
+
+  async signOut() {
+    if (!supabase) return;
+    await supabase.auth.signOut();
+  },
+
+  async getPublicExhibitions(): Promise<Exhibition[]> {
+    if (!supabase) return localExhibitions;
+
+    const { data, error } = await supabase
+      .from('exhibitions')
+      .select('*')
+      .eq('publication_status', 'published')
+      .order('end_date', { ascending: true, nullsFirst: false });
+    if (error) {
+      console.warn('Falling back to local exhibition JSON after Supabase read failed.', error.message);
+      return localExhibitions;
+    }
+
+    const backendRecords = (data ?? []).map((row) => toCamelExhibition(row)).filter((record): record is Exhibition => Boolean(record));
+    return backendRecords.length ? backendRecords : localExhibitions;
+  },
+
+  async getPublishedFeaturedContent(): Promise<FeaturedContent | null> {
+    if (!supabase) return null;
+    const { data, error } = await supabase
+      .from('featured_content')
+      .select('*')
+      .eq('status', 'published')
+      .order('published_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (error) throw error;
+    if (!data) return null;
+    return featuredContentFromRow(data);
+  },
+
+  async getFeaturedContentHistory(): Promise<FeaturedContent[]> {
+    if (!supabase) return [];
+    const { data, error } = await supabase
+      .from('featured_content')
+      .select('*')
+      .in('status', ['published', 'archived'])
+      .order('published_at', { ascending: false, nullsFirst: false })
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return (data ?? []).map((row) => featuredContentFromRow(row));
+  },
+
+  async getStagingQueues(): Promise<StagingQueueSource[]> {
+    if (!supabase) return localSources();
+
+    const { data, error } = await supabase
+      .from('staging_items')
+      .select('*')
+      .eq('proposed->>type', 'exhibition')
+      .order('source_id')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+
+    const grouped = new Map<string, StagedItem[]>();
+    for (const row of data ?? []) {
+      const item = dbItemToStagedItem(row);
+      const sourceId = String(row.source_id || 'unknown-source');
+      grouped.set(sourceId, [...(grouped.get(sourceId) ?? []), item]);
+    }
+
+    return Array.from(grouped.entries()).map(([id, items]) => ({
+      id,
+      label: id.replace(/-exhibitions$/, '').replace(/-/g, ' '),
+      counts: countStatuses(items),
+      items
+    }));
+  },
+
+  async submitReviewDecision(itemId: string, decision: ReviewDecisionType, notes: string) {
+    if (!supabase) {
+      const status = decision === 'looks_good' ? 'approved' : decision === 'reject' ? 'rejected' : 'needs_revision';
+      writeLocalDecision(itemId, status, notes);
+      return;
+    }
+    const { error } = await supabase.rpc('submit_review_decision', {
+      staging_item_id: itemId,
+      decision,
+      notes
+    });
+    if (error) throw error;
+  },
+
+  async promoteStagingItem(itemId: string, notes: string) {
+    if (!supabase) throw new Error('Promotion requires Supabase to be configured.');
+    const { error } = await supabase.rpc('admin_promote_staging_item', {
+      staging_item_id: itemId,
+      notes
+    });
+    if (error) throw error;
+  },
+
+  async updateStagingStatus(itemId: string, nextStatus: StagingStatus, notes: string) {
+    if (!supabase) {
+      const localStatus = nextStatus === 'rejected' ? 'rejected' : nextStatus === 'needs_revision' ? 'needs_revision' : 'approved';
+      writeLocalDecision(itemId, localStatus, notes);
+      return;
+    }
+    const { error } = await supabase.rpc('admin_update_staging_status', {
+      staging_item_id: itemId,
+      next_status: nextStatus,
+      notes
+    });
+    if (error) throw error;
+  },
+
+  async updateStagingProposal(itemId: string, proposed: StagedItem['proposed'], notes: string) {
+    if (!supabase) {
+      writeLocalProposalEdit(itemId, proposed);
+      return;
+    }
+    const { error } = await supabase.rpc('admin_update_staging_proposed', {
+      staging_item_id: itemId,
+      proposed,
+      notes
+    });
+    if (error) throw error;
+  },
+
+  async saveFeaturedContent(input: Omit<FeaturedContent, 'id' | 'publishedAt'> & { id?: string | null; publish?: boolean }) {
+    if (!supabase) throw new Error('Featured content publishing requires Supabase to be configured.');
+    const auth = await this.getAuthState();
+    if (auth.role !== 'admin' && auth.role !== 'owner') throw new Error('Only admins can save featured content.');
+
+    const payload = {
+      id: input.id || undefined,
+      status: input.publish ? 'published' : input.status,
+      exhibition_id: input.exhibitionId || null,
+      title: input.title,
+      dek: input.dek || null,
+      body_markdown: input.bodyMarkdown || null,
+      image_url: input.imageUrl || null,
+      cta_url: input.ctaUrl || null
+    };
+    const { data, error } = await supabase.from('featured_content').upsert(payload).select('id').single();
+    if (error) throw error;
+    if (input.publish) {
+      const { error: publishError } = await supabase.rpc('admin_publish_featured_content', {
+        content_id: data.id,
+        notes: 'Published from admin featured content screen.'
+      });
+      if (publishError) throw publishError;
+    }
+  },
+
+  stagingItemSummary(item: StagedItem) {
+    return {
+      title: item.proposed?.title || item.id,
+      venue: item.proposed?.venue || 'Unknown venue',
+      dates: formatStagedDates(item.proposed ?? {}),
+      url: itemUrl(item)
+    };
+  },
+
+  sourcePreviewUrl(sourceUrl: string) {
+    if (!sourceUrl) return '';
+    if (!sourcePreviewBaseUrl) return sourceUrl;
+    const preview = new URL(sourcePreviewBaseUrl);
+    preview.searchParams.set('url', sourceUrl);
+    return preview.toString();
+  },
+
+  normalizeExhibitions(records: unknown[]) {
+    return normalizeExhibitionRecords(records as Parameters<typeof normalizeExhibitionRecords>[0]);
+  }
+};

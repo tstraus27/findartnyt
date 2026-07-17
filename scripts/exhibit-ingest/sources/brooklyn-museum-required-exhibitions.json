@@ -1,0 +1,21 @@
+{
+  "source": "brooklyn-museum",
+  "minimumExpectedRecords": 2,
+  "listingFixtureMaxAgeDays": 14,
+  "requiredExhibitions": [
+    {
+      "url": "https://www.brooklynmuseum.org/exhibitions/breaking-the-mold",
+      "title": "Breaking the Mold: Brooklyn Museum at 200",
+      "reason": "Still-open Brooklyn Museum exhibition retained after closed pending staging items are pruned.",
+      "addedAt": "2026-07-15T18:30:00.000Z",
+      "status": "active"
+    },
+    {
+      "url": "https://www.brooklynmuseum.org/exhibitions/rubin-museum-tibetan-buddhist-shrine-room",
+      "title": "Rubin Museum Tibetan Buddhist Shrine Room",
+      "reason": "Long-running Brooklyn Museum exhibition retained after closed pending staging items are pruned.",
+      "addedAt": "2026-07-15T18:30:00.000Z",
+      "status": "active"
+    }
+  ]
+}

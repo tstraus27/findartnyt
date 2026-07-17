@@ -222,7 +222,7 @@ test('ingest CLI supports custom staging output paths for source verification ru
 
   const written = JSON.parse(await fs.readFile(outputPath, 'utf8'));
   assert.equal(written.summary.sourceId, 'david-zwirner-exhibitions');
-  assert.equal(written.items.length, 6);
+  assert.equal(written.items.length, 5);
   assert.equal(written.summary.sourcePages[0].pageRole, 'configured');
   assert.equal(written.summary.sourcePages[0].fetchMode, 'fixture');
 });

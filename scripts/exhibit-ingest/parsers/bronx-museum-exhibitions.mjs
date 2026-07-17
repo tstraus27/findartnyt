@@ -144,7 +144,15 @@ const extractBetween = (html, startMarker, endMarker) => {
 
 const articlePattern = /<article class="exhibition-card">[\s\S]*?<\/article>/gi;
 
-const buildRecord = ({ title, exhibitionUrl, imageUrl, dateText }) => {
+const pageTag = (url) => {
+  try {
+    return new URL(url).searchParams.get('date_filter') === 'upcoming' ? 'upcoming' : 'current';
+  } catch {
+    return 'current';
+  }
+};
+
+const buildRecord = ({ title, exhibitionUrl, imageUrl, dateText, tag }) => {
   if (!title || !exhibitionUrl) {
     return null;
   }
@@ -171,16 +179,16 @@ const buildRecord = ({ title, exhibitionUrl, imageUrl, dateText }) => {
     exhibitionUrl,
     sourceUrl: exhibitionUrl,
     openingReceptionDate: null,
-    tags: ['current'],
+    tags: [tag],
     sourceConfidence: 'high',
     reviewStatus: 'needs_review',
     lastCheckedAt: null,
     sourceNotes:
-      'Parsed from The Bronx Museum official exhibitions archive using only the visible Current exhibition-card grid after the filter links. The featured-show hero is ignored to avoid duplicate staging, Upcoming and Archive filters remain out of scope, and youth-program cards are currently staged when they appear in the same official Current grid.'
+      'Parsed from The Bronx Museum official exhibitions archive using visible Current and Upcoming exhibition-card grids after the filter links. The featured-show hero is ignored to avoid duplicate staging, Archive filters remain out of scope, and youth-program cards are currently staged when they appear in the same official exhibition grids.'
   };
 };
 
-const parseArticle = ({ articleHtml, baseUrl }) => {
+const parseArticle = ({ articleHtml, baseUrl, tag }) => {
   const exhibitionUrl = absoluteUrl(articleHtml.match(/<a class="exhibition-link" href="([^"]+)"/i)?.[1], baseUrl);
   const imageUrl = absoluteUrl(articleHtml.match(/<img[^>]+src="([^"]+)"/i)?.[1], baseUrl);
   const title = text(articleHtml.match(/<h2 class="exhibition-title[\s\S]*?>([\s\S]*?)<\/h2>/i)?.[1]);
@@ -190,23 +198,28 @@ const parseArticle = ({ articleHtml, baseUrl }) => {
     title,
     exhibitionUrl,
     imageUrl,
-    dateText
+    dateText,
+    tag
   });
 };
 
 export const parseBronxMuseumExhibitionsPage = ({ html, url }) => {
-  const currentSection = extractBetween(
+  const tag = pageTag(url);
+  const section = extractBetween(
     html,
-    '<a href="https://bronxmuseum.org/exhibitions/" class="show-category active">',
+    tag === 'upcoming'
+      ? '<a href="https://bronxmuseum.org/exhibitions/?date_filter=upcoming" class="show-category active">'
+      : '<a href="https://bronxmuseum.org/exhibitions/" class="show-category active">',
     '<div class="pagination">'
   );
 
   const records = new Map();
 
-  for (const match of currentSection.matchAll(articlePattern)) {
+  for (const match of section.matchAll(articlePattern)) {
     const record = parseArticle({
       articleHtml: match[0],
-      baseUrl: url
+      baseUrl: url,
+      tag
     });
 
     if (!record) continue;

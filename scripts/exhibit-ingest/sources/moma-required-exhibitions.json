@@ -1,0 +1,21 @@
+{
+  "source": "moma",
+  "minimumExpectedRecords": 24,
+  "listingFixtureMaxAgeDays": 14,
+  "requiredExhibitions": [
+    {
+      "url": "https://www.moma.org/calendar/exhibitions/5755",
+      "title": "Ideas of Africa: Portraiture and Political Imagination",
+      "reason": "Still-open MoMA fixture smoke-test exhibition retained after closed pending staging items are pruned.",
+      "addedAt": "2026-07-15T18:30:00.000Z",
+      "status": "active"
+    },
+    {
+      "url": "https://www.moma.org/calendar/exhibitions/5906",
+      "title": "Architects of Liberation: Modernism in Western Africa",
+      "reason": "Upcoming MoMA baseline record with an explicit date range; protects both coverage and date parsing.",
+      "addedAt": "2026-07-14T18:00:00.000Z",
+      "status": "active"
+    }
+  ]
+}

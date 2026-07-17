@@ -33,7 +33,7 @@
     {
       "id": "stage:jewish-museum-exhibitions:exhibition:jewish-museum:collection-exhibition-and-center-for-learning-october-2025:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://thejewishmuseum.org/exhibitions/collection-exhibition-and-center-for-learning-october-2025/",
         "sourceType": "official_venue",
@@ -67,7 +67,7 @@
           "current"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Jewish Museum official exhibitions page server-rendered cards that appear before the client-side schedule calendar. The React calendar and any later detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -110,7 +110,7 @@
     {
       "id": "stage:jewish-museum-exhibitions:exhibition:jewish-museum:paul-klee-other-possible-worlds:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://thejewishmuseum.org/exhibitions/paul-klee-other-possible-worlds/",
         "sourceType": "official_venue",
@@ -144,7 +144,7 @@
           "current"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Jewish Museum official exhibitions page server-rendered cards that appear before the client-side schedule calendar. The React calendar and any later detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -187,7 +187,7 @@
     {
       "id": "stage:jewish-museum-exhibitions:exhibition:jewish-museum:walter-benjamin-and-the-edges-of-photography:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://thejewishmuseum.org/exhibitions/walter-benjamin-and-the-edges-of-photography/",
         "sourceType": "official_venue",
@@ -221,7 +221,7 @@
           "current"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Jewish Museum official exhibitions page server-rendered cards that appear before the client-side schedule calendar. The React calendar and any later detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -264,7 +264,7 @@
     {
       "id": "stage:jewish-museum-exhibitions:exhibition:jewish-museum:circa-1776-jews-in-colonial-america:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://thejewishmuseum.org/exhibitions/circa-1776-jews-in-colonial-america/",
         "sourceType": "official_venue",
@@ -298,7 +298,7 @@
           "current"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Jewish Museum official exhibitions page server-rendered cards that appear before the client-side schedule calendar. The React calendar and any later detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -341,7 +341,7 @@
     {
       "id": "stage:jewish-museum-exhibitions:exhibition:jewish-museum:focus-gallery-oded-halahmy-models-in-wood:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://thejewishmuseum.org/exhibitions/focus-gallery-oded-halahmy-models-in-wood/",
         "sourceType": "official_venue",
@@ -375,7 +375,7 @@
           "current"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Jewish Museum official exhibitions page server-rendered cards that appear before the client-side schedule calendar. The React calendar and any later detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -418,7 +418,7 @@
     {
       "id": "stage:jewish-museum-exhibitions:exhibition:jewish-museum:women-of-the-wiener-werkstatte:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://thejewishmuseum.org/exhibitions/women-of-the-wiener-werkstatte/",
         "sourceType": "official_venue",
@@ -452,7 +452,7 @@
           "upcoming"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Jewish Museum official exhibitions page server-rendered cards that appear before the client-side schedule calendar. The React calendar and any later detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -495,7 +495,7 @@
     {
       "id": "stage:jewish-museum-exhibitions:exhibition:jewish-museum:sacred-splendor-jewish-ritual-art-and-christian-treasures-from-st-vitus-cathedral-in-prague:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://thejewishmuseum.org/exhibitions/sacred-splendor-jewish-ritual-art-and-christian-treasures-from-st-vitus-cathedral-in-prague/",
         "sourceType": "official_venue",
@@ -529,7 +529,7 @@
           "upcoming"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Jewish Museum official exhibitions page server-rendered cards that appear before the client-side schedule calendar. The React calendar and any later detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -572,7 +572,7 @@
     {
       "id": "stage:jewish-museum-exhibitions:exhibition:jewish-museum:ruth-patir-motherland:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://thejewishmuseum.org/exhibitions/ruth-patir-motherland/",
         "sourceType": "official_venue",
@@ -606,7 +606,7 @@
           "upcoming"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Jewish Museum official exhibitions page server-rendered cards that appear before the client-side schedule calendar. The React calendar and any later detail-page enrichment remain out of scope for this first staging-only slice."
       },

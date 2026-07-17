@@ -264,7 +264,7 @@
     {
       "id": "stage:poster-house-exhibitions:exhibition:poster-house:reading-under-fire-arming-minds-hearts-during-wartime:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.posterhouse.org/exhibition/reading-under-fire-arming-minds-hearts-during-wartime/",
         "sourceType": "official_venue",
@@ -298,7 +298,7 @@
           "current"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from the official Poster House exhibitions page using the visible On View and Upcoming Exhibitions cards for exact dates, URLs, and images, then enriched with the same page’s embedded exhibition payload for long-form descriptions. Past Exhibitions and detail-page fetches remain out of scope for this first staging-only slice."
       },
@@ -341,7 +341,7 @@
     {
       "id": "stage:poster-house-exhibitions:exhibition:poster-house:designed-to-be-red-native-american-indigenous-poster-works:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.posterhouse.org/exhibition/designed-to-be-red-native-american-indigenous-poster-works/",
         "sourceType": "official_venue",
@@ -375,7 +375,7 @@
           "upcoming"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from the official Poster House exhibitions page using the visible On View and Upcoming Exhibitions cards for exact dates, URLs, and images, then enriched with the same page’s embedded exhibition payload for long-form descriptions. Past Exhibitions and detail-page fetches remain out of scope for this first staging-only slice."
       },
@@ -418,7 +418,7 @@
     {
       "id": "stage:poster-house-exhibitions:exhibition:poster-house:cuteness-conservatism-consumption-lefor-openo-and-postwar-france:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.posterhouse.org/exhibition/cuteness-conservatism-consumption-lefor-openo-and-postwar-france/",
         "sourceType": "official_venue",
@@ -452,7 +452,7 @@
           "upcoming"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from the official Poster House exhibitions page using the visible On View and Upcoming Exhibitions cards for exact dates, URLs, and images, then enriched with the same page’s embedded exhibition payload for long-form descriptions. Past Exhibitions and detail-page fetches remain out of scope for this first staging-only slice."
       },
@@ -495,7 +495,7 @@
     {
       "id": "stage:poster-house-exhibitions:exhibition:poster-house:sculpting-sound-gunther-kiesers-music-posters:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.posterhouse.org/exhibition/sculpting-sound-gunther-kiesers-music-posters/",
         "sourceType": "official_venue",
@@ -529,7 +529,7 @@
           "upcoming"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from the official Poster House exhibitions page using the visible On View and Upcoming Exhibitions cards for exact dates, URLs, and images, then enriched with the same page’s embedded exhibition payload for long-form descriptions. Past Exhibitions and detail-page fetches remain out of scope for this first staging-only slice."
       },

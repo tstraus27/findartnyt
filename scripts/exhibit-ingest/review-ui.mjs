@@ -2,25 +2,41 @@ import fs from 'node:fs/promises';
 import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildApprovalPlan } from './approve-staging.mjs';
+import { audit as auditMet } from './audit-met.mjs';
 import { stableJson } from './ingest.mjs';
+import { pruneClosedStagingDirectory, pruneClosedStagingFile, todayLocalDate } from './prune-closed-staging.mjs';
 import { validateStagingReport } from './schema-validation.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '../..');
 const stagingDir = path.join(projectRoot, 'data/staging');
 const defaultStaging = path.join(projectRoot, 'data/staging/poster-house-exhibitions.json');
+const defaultRecords = path.join(projectRoot, 'data/exhibit-records.json');
+const defaultMetSource = path.join(__dirname, 'sources/met-exhibitions.fixture.json');
+const defaultMetRegistry = path.join(__dirname, 'sources/met-required-exhibitions.json');
 const reviewStatuses = new Set(['pending', 'approved', 'rejected', 'needs_revision']);
+const defaultPromotionAudits = {
+  'met-exhibitions': async ({ stagingFile }) =>
+    auditMet({
+      stagingPath: stagingFile,
+      sourcePath: defaultMetSource,
+      registryPath: defaultMetRegistry
+    })
+};
 
 const parseArgs = (argv) => {
   const args = {
     host: '127.0.0.1',
     port: 8765,
-    staging: defaultStaging
+    staging: defaultStaging,
+    records: defaultRecords
   };
 
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--staging') args.staging = path.resolve(argv[++i]);
+    else if (arg === '--records') args.records = path.resolve(argv[++i]);
     else if (arg === '--host') args.host = argv[++i];
     else if (arg === '--port') args.port = Number(argv[++i]);
     else if (arg === '--help') args.help = true;
@@ -51,6 +67,11 @@ const loadReport = async (stagingFile) => {
   return report;
 };
 
+const pruneClosedForReview = async (stagingFile) => {
+  const result = await pruneClosedStagingFile({ stagingFile });
+  return result.removedItems.length;
+};
+
 export const listStagingReports = async ({ selectedFile = defaultStaging } = {}) => {
   const entries = await fs.readdir(stagingDir, { withFileTypes: true });
   const summaries = [];
@@ -65,6 +86,7 @@ export const listStagingReports = async ({ selectedFile = defaultStaging } = {})
     } catch {
       continue;
     }
+    if (!isExhibitionReviewReport(report)) continue;
     const items = report.items || [];
     const counts = statusCounts(items);
     const source = stagingSlug(file);
@@ -137,6 +159,51 @@ const statusCounts = (items = []) =>
     return counts;
   }, {});
 
+const isExhibitionReviewReport = (report) =>
+  (report.items || []).some((item) => item.proposed?.type === 'exhibition') ||
+  Boolean(report.summary?.incomingByType?.exhibition);
+
+export const previewFallbackReason = ({ status = 200, html = '' } = {}) => {
+  const normalized = String(html || '').toLowerCase();
+  const verificationSignals = [
+    'failed to verify your browser',
+    'browser verification',
+    'vercel security checkpoint',
+    'security checkpoint',
+    'code 99'
+  ];
+
+  if (verificationSignals.some((signal) => normalized.includes(signal))) {
+    return 'The embedded preview fetched a browser verification page instead of the exhibition page.';
+  }
+
+  if ([401, 403, 429].includes(status) && normalized.includes('verify')) {
+    return 'The embedded preview was blocked by browser verification.';
+  }
+
+  return null;
+};
+
+const renderPreviewFallback = (url, reason = '') => {
+  if (!url) return '<div class="empty-preview">No source URL available for this item.</div>';
+
+  return `
+    <div class="preview-fallback">
+      <h2>Source preview unavailable</h2>
+      <p>${escapeHtml(reason || 'This source cannot be embedded in the review pane.')}</p>
+      <p>Use the official page in your browser to review the record.</p>
+      <a class="preview-fallback-link" href="${escapeAttr(url)}" target="_blank" rel="noreferrer">Open official source</a>
+    </div>
+  `;
+};
+
+const renderSourcePreview = (url) => {
+  if (!url) return renderPreviewFallback('');
+
+  const previewSrc = `/preview?url=${encodeURIComponent(url)}`;
+  return `<iframe class="site-frame" src="${escapeAttr(previewSrc)}" title="Source website preview"></iframe>`;
+};
+
 export const applyReviewStatus = async ({ stagingFile, itemId, status }) => {
   if (!reviewStatuses.has(status)) throw new Error(`Unsupported review status: ${status}`);
   const report = await loadReport(stagingFile);
@@ -150,6 +217,99 @@ export const applyReviewStatus = async ({ stagingFile, itemId, status }) => {
 
   await writeStagingReport(stagingFile, report);
   return report;
+};
+
+const sourceAuditKey = (report) => report.summary?.sourceId || report.summary?.source || null;
+
+const assertPromotionAllowed = async ({ stagingFile, report, sourceAudits = defaultPromotionAudits }) => {
+  const auditKey = sourceAuditKey(report);
+  const audit = auditKey ? sourceAudits[auditKey] : null;
+  if (!audit) return;
+
+  const result = await audit({ stagingFile, report });
+  if (result.ok) return;
+
+  const details = [...(result.problems || []), ...(result.warnings || [])].filter(Boolean).join(' ');
+  throw new Error(
+    `${result.label || auditKey} approval blocked: source audit failed. Refresh fixture and rerun audit before approving.${
+      details ? ` ${details}` : ''
+    }`
+  );
+};
+
+export const applyReviewDecision = async ({
+  stagingFile,
+  recordsFile = defaultRecords,
+  itemId,
+  status,
+  sourceAudits = defaultPromotionAudits
+}) => {
+  if (status !== 'approved') {
+    const report = await applyReviewStatus({ stagingFile, itemId, status });
+    return {
+      report,
+      promotion: {
+        attempted: false,
+        approvedCreates: 0,
+        promoted: 0,
+        skipped: 0,
+        skippedDetails: []
+      }
+    };
+  }
+
+  const initialReport = await loadReport(stagingFile);
+  if (status === 'approved') {
+    await assertPromotionAllowed({ stagingFile, report: initialReport, sourceAudits });
+  }
+
+  const recordsDb = await readJson(recordsFile);
+  const clickedItem = (initialReport.items || []).find((item) => item.id === itemId);
+  if (!clickedItem) throw new Error(`Could not find staged item: ${itemId}`);
+  const clickedItemReport = {
+    ...initialReport,
+    items: [
+      {
+        ...clickedItem,
+        reviewStatus: 'approved',
+        proposed: clickedItem.proposed
+          ? {
+              ...clickedItem.proposed,
+              reviewStatus: 'approved'
+            }
+          : clickedItem.proposed
+      }
+    ]
+  };
+  const plan = await buildApprovalPlan({ stagingReport: clickedItemReport, recordsDb });
+
+  if (!plan.promoted.length && plan.skipped.length) {
+    const report = await applyReviewStatus({ stagingFile, itemId, status: 'needs_revision' });
+    return {
+      report,
+      promotion: {
+        attempted: true,
+        approvedCreates: plan.approvedCreates,
+        promoted: 0,
+        skipped: plan.skipped.length,
+        skippedDetails: plan.skipped
+      }
+    };
+  }
+
+  const report = await applyReviewStatus({ stagingFile, itemId, status });
+  await fs.writeFile(recordsFile, stableJson({ records: plan.records }));
+
+  return {
+    report,
+    promotion: {
+      attempted: true,
+      approvedCreates: plan.approvedCreates,
+      promoted: plan.promoted.length,
+      skipped: plan.skipped.length,
+      skippedDetails: plan.skipped
+    }
+  };
 };
 
 const renderSourceList = (sources) =>
@@ -222,7 +382,6 @@ const renderPage = ({ report, stagingFile, sources, index, message = '' }) => {
   const { item } = queue[safeIndex];
   const proposed = item.proposed || {};
   const url = itemUrl(item);
-  const previewSrc = url ? `/preview?url=${encodeURIComponent(url)}` : '';
   const prevHref = sourceHref({ source, index: Math.max(0, safeIndex - 1) });
   const nextHref = sourceHref({ source, index: Math.min(queue.length - 1, safeIndex + 1) });
 
@@ -271,7 +430,7 @@ const renderPage = ({ report, stagingFile, sources, index, message = '' }) => {
           ${decisionForm(item.id, safeIndex, source, 'rejected', 'Reject', 'btn-reject')}
           ${decisionForm(item.id, safeIndex, source, 'needs_revision', 'Needs Revision', 'btn-secondary')}
         </div>
-        <p class="safety-note">Approve/reject only updates this staging file. Nothing is promoted to canonical data until the separate promotion command runs.</p>
+        <p class="safety-note">Approve writes eligible create proposals to the canonical public backend database. Reject and Needs Revision only update this staging file.</p>
       </section>
 
       <section class="site-pane">
@@ -279,11 +438,7 @@ const renderPage = ({ report, stagingFile, sources, index, message = '' }) => {
           <strong>Source Website</strong>
           ${url ? `<span>${escapeHtml(url)}</span>` : '<span>No source URL</span>'}
         </div>
-        ${
-          previewSrc
-            ? `<iframe class="site-frame" src="${escapeAttr(previewSrc)}" title="Source website preview"></iframe>`
-            : '<div class="empty-preview">No source URL available for this item.</div>'
-        }
+        ${renderSourcePreview(url)}
       </section>
     </div>
   `);
@@ -374,7 +529,11 @@ const layout = (body) => `<!doctype html>
       .site-header { justify-content: space-between; min-height: 48px; padding: 10px 14px; border-bottom: 1px solid var(--border); background: #f9fafb; }
       .site-header span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 70%; }
       .site-frame { border: 0; width: 100%; flex: 1; background: #fff; }
-      .empty, .empty-preview { padding: 40px; }
+      .empty, .empty-preview, .preview-fallback { padding: 40px; }
+      .preview-fallback { max-width: 620px; }
+      .preview-fallback h2 { font-size: 20px; margin: 0 0 10px; }
+      .preview-fallback p { color: var(--muted); line-height: 1.45; margin: 0 0 10px; }
+      .preview-fallback-link { display: inline-block; margin-top: 8px; color: var(--blue); font-weight: 800; text-decoration: none; }
       code { background: #eef1f4; padding: 2px 5px; border-radius: 5px; }
       @media (max-width: 1050px) {
         .app-shell { grid-template-columns: 220px 1fr; }
@@ -416,6 +575,12 @@ const proxyPreview = async (response, rawUrl) => {
       }
     });
     const text = await upstream.text();
+    const fallbackReason = previewFallbackReason({ status: upstream.status, html: text });
+    if (fallbackReason) {
+      sendHtml(response, layout(renderPreviewFallback(rawUrl, fallbackReason)));
+      return;
+    }
+
     const base = `<base href="${escapeAttr(upstream.url)}">`;
     const withBase = text.includes('<head') ? text.replace(/<head([^>]*)>/i, `<head$1>${base}`) : `${base}${text}`;
     sendHtml(response, withBase);
@@ -441,13 +606,14 @@ const redirect = (response, location) => {
   response.end();
 };
 
-export const createReviewUiServer = ({ stagingFile }) =>
+export const createReviewUiServer = ({ stagingFile, recordsFile = defaultRecords }) =>
   http.createServer(async (request, response) => {
     try {
       const url = new URL(request.url || '/', 'http://localhost');
 
       if (request.method === 'GET' && url.pathname === '/') {
         const activeFile = await resolveStagingFile(url.searchParams.get('source'), stagingFile);
+        await pruneClosedForReview(activeFile);
         const report = await loadReport(activeFile);
         const sources = await listStagingReports({ selectedFile: activeFile });
         sendHtml(
@@ -475,10 +641,19 @@ export const createReviewUiServer = ({ stagingFile }) =>
         const source = form.get('source') || '';
         const index = Number.parseInt(form.get('index') || '0', 10);
         const activeFile = await resolveStagingFile(source, stagingFile);
-        const report = await applyReviewStatus({ stagingFile: activeFile, itemId, status });
+        const { report, promotion } = await applyReviewDecision({ stagingFile: activeFile, recordsFile, itemId, status });
         const nextIndex = clampIndex(index, pendingQueue(report).length);
-        const label = status === 'approved' ? 'Approved' : status === 'rejected' ? 'Rejected' : 'Marked needs revision';
-        redirect(response, sourceHref({ source: stagingSlug(activeFile), index: nextIndex, message: `${label}.` }));
+        const label =
+          status === 'approved'
+            ? promotion.promoted > 0
+              ? `Approved. Promoted ${promotion.promoted} record(s) to canonical data.`
+              : `Needs revision. Could not promote: ${
+                  promotion.skippedDetails[0]?.reason || 'record did not meet canonical requirements'
+                }`
+            : status === 'rejected'
+              ? 'Rejected.'
+              : 'Marked needs revision.';
+        redirect(response, sourceHref({ source: stagingSlug(activeFile), index: nextIndex, message: label }));
         return;
       }
 
@@ -492,15 +667,21 @@ export const run = async () => {
   const args = parseArgs(process.argv.slice(2));
 
   if (args.help) {
-    console.log('Usage: node scripts/exhibit-ingest/review-ui.mjs [--staging path] [--host 127.0.0.1] [--port 8765]');
+    console.log(
+      'Usage: node scripts/exhibit-ingest/review-ui.mjs [--staging path] [--records path] [--host 127.0.0.1] [--port 8765]'
+    );
     return;
   }
 
+  const pruneResults = await pruneClosedStagingDirectory({ stagingDir, asOfDate: todayLocalDate() });
+  const prunedCount = pruneResults.reduce((count, result) => count + result.removedItems.length, 0);
   await loadReport(args.staging);
-  const server = createReviewUiServer({ stagingFile: args.staging });
+  const server = createReviewUiServer({ stagingFile: args.staging, recordsFile: args.records });
   server.listen(args.port, args.host, () => {
     console.log(`Review UI running at http://${args.host}:${args.port}`);
     console.log(`Staging file: ${path.relative(projectRoot, args.staging)}`);
+    console.log(`Canonical records file: ${path.relative(projectRoot, args.records)}`);
+    console.log(`Closed staging items pruned on startup: ${prunedCount}`);
     console.log('Press Ctrl+C to stop.');
   });
 };

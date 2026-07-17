@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict';
+import path from 'node:path';
 import test from 'node:test';
 import { buildReviewPayload, buildReviewSummary } from './review-staging.mjs';
 
-const stagingPath = '/Users/tobystraus/Documents/New project/data/staging/david-zwirner-exhibitions.json';
+const stagingPath = path.join(process.cwd(), 'data/staging/david-zwirner-exhibitions.json');
 const report = {
     summary: {
       sourceId: 'david-zwirner-exhibitions',

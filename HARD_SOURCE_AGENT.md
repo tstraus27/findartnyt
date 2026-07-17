@@ -31,19 +31,19 @@ Primary state:
 - `HARD_SOURCE_PLAN.md`
 - `data/staging/moma-exhibitions.json`
 - `data/staging/met-exhibitions.json`
-- future `data/staging/brooklyn-museum-exhibitions.json`
+- `data/staging/brooklyn-museum-exhibitions.json`
 
 Source configs:
 
 - `scripts/exhibit-ingest/sources/moma-exhibitions.fixture.json`
 - `scripts/exhibit-ingest/sources/met-exhibitions.fixture.json`
-- future `scripts/exhibit-ingest/sources/brooklyn-museum-exhibitions.fixture.json`
+- `scripts/exhibit-ingest/sources/brooklyn-museum-exhibitions.fixture.json`
 
 Parsers:
 
 - `scripts/exhibit-ingest/parsers/moma-exhibitions.mjs`
 - `scripts/exhibit-ingest/parsers/met-exhibitions.mjs`
-- future `scripts/exhibit-ingest/parsers/brooklyn-museum-exhibitions.mjs`
+- `scripts/exhibit-ingest/parsers/brooklyn-museum-exhibitions.mjs`
 
 ## Agent Loop
 
@@ -95,11 +95,11 @@ Write it for a smart reader who is new to computer science:
 
 ## Current Dynamic Priority
 
-As of 2026-06-29:
+As of 2026-07-14:
 
-1. MoMA has a browser-assisted fixture-backed staging path with 25 proposals.
-2. The Met has a browser-assisted fixture-backed staging path with 23 proposals, but it still needs human review and better detail enrichment.
-3. Brooklyn is next because it still lacks a staging artifact; browser rendering produced usable exhibition links, but the first browser pass was less stable.
+1. MoMA has a browser-assisted fixture-backed staging path with 25 proposals and stale-fixture guardrails.
+2. The Met has a browser-assisted fixture-backed staging path with 24 proposals, including `Orientalism: Between Fact and Fantasy`, plus stale-fixture and required-seed guardrails.
+3. Brooklyn Museum has a browser-assisted fixture-backed first staging slice with 8 proposals and matching guardrails. It still needs live verification or a refreshed browser-assisted fixture when direct backend fetch is no longer blocked.
 
 ## Reusable Prompt
 

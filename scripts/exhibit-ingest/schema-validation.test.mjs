@@ -56,7 +56,7 @@ test('validateStagingReport rejects malformed staging reports', async () => {
   );
 });
 
-test('validateSourceConfig accepts official exhibition configs and legacy artist configs', async () => {
+test('validateSourceConfig accepts official exhibition configs', async () => {
   const baseDir = path.resolve('scripts/exhibit-ingest/sources');
   const sourceFiles = [
     'bronx-museum-exhibitions.fixture.json',
@@ -87,8 +87,7 @@ test('validateSourceConfig accepts official exhibition configs and legacy artist
     'noguchi-exhibitions.fixture.json',
     'noguchi-exhibitions.json',
     'whitney-exhibitions.fixture.json',
-    'whitney-exhibitions.json',
-    'david-zwirner-artists.json'
+    'whitney-exhibitions.json'
   ];
 
   for (const file of sourceFiles) {

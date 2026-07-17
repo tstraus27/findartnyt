@@ -39,7 +39,7 @@
     {
       "id": "stage:morgan-exhibitions:exhibition:morgan:hujar-contact:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.themorgan.org/exhibitions/hujar-contact",
         "sourceType": "official_venue",
@@ -73,7 +73,7 @@
           "current"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Morgan Library & Museum official current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -116,7 +116,7 @@
     {
       "id": "stage:morgan-exhibitions:exhibition:morgan:ashbery-collection:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.themorgan.org/exhibitions/ashbery-collection",
         "sourceType": "official_venue",
@@ -150,7 +150,7 @@
           "current"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Morgan Library & Museum official current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -193,7 +193,7 @@
     {
       "id": "stage:morgan-exhibitions:exhibition:morgan:J-Pierpont-Morgans-Library:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "rejected",
       "source": {
         "url": "https://www.themorgan.org/exhibitions/J-Pierpont-Morgans-Library",
         "sourceType": "official_venue",
@@ -227,7 +227,7 @@
           "current"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "rejected",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Morgan Library & Museum official current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -270,7 +270,7 @@
     {
       "id": "stage:morgan-exhibitions:exhibition:morgan:tarot:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.themorgan.org/exhibitions/tarot",
         "sourceType": "official_venue",
@@ -304,7 +304,7 @@
           "upcoming"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Morgan Library & Museum official current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -347,7 +347,7 @@
     {
       "id": "stage:morgan-exhibitions:exhibition:morgan:rembrandts-lions:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.themorgan.org/exhibitions/rembrandts-lions",
         "sourceType": "official_venue",
@@ -381,7 +381,7 @@
           "upcoming"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Morgan Library & Museum official current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -424,7 +424,7 @@
     {
       "id": "stage:morgan-exhibitions:exhibition:morgan:johan-tobias-sergel:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.themorgan.org/exhibitions/johan-tobias-sergel",
         "sourceType": "official_venue",
@@ -458,7 +458,7 @@
           "upcoming"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Morgan Library & Museum official current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -501,7 +501,7 @@
     {
       "id": "stage:morgan-exhibitions:exhibition:morgan:blockbooks:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.themorgan.org/exhibitions/blockbooks",
         "sourceType": "official_venue",
@@ -535,7 +535,7 @@
           "upcoming"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Morgan Library & Museum official current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -578,7 +578,7 @@
     {
       "id": "stage:morgan-exhibitions:exhibition:morgan:ragtime:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.themorgan.org/exhibitions/ragtime",
         "sourceType": "official_venue",
@@ -612,7 +612,7 @@
           "upcoming"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Morgan Library & Museum official current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first staging-only slice."
       },
@@ -655,7 +655,7 @@
     {
       "id": "stage:morgan-exhibitions:exhibition:morgan:william-blake:create",
       "proposalType": "create",
-      "reviewStatus": "pending",
+      "reviewStatus": "approved",
       "source": {
         "url": "https://www.themorgan.org/exhibitions/william-blake",
         "sourceType": "official_venue",
@@ -689,7 +689,7 @@
           "upcoming"
         ],
         "sourceConfidence": "high",
-        "reviewStatus": "needs_review",
+        "reviewStatus": "approved",
         "lastCheckedAt": null,
         "sourceNotes": "Parsed from The Morgan Library & Museum official current and upcoming exhibition listing grids only. The separate Collection Spotlight block on the current page, plus online, past, and any detail-page enrichment remain out of scope for this first staging-only slice."
       },

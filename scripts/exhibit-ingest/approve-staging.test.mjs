@@ -145,6 +145,69 @@ test('buildApprovalPlan skips pending creates and possible duplicates', async ()
   assert.equal(plan.records.length, 1);
 });
 
+test('buildApprovalPlan promotes approved creates with end-date-only official date signals', async () => {
+  const endDateOnlyExhibition = {
+    ...exhibition,
+    id: 'exhibition:approval-test:end-date-only',
+    startDate: null,
+    endDate: '2026-09-12',
+    dateText: 'Through September 12, 2026',
+    sourceUrl: 'https://example.org/exhibitions/end-date-only',
+    exhibitionUrl: 'https://example.org/exhibitions/end-date-only'
+  };
+  const report = buildStagingReport({
+    sourceConfig,
+    incomingRecords: [endDateOnlyExhibition],
+    existingRecords: [],
+    generatedAt: '2026-06-22T16:20:00.000Z'
+  });
+  report.items[0].reviewStatus = 'approved';
+
+  const plan = await buildApprovalPlan({
+    stagingReport: report,
+    recordsDb: { records: [] },
+    approvedAt: '2026-06-22T16:30:00.000Z'
+  });
+
+  assert.equal(plan.approvedCreates, 1);
+  assert.equal(plan.promoted.length, 1);
+  assert.equal(plan.skipped.length, 0);
+  assert.equal(plan.records.length, 1);
+  assert.equal(plan.promoted[0].startDate, null);
+  assert.equal(plan.promoted[0].endDate, '2026-09-12');
+  assert.equal(plan.promoted[0].dateText, 'Through September 12, 2026');
+});
+
+test('buildApprovalPlan skips approved creates that have no publishable date signal', async () => {
+  const datelessExhibition = {
+    ...exhibition,
+    id: 'exhibition:approval-test:dateless',
+    startDate: null,
+    endDate: null,
+    sourceUrl: 'https://example.org/exhibitions/dateless',
+    exhibitionUrl: 'https://example.org/exhibitions/dateless'
+  };
+  const report = buildStagingReport({
+    sourceConfig,
+    incomingRecords: [datelessExhibition],
+    existingRecords: [],
+    generatedAt: '2026-06-22T16:20:00.000Z'
+  });
+  report.items[0].reviewStatus = 'approved';
+
+  const plan = await buildApprovalPlan({
+    stagingReport: report,
+    recordsDb: { records: [] },
+    approvedAt: '2026-06-22T16:30:00.000Z'
+  });
+
+  assert.equal(plan.approvedCreates, 1);
+  assert.equal(plan.promoted.length, 0);
+  assert.equal(plan.skipped.length, 1);
+  assert.equal(plan.records.length, 0);
+  assert.match(plan.skipped[0].reason, /must match a schema in anyOf/);
+});
+
 test('approve-staging CLI dry run reports promotions without writing canonical records', async () => {
   const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'approve-staging-dry-run-'));
   const stagingPath = path.join(tempDir, 'staging.json');

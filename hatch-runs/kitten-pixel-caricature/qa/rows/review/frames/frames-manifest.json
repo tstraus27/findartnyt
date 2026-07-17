@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "chroma_key": {
+    "hex": "#0000FF",
+    "rgb": [
+      0,
+      0,
+      255
+    ],
+    "threshold": 96.0
+  },
+  "rows": [
+    {
+      "state": "review",
+      "frames": [
+        "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/review/frames/review/00.png",
+        "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/review/frames/review/01.png",
+        "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/review/frames/review/02.png",
+        "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/review/frames/review/03.png",
+        "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/review/frames/review/04.png",
+        "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/review/frames/review/05.png"
+      ],
+      "method": "components"
+    }
+  ]
+}

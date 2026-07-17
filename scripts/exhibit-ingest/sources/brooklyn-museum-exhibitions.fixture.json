@@ -1,0 +1,19 @@
+{
+  "id": "brooklyn-museum-exhibitions",
+  "source": "brooklyn-museum",
+  "sourceType": "official_venue",
+  "reliability": "medium",
+  "parser": "brooklyn-museum-exhibitions",
+  "verification": {
+    "status": "pending_live_verification",
+    "verifiedAt": "2026-07-14T18:15:00.000Z",
+    "notes": "Browser-assisted compact snapshot captured from https://www.brooklynmuseum.org/exhibitions on 2026-07-14 after Node fetch returned Vercel 429 security checkpoint responses. This is staging-only and requires human review against the live official page before promotion."
+  },
+  "stagingNotes": "Official Brooklyn Museum exhibitions page included-in-general-admission cards from a browser-assisted compact snapshot. Direct automated backend fetch is currently blocked by Vercel 429, so this source is not a fully automated live ingestion path. Permanent collection galleries, museum spotlights, touring pages, and past exhibitions are out of scope for this first staging slice.",
+  "pages": [
+    {
+      "url": "https://www.brooklynmuseum.org/exhibitions",
+      "file": "../fixtures/brooklyn-museum-exhibitions.browser-2026-07-14.html"
+    }
+  ]
+}

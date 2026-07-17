@@ -1,0 +1,142 @@
+{
+  "ok": true,
+  "frames_root": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/running-left/frames",
+  "states": [
+    "running-left"
+  ],
+  "errors": [],
+  "warnings": [],
+  "rows": [
+    {
+      "state": "running-left",
+      "expected_frames": 8,
+      "actual_frames": 8,
+      "extraction_method": "components",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/running-left/frames/running-left/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 23015,
+          "bbox": [
+            5,
+            17,
+            187,
+            191
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 425
+        },
+        {
+          "index": 1,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/running-left/frames/running-left/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 25327,
+          "bbox": [
+            8,
+            5,
+            184,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 459
+        },
+        {
+          "index": 2,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/running-left/frames/running-left/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 20318,
+          "bbox": [
+            5,
+            17,
+            187,
+            190
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 448
+        },
+        {
+          "index": 3,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/running-left/frames/running-left/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 20762,
+          "bbox": [
+            5,
+            12,
+            187,
+            196
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 453
+        },
+        {
+          "index": 4,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/running-left/frames/running-left/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 21639,
+          "bbox": [
+            5,
+            21,
+            187,
+            186
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 414
+        },
+        {
+          "index": 5,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/running-left/frames/running-left/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 13598,
+          "bbox": [
+            5,
+            43,
+            187,
+            164
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 319
+        },
+        {
+          "index": 6,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/running-left/frames/running-left/06.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 20454,
+          "bbox": [
+            5,
+            28,
+            187,
+            180
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 443
+        },
+        {
+          "index": 7,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/kitten-pixel-caricature/qa/rows/running-left/frames/running-left/07.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 19520,
+          "bbox": [
+            5,
+            26,
+            187,
+            181
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 400
+        }
+      ]
+    }
+  ]
+}

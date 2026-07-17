@@ -1,0 +1,142 @@
+{
+  "ok": true,
+  "frames_root": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/failed/frames",
+  "states": [
+    "failed"
+  ],
+  "errors": [],
+  "warnings": [],
+  "rows": [
+    {
+      "state": "failed",
+      "expected_frames": 8,
+      "actual_frames": 8,
+      "extraction_method": "components",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "frames": [
+        {
+          "index": 0,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/failed/frames/failed/00.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 16461,
+          "bbox": [
+            21,
+            5,
+            170,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 307
+        },
+        {
+          "index": 1,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/failed/frames/failed/01.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 15864,
+          "bbox": [
+            15,
+            5,
+            177,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 261
+        },
+        {
+          "index": 2,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/failed/frames/failed/02.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 16368,
+          "bbox": [
+            18,
+            5,
+            174,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 287
+        },
+        {
+          "index": 3,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/failed/frames/failed/03.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 17329,
+          "bbox": [
+            25,
+            5,
+            167,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 303
+        },
+        {
+          "index": 4,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/failed/frames/failed/04.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14585,
+          "bbox": [
+            21,
+            5,
+            171,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 259
+        },
+        {
+          "index": 5,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/failed/frames/failed/05.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 15432,
+          "bbox": [
+            24,
+            5,
+            167,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 259
+        },
+        {
+          "index": 6,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/failed/frames/failed/06.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 14886,
+          "bbox": [
+            30,
+            5,
+            162,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 269
+        },
+        {
+          "index": 7,
+          "file": "/Users/tobystraus/Documents/FindArtNYC/hatch-runs/spankys-huhbeast-64bit/qa/rows/failed/frames/failed/07.png",
+          "width": 192,
+          "height": 208,
+          "nontransparent_pixels": 15144,
+          "bbox": [
+            27,
+            5,
+            164,
+            203
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 284
+        }
+      ]
+    }
+  ]
+}

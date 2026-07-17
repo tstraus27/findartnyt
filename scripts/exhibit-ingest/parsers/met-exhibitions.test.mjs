@@ -31,6 +31,30 @@ test('parseMetExhibitionsPage extracts unique exhibition records from compact br
   assert.equal(georgeHarvey.endDate, '2028-03-05');
 });
 
+test('parseMetExhibitionsPage extracts seeded official detail pages missing from the listing snapshot', async () => {
+  const html = await fs.readFile(
+    path.resolve(import.meta.dirname, '../fixtures/met-exhibitions-details/orientalism-between-fact-and-fantasy.html'),
+    'utf8'
+  );
+  const records = parseMetExhibitionsPage({
+    html,
+    url: 'https://www.metmuseum.org/exhibitions/orientalism-between-fact-and-fantasy'
+  });
+
+  assert.equal(records.length, 1);
+  assert.equal(records[0].id, 'exhibition:met:orientalism-between-fact-and-fantasy');
+  assert.equal(records[0].title, 'Orientalism: Between Fact and Fantasy');
+  assert.equal(records[0].dateText, 'Through February 28, 2027');
+  assert.equal(records[0].startDate, null);
+  assert.equal(records[0].endDate, '2027-02-28');
+  assert.match(records[0].description, /19th-century European and Ottoman images/);
+  assert.deepEqual(records[0].tags, ['browser-assisted-snapshot', 'seeded-detail-page']);
+  assert.equal(
+    records[0].sourceUrl,
+    'https://www.metmuseum.org/exhibitions/orientalism-between-fact-and-fantasy'
+  );
+});
+
 test('parseMetExhibitionsPage parses open-ended and seasonal dates', () => {
   const html = `
     <section data-met-section="Upcoming">

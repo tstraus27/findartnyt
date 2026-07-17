@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseBronxMuseumExhibitionsPage } from './parsers/bronx-museum-exhibitions.mjs';
+import { parseBrooklynMuseumExhibitionsPage } from './parsers/brooklyn-museum-exhibitions.mjs';
 import { parseCooperHewittExhibitionsPage } from './parsers/cooper-hewitt-exhibitions.mjs';
 import { parseDavidZwirnerArtistPage } from './parsers/david-zwirner-artist.mjs';
 import { parseDavidZwirnerExhibitionsPage } from './parsers/david-zwirner-exhibitions.mjs';
@@ -30,6 +31,7 @@ const defaultStagingDir = path.join(projectRoot, 'data/staging');
 
 const parsers = {
   'bronx-museum-exhibitions': parseBronxMuseumExhibitionsPage,
+  'brooklyn-museum-exhibitions': parseBrooklynMuseumExhibitionsPage,
   'cooper-hewitt-exhibitions': parseCooperHewittExhibitionsPage,
   'david-zwirner-artist': parseDavidZwirnerArtistPage,
   'david-zwirner-exhibitions': parseDavidZwirnerExhibitionsPage,
@@ -72,6 +74,15 @@ export const parseArgs = (argv) => {
 };
 
 const readJson = async (file) => JSON.parse(await fs.readFile(file, 'utf8'));
+
+const fileExists = async (file) => {
+  try {
+    await fs.access(file);
+    return true;
+  } catch {
+    return false;
+  }
+};
 
 const fetchPage = async (url) => {
   const response = await fetch(url, {
@@ -224,6 +235,14 @@ const followPageForRecord = (page, record) => {
   }
 
   return followedPage;
+};
+
+const followedFixtureExists = async (page, followedPage, sourceDir) => {
+  if (!followedPage?.file || page.followRecordUrlFixtureRequired !== false) {
+    return true;
+  }
+
+  return fileExists(path.resolve(sourceDir, followedPage.file));
 };
 
 const sourceVerificationSummary = (sourceConfig) => ({
@@ -561,6 +580,10 @@ export const run = async () => {
         .filter((followedPage, index, allPages) => allPages.findIndex((candidate) => candidate.url === followedPage.url) === index);
 
       for (const followedPage of followedPages) {
+        if (!(await followedFixtureExists(page, followedPage, sourceDir))) {
+          continue;
+        }
+
         const detailPage = await readSourcePage(followedPage, sourceDir);
           fetchedPages.push(summarizeFetchedPage(followedPage, args.source, 'followed'));
         const detailRecords = parser({

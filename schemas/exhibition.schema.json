@@ -16,6 +16,39 @@
     "createdAt",
     "updatedAt"
   ],
+  "anyOf": [
+    {
+      "required": [
+        "startDate"
+      ],
+      "properties": {
+        "startDate": {
+          "$ref": "#/$defs/dateLike"
+        }
+      }
+    },
+    {
+      "required": [
+        "endDate"
+      ],
+      "properties": {
+        "endDate": {
+          "$ref": "#/$defs/dateLike"
+        }
+      }
+    },
+    {
+      "required": [
+        "dateText"
+      ],
+      "properties": {
+        "dateText": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  ],
   "properties": {
     "id": {
       "type": "string",
@@ -33,10 +66,16 @@
       "minLength": 1
     },
     "startDate": {
-      "$ref": "#/$defs/dateLike"
+      "$ref": "#/$defs/nullableDateLike"
     },
     "endDate": {
       "$ref": "#/$defs/nullableDateLike"
+    },
+    "dateText": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "description": {
       "type": [
