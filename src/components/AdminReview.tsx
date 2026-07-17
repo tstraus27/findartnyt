@@ -9,7 +9,6 @@ import type { Exhibition } from '../lib/exhibitions';
 import { formatStagedDates, itemUrl, normalizeReviewStatus, type StagedItem, type StagedProposal } from '../lib/stagingReview';
 
 type AdminRoute = 'dashboard' | 'review' | 'featured' | 'history';
-type QueueFilter = 'active' | 'all' | 'pending' | 'reviewer_approved' | 'rejected' | 'needs_revision' | 'promoted';
 type HistoryStatusFilter =
   | 'all'
   | 'reviewer_approved'
@@ -36,6 +35,10 @@ const emptyAuth: AuthState = {
 
 const canPromote = (auth: AuthState) => auth.role === 'admin' || auth.role === 'owner';
 const canReview = (auth: AuthState) => auth.role === 'reviewer' || canPromote(auth);
+const needsReview = (item: StagedItem, auth: AuthState) => {
+  if (canPromote(auth)) return !['approved', 'rejected', 'promoted'].includes(item.reviewStatus);
+  return item.reviewStatus === 'pending' || item.reviewStatus === 'needs_revision';
+};
 
 function useAuth() {
   const [auth, setAuth] = useState<AuthState>(emptyAuth);
@@ -409,14 +412,12 @@ function ReviewWorkspace() {
   const [sources, setSources] = useState<StagingQueueSource[]>([]);
   const [sourceId, setSourceId] = useState('');
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
-  const [queueFilter, setQueueFilter] = useState<QueueFilter>('active');
   const [error, setError] = useState('');
 
   const refreshQueues = async () => {
     try {
       const next = await backend.getStagingQueues();
       setSources(next);
-      setSourceId((current) => current || next[0]?.id || '');
       setError('');
     } catch (queueError) {
       setError(queueError instanceof Error ? queueError.message : 'Could not load staging queue.');
@@ -427,15 +428,12 @@ function ReviewWorkspace() {
     if (!loading && auth.signedIn && canReview(auth)) refreshQueues();
   }, [auth.signedIn, auth.role, loading]);
 
-  const selectedSource = sources.find((source) => source.id === sourceId) ?? sources[0];
-  const items = selectedSource?.items ?? [];
-  const queueItems = items.filter((item) => {
-    const status = item.reviewStatus;
-    if (queueFilter === 'all') return true;
-    if (queueFilter === 'active') return !['approved', 'rejected', 'promoted'].includes(status);
-    return status === queueFilter;
-  });
-  const selectedItem = items.find((item) => item.id === selectedItemId) ?? queueItems[0] ?? items[0] ?? null;
+  const activeSources = sources
+    .map((source) => ({ ...source, items: source.items.filter((item) => needsReview(item, auth)) }))
+    .filter((source) => source.items.length > 0);
+  const selectedSource = activeSources.find((source) => source.id === sourceId) ?? activeSources[0];
+  const queueItems = selectedSource?.items ?? [];
+  const selectedItem = queueItems.find((item) => item.id === selectedItemId) ?? queueItems[0] ?? null;
 
   if (loading) return <main className="app admin-app">Loading...</main>;
   if (!auth.signedIn || !canReview(auth)) return <AdminLogin />;
@@ -452,7 +450,7 @@ function ReviewWorkspace() {
       <div className="review-shell">
         <aside className="source-review-list" aria-label="Source datasets">
           <h2>Sources</h2>
-          {sources.map((source) => (
+          {activeSources.map((source) => (
             <button
               key={source.id}
               type="button"
@@ -463,30 +461,17 @@ function ReviewWorkspace() {
               }}
             >
               <strong>{source.label}</strong>
-              <span>{(source.counts.pending || 0) + (source.counts.needs_revision || 0)} need review</span>
-              <small>{source.items.length} staged items</small>
+              <span>{source.items.length} need review</span>
             </button>
           ))}
+          {!activeSources.length && <p className="empty-review">No sources need review.</p>}
         </aside>
 
         <aside className="review-queue" aria-label="Items to review">
           <div className="review-section-head">
             <h2>{selectedSource?.label || 'Queue'}</h2>
-            <span>{items.length} staged</span>
+            <span>{queueItems.length} need review</span>
           </div>
-          <label className="queue-filter" htmlFor="queue-filter">
-            <span>Status</span>
-            <select id="queue-filter" value={queueFilter} onChange={(event) => setQueueFilter(event.target.value as QueueFilter)}>
-              <option value="active">Active review</option>
-              <option value="all">All statuses</option>
-              <option value="pending">Pending</option>
-              <option value="reviewer_approved">Reviewer approved</option>
-              <option value="admin_approved">Admin approved</option>
-              <option value="needs_revision">Needs revision</option>
-              <option value="rejected">Rejected</option>
-              <option value="promoted">Promoted</option>
-            </select>
-          </label>
           <div className="queue-list-panel">
             {queueItems.map((item) => {
               const proposal = item.proposed ?? {};
@@ -522,7 +507,7 @@ function ReviewWorkspace() {
               <ReviewActions auth={auth} item={selectedItem} onRefresh={refreshQueues} />
             </>
           ) : (
-            <p>Select a staged record.</p>
+            <p>{activeSources.length ? 'Select a staged record.' : 'Review queue is complete.'}</p>
           )}
         </section>
 
