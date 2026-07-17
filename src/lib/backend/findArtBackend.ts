@@ -137,6 +137,25 @@ const writeLocalProposalEdit = (itemId: string, proposed: StagedItem['proposed']
   localStorage.setItem(localProposalStorageKey, JSON.stringify(edits));
 };
 
+const dbDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+
+const sanitizePromotionProposal = (proposed: StagedItem['proposed']) => {
+  if (!proposed) return { proposed, changed: false };
+
+  let changed = false;
+  const next = { ...proposed };
+
+  (['startDate', 'endDate'] as const).forEach((field) => {
+    const value = next[field];
+    if (typeof value === 'string' && value && !dbDatePattern.test(value)) {
+      next[field] = null;
+      changed = true;
+    }
+  });
+
+  return { proposed: next, changed };
+};
+
 const localSources = (): StagingQueueSource[] => {
   const decisions = readLocalDecisions();
   const proposalEdits = readLocalProposalEdits();
@@ -295,8 +314,25 @@ export const backend = {
     if (error) throw error;
   },
 
-  async promoteStagingItem(itemId: string, notes: string) {
-    if (!supabase) throw new Error('Promotion requires Supabase to be configured.');
+  async promoteStagingItem(itemOrId: StagedItem | string, notes: string) {
+    const itemId = typeof itemOrId === 'string' ? itemOrId : itemOrId.id;
+
+    if (!supabase) {
+      writeLocalDecision(itemId, 'promoted', notes);
+      return;
+    }
+
+    if (typeof itemOrId !== 'string') {
+      const sanitized = sanitizePromotionProposal(itemOrId.proposed);
+      if (sanitized.changed) {
+        await this.updateStagingProposal(
+          itemId,
+          sanitized.proposed,
+          'Normalized staged date fields before admin promotion.'
+        );
+      }
+    }
+
     const { error } = await supabase.rpc('admin_promote_staging_item', {
       staging_item_id: itemId,
       notes

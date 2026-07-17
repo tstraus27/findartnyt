@@ -315,38 +315,59 @@ function ReviewActions({
 }) {
   const [notes, setNotes] = useState('');
   const [message, setMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    setNotes('');
+    setMessage('');
+    setSubmitting(false);
+  }, [item.id]);
 
   const submitApproval = async () => {
     setMessage('');
-    if (canPromote(auth)) {
-      await backend.promoteStagingItem(item.id, notes);
-      setMessage('Approved and promoted.');
-    } else {
-      await backend.submitReviewDecision(item.id, 'looks_good', notes);
-      setMessage('Approval recommendation saved.');
+    setSubmitting(true);
+    try {
+      if (canPromote(auth)) {
+        await backend.promoteStagingItem(item, notes);
+        setMessage('Approved and promoted.');
+      } else {
+        await backend.submitReviewDecision(item.id, 'looks_good', notes);
+        setMessage('Approval recommendation saved.');
+      }
+      await onRefresh();
+    } catch (approvalError) {
+      setMessage(approvalError instanceof Error ? approvalError.message : 'Approval failed.');
+    } finally {
+      setSubmitting(false);
     }
-    await onRefresh();
   };
 
   const submitRejection = async () => {
     setMessage('');
-    if (canPromote(auth)) {
-      await backend.updateStagingStatus(item.id, 'rejected', notes);
-      setMessage('Rejected.');
-    } else {
-      await backend.submitReviewDecision(item.id, 'reject', notes);
-      setMessage('Rejection recommendation saved.');
+    setSubmitting(true);
+    try {
+      if (canPromote(auth)) {
+        await backend.updateStagingStatus(item.id, 'rejected', notes);
+        setMessage('Rejected.');
+      } else {
+        await backend.submitReviewDecision(item.id, 'reject', notes);
+        setMessage('Rejection recommendation saved.');
+      }
+      await onRefresh();
+    } catch (rejectionError) {
+      setMessage(rejectionError instanceof Error ? rejectionError.message : 'Rejection failed.');
+    } finally {
+      setSubmitting(false);
     }
-    await onRefresh();
   };
 
   return (
     <section className="review-actions" aria-label="Review decision">
       <div className="decision-buttons primary-decisions">
-        <button type="button" onClick={submitApproval} disabled={!canReview(auth)}>
-          Approve
+        <button type="button" onClick={submitApproval} disabled={!canReview(auth) || submitting}>
+          {submitting ? 'Working...' : 'Approve'}
         </button>
-        <button type="button" onClick={submitRejection} disabled={!canReview(auth)}>
+        <button type="button" onClick={submitRejection} disabled={!canReview(auth) || submitting}>
           Reject
         </button>
       </div>
