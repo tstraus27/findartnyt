@@ -109,6 +109,14 @@ a:focus-visible {
   margin: 0 0 10px;
 }
 
+.featured-footer {
+  margin-top: 12px;
+}
+
+.featured-footer > :last-child {
+  margin-bottom: 0;
+}
+
 .featured-content {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
