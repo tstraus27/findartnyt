@@ -374,25 +374,39 @@ export const backend = {
     const auth = await this.getAuthState();
     if (auth.role !== 'admin' && auth.role !== 'owner') throw new Error('Only admins can save featured content.');
 
+    let exhibitionId: string | null = null;
+    if (input.exhibitionId) {
+      const { data: exhibition, error: exhibitionError } = await supabase
+        .from('exhibitions')
+        .select('id')
+        .eq('id', input.exhibitionId)
+        .maybeSingle();
+      if (exhibitionError) throw exhibitionError;
+      exhibitionId = exhibition?.id ?? null;
+    }
+
     const payload = {
-      id: input.id || undefined,
-      status: input.publish ? 'published' : input.status,
-      exhibition_id: input.exhibitionId || null,
+      ...(input.id ? { id: input.id } : {}),
+      status: 'draft' as const,
+      exhibition_id: exhibitionId,
       title: input.title,
       dek: input.dek || null,
       body_markdown: input.bodyMarkdown || null,
       image_url: input.imageUrl || null,
       cta_url: input.ctaUrl || null
     };
-    const { data, error } = await supabase.from('featured_content').upsert(payload).select('id').single();
+    const { data, error } = await supabase.from('featured_content').upsert(payload).select('*').single();
     if (error) throw error;
+    let saved = data;
     if (input.publish) {
-      const { error: publishError } = await supabase.rpc('admin_publish_featured_content', {
+      const { data: published, error: publishError } = await supabase.rpc('admin_publish_featured_content', {
         content_id: data.id,
         notes: 'Published from admin featured content screen.'
       });
       if (publishError) throw publishError;
+      if (published) saved = published;
     }
+    return featuredContentFromRow(saved);
   },
 
   stagingItemSummary(item: StagedItem) {

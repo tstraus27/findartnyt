@@ -785,6 +785,8 @@ export function FeaturedContentAdmin() {
     ctaUrl: ''
   });
   const [message, setMessage] = useState('');
+  const [submitError, setSubmitError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (!loading && auth.signedIn && canPromote(auth)) {
@@ -832,11 +834,25 @@ export function FeaturedContentAdmin() {
     setForm((current) => ({ ...current, exhibitionId: null }));
   };
 
-  const submit = async (event: FormEvent, publish: boolean) => {
-    event.preventDefault();
-    await backend.saveFeaturedContent({ ...form, publish });
-    setFeaturedHistory(await backend.getFeaturedContentHistory());
-    setMessage(publish ? 'Featured content published.' : 'Featured content saved as draft.');
+  const submit = async (publish: boolean) => {
+    setMessage('');
+    setSubmitError('');
+    if (!form.title.trim()) {
+      setSubmitError('A title is required.');
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const saved = await backend.saveFeaturedContent({ ...form, publish });
+      setForm((current) => ({ ...current, id: saved.id, status: saved.status }));
+      setFeaturedHistory(await backend.getFeaturedContentHistory());
+      setMessage(publish ? 'Featured content published.' : 'Featured content saved as draft.');
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Could not save featured content.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -844,7 +860,12 @@ export function FeaturedContentAdmin() {
       <AdminHeader auth={auth} route="featured" />
       <section className="admin-login featured-editor">
         <h2>Featured block</h2>
-        <form onSubmit={(event) => submit(event, false)}>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            submit(false);
+          }}
+        >
           <section className="featured-picker" aria-label="Choose exhibition">
             <label htmlFor="featured-exhibition-search">
               <span>Find exhibition</span>
@@ -900,10 +921,11 @@ export function FeaturedContentAdmin() {
             <input value={form.ctaUrl || ''} onChange={(event) => setField('ctaUrl', event.target.value)} />
           </label>
           <div className="decision-buttons">
-            <button type="submit">Save draft</button>
-            <button type="button" onClick={(event) => submit(event as unknown as FormEvent, true)}>Publish</button>
+            <button type="submit" disabled={submitting}>{submitting ? 'Working...' : 'Save draft'}</button>
+            <button type="button" onClick={() => submit(true)} disabled={submitting}>Publish</button>
           </div>
         </form>
+        {submitError && <p className="form-error">{submitError}</p>}
         {message && <p className="decision-saved">{message}</p>}
       </section>
       <section className="featured-history-admin" aria-label="Feature history">
