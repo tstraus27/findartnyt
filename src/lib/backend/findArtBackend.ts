@@ -245,7 +245,9 @@ export const backend = {
     }
 
     const backendRecords = (data ?? []).map((row) => toCamelExhibition(row)).filter((record): record is Exhibition => Boolean(record));
-    return backendRecords.length ? backendRecords : localExhibitions;
+    const recordsById = new Map(localExhibitions.map((record) => [record.id, record]));
+    backendRecords.forEach((record) => recordsById.set(record.id, record));
+    return Array.from(recordsById.values());
   },
 
   async getPublishedFeaturedContent(): Promise<FeaturedContent | null> {
