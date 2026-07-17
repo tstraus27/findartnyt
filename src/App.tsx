@@ -336,7 +336,7 @@ export default function App() {
       <header className="site-header">
         <div>
           <h1>FindArtNYC</h1>
-          <p>Approved NYC exhibition records. Public beta.</p>
+          <p>Public beta.</p>
         </div>
         <a className="admin-link" href="/admin/login">Admin sign-on</a>
       </header>
