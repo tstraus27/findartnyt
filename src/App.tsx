@@ -1,5 +1,6 @@
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 import { AdminDashboard, AdminHistory, AdminLogin, AdminReview, FeaturedContentAdmin } from './components/AdminReview';
+import { FeatureRichText } from './components/FeatureRichText';
 import { VenueMap } from './components/VenueMap';
 import { backend, type FeaturedContent } from './lib/backend/findArtBackend';
 import {
@@ -509,7 +510,7 @@ export default function App() {
                     <p className="featured-label">Featured</p>
                     <h2>{featuredContent.title}</h2>
                     {featuredContent.dek && <p className="featured-dek">{featuredContent.dek}</p>}
-                    {featuredContent.bodyMarkdown && <p>{featuredContent.bodyMarkdown}</p>}
+                    {featuredContent.bodyMarkdown && <FeatureRichText value={featuredContent.bodyMarkdown} />}
                     {featuredContent.ctaUrl && (
                       <a href={featuredContent.ctaUrl} target="_blank" rel="noreferrer">
                         More information

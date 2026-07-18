@@ -474,8 +474,19 @@ export const backend = {
       exhibitionId = exhibition?.id ?? null;
     }
 
+    let editableDraftId: string | null = null;
+    if (input.id) {
+      const { data: existing, error: existingError } = await supabase
+        .from('featured_content')
+        .select('id, status')
+        .eq('id', input.id)
+        .maybeSingle();
+      if (existingError) throw existingError;
+      if (existing?.status === 'draft') editableDraftId = existing.id;
+    }
+
     const payload = {
-      ...(input.id ? { id: input.id } : {}),
+      ...(editableDraftId ? { id: editableDraftId } : {}),
       status: 'draft' as const,
       exhibition_id: exhibitionId,
       title: input.title,

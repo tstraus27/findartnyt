@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useMemo, useState } from 'react';
+import { type FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import {
   backend,
   type AuthState,
@@ -7,6 +7,7 @@ import {
 } from '../lib/backend/findArtBackend';
 import { publicListingCutoff, type Exhibition } from '../lib/exhibitions';
 import { formatStagedDates, itemUrl, normalizeReviewStatus, type StagedItem, type StagedProposal } from '../lib/stagingReview';
+import { FeatureRichText } from './FeatureRichText';
 
 type AdminRoute = 'dashboard' | 'review' | 'featured' | 'history';
 type HistoryStatusFilter =
@@ -878,6 +879,9 @@ export function FeaturedContentAdmin() {
   const [message, setMessage] = useState('');
   const [submitError, setSubmitError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [editingFrom, setEditingFrom] = useState<FeaturedContent | null>(null);
+  const bodyEditorRef = useRef<HTMLTextAreaElement>(null);
+  const initializedEditor = useRef(false);
 
   useEffect(() => {
     if (!loading && auth.signedIn && canPromote(auth)) {
@@ -885,6 +889,23 @@ export function FeaturedContentAdmin() {
         .then(([nextExhibitions, nextHistory]) => {
           setExhibitions(nextExhibitions);
           setFeaturedHistory(nextHistory);
+          if (!initializedEditor.current) {
+            const currentFeature = nextHistory.find((entry) => entry.status === 'published') ?? nextHistory[0];
+            if (currentFeature) {
+              setForm({
+                id: null,
+                status: 'draft',
+                exhibitionId: currentFeature.exhibitionId,
+                title: currentFeature.title,
+                dek: currentFeature.dek || '',
+                bodyMarkdown: currentFeature.bodyMarkdown || '',
+                imageUrl: currentFeature.imageUrl || '',
+                ctaUrl: currentFeature.ctaUrl || ''
+              });
+              setEditingFrom(currentFeature);
+            }
+            initializedEditor.current = true;
+          }
           setExhibitionError('');
         })
         .catch((error) => setExhibitionError(error instanceof Error ? error.message : 'Could not load featured data.'));
@@ -904,6 +925,25 @@ export function FeaturedContentAdmin() {
       )
       .slice(0, 20);
   }, [exhibitionQuery, exhibitions]);
+
+  const historyEntries = useMemo(() => {
+    const counters = new Map<string, number>();
+    const revisionById = new Map<string, number>();
+    const identity = (entry: FeaturedContent) =>
+      entry.exhibitionId || entry.ctaUrl || entry.title.trim().toLowerCase();
+    const chronological = [...featuredHistory].sort((left, right) =>
+      String(left.publishedAt || left.createdAt || '').localeCompare(String(right.publishedAt || right.createdAt || ''))
+    );
+
+    chronological.forEach((entry) => {
+      const key = identity(entry);
+      const revision = (counters.get(key) || 0) + 1;
+      counters.set(key, revision);
+      revisionById.set(entry.id, revision);
+    });
+
+    return featuredHistory.map((entry) => ({ entry, revision: revisionById.get(entry.id) || 1 }));
+  }, [featuredHistory]);
 
   if (loading) return <main className="app admin-app">Loading...</main>;
   if (!auth.signedIn || !canPromote(auth)) return <AdminLogin />;
@@ -925,6 +965,71 @@ export function FeaturedContentAdmin() {
     setForm((current) => ({ ...current, exhibitionId: null }));
   };
 
+  const startNewFeature = () => {
+    setForm({
+      id: null,
+      status: 'draft',
+      exhibitionId: null,
+      title: '',
+      dek: '',
+      bodyMarkdown: '',
+      imageUrl: '',
+      ctaUrl: ''
+    });
+    setEditingFrom(null);
+    setExhibitionQuery('');
+    setMessage('Started a new feature draft.');
+    setSubmitError('');
+  };
+
+  const loadHistoryEntry = (entry: FeaturedContent) => {
+    setForm({
+      id: null,
+      status: 'draft',
+      exhibitionId: entry.exhibitionId,
+      title: entry.title,
+      dek: entry.dek || '',
+      bodyMarkdown: entry.bodyMarkdown || '',
+      imageUrl: entry.imageUrl || '',
+      ctaUrl: entry.ctaUrl || ''
+    });
+    setEditingFrom(entry);
+    setMessage('Editing a copy. Publishing will create a new history entry.');
+    setSubmitError('');
+  };
+
+  const applyBodyMarkup = (before: string, after: string, placeholder: string) => {
+    const editor = bodyEditorRef.current;
+    if (!editor) return;
+    const current = form.bodyMarkdown || '';
+    const start = editor.selectionStart;
+    const end = editor.selectionEnd;
+    const selected = current.slice(start, end) || placeholder;
+    const next = `${current.slice(0, start)}${before}${selected}${after}${current.slice(end)}`;
+    setField('bodyMarkdown', next);
+    requestAnimationFrame(() => {
+      editor.focus();
+      editor.setSelectionRange(start + before.length, start + before.length + selected.length);
+    });
+  };
+
+  const setBodySize = (size: 'small' | 'normal' | 'large') => {
+    const editor = bodyEditorRef.current;
+    if (!editor) return;
+    const current = form.bodyMarkdown || '';
+    const start = editor.selectionStart;
+    const end = editor.selectionEnd;
+    const selected = current.slice(start, end) || 'text';
+    const unwrapped = selected.replace(/^<(?:small|big)>([\s\S]*)<\/(?:small|big)>$/, '$1');
+    const nextSelection = size === 'normal' ? unwrapped : `<${size === 'small' ? 'small' : 'big'}>${unwrapped}</${size === 'small' ? 'small' : 'big'}>`;
+    const next = `${current.slice(0, start)}${nextSelection}${current.slice(end)}`;
+    setField('bodyMarkdown', next);
+    requestAnimationFrame(() => {
+      editor.focus();
+      editor.setSelectionRange(start, start + nextSelection.length);
+    });
+  };
+
   const submit = async (publish: boolean) => {
     setMessage('');
     setSubmitError('');
@@ -935,10 +1040,22 @@ export function FeaturedContentAdmin() {
 
     setSubmitting(true);
     try {
+      const wasModification = Boolean(editingFrom);
       const saved = await backend.saveFeaturedContent({ ...form, publish });
-      setForm((current) => ({ ...current, id: saved.id, status: saved.status }));
+      setForm((current) => ({
+        ...current,
+        id: publish ? null : saved.id,
+        status: publish ? 'draft' : saved.status
+      }));
+      if (publish) setEditingFrom(saved);
       setFeaturedHistory(await backend.getFeaturedContentHistory());
-      setMessage(publish ? 'Featured content published.' : 'Featured content saved as draft.');
+      setMessage(
+        publish
+          ? wasModification
+            ? 'Feature modification published as a new history entry.'
+            : 'Featured content published.'
+          : 'Featured content saved as draft.'
+      );
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'Could not save featured content.');
     } finally {
@@ -949,8 +1066,15 @@ export function FeaturedContentAdmin() {
   return (
     <main className="app admin-app">
       <AdminHeader auth={auth} route="featured" />
+      <div className="featured-admin-workspace">
       <section className="admin-login featured-editor">
-        <h2>Featured block</h2>
+        <div className="review-section-head">
+          <h2>Featured block</h2>
+          <div className="feature-editor-heading-actions">
+            {editingFrom && <span className="feature-revision-note">New version of {editingFrom.title}</span>}
+            <button type="button" onClick={startNewFeature}>New feature</button>
+          </div>
+        </div>
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -991,25 +1115,45 @@ export function FeaturedContentAdmin() {
               {!matchingExhibitions.length && <p className="empty-review">No exhibitions match that search.</p>}
             </div>
           </section>
-          <label>
+          <label htmlFor="featured-title">
             <span>Title</span>
-            <input value={form.title} onChange={(event) => setField('title', event.target.value)} required />
+            <input id="featured-title" type="text" value={form.title} onChange={(event) => setField('title', event.target.value)} required />
           </label>
-          <label>
+          <label htmlFor="featured-subtitle">
             <span>Subtitle</span>
-            <input value={form.dek || ''} onChange={(event) => setField('dek', event.target.value)} />
+            <input id="featured-subtitle" type="text" value={form.dek || ''} onChange={(event) => setField('dek', event.target.value)} />
           </label>
-          <label>
-            <span>Body markdown</span>
-            <textarea value={form.bodyMarkdown || ''} onChange={(event) => setField('bodyMarkdown', event.target.value)} />
-          </label>
-          <label>
+          <div className="feature-body-field">
+            <label htmlFor="featured-body">Body markdown</label>
+            <div className="feature-format-toolbar" role="toolbar" aria-label="Body formatting">
+              <button type="button" className="format-bold" title="Bold" aria-label="Bold" onClick={() => applyBodyMarkup('**', '**', 'bold text')}>B</button>
+              <button type="button" className="format-italic" title="Italic" aria-label="Italic" onClick={() => applyBodyMarkup('*', '*', 'italic text')}>I</button>
+              <button type="button" className="format-underline" title="Underline" aria-label="Underline" onClick={() => applyBodyMarkup('<u>', '</u>', 'underlined text')}>U</button>
+              <span className="format-divider" aria-hidden="true" />
+              <button type="button" className="format-small" title="Small text" aria-label="Small text" onClick={() => setBodySize('small')}>A</button>
+              <button type="button" title="Normal text" aria-label="Normal text" onClick={() => setBodySize('normal')}>A</button>
+              <button type="button" className="format-large" title="Large text" aria-label="Large text" onClick={() => setBodySize('large')}>A</button>
+            </div>
+            <textarea
+              id="featured-body"
+              ref={bodyEditorRef}
+              value={form.bodyMarkdown || ''}
+              onChange={(event) => setField('bodyMarkdown', event.target.value)}
+            />
+          </div>
+          {form.bodyMarkdown && (
+            <section className="feature-body-preview" aria-label="Body preview">
+              <strong>Preview</strong>
+              <FeatureRichText value={form.bodyMarkdown} />
+            </section>
+          )}
+          <label htmlFor="featured-image-url">
             <span>Image URL</span>
-            <input value={form.imageUrl || ''} onChange={(event) => setField('imageUrl', event.target.value)} />
+            <input id="featured-image-url" type="url" value={form.imageUrl || ''} onChange={(event) => setField('imageUrl', event.target.value)} />
           </label>
-          <label>
+          <label htmlFor="featured-cta-url">
             <span>CTA URL</span>
-            <input value={form.ctaUrl || ''} onChange={(event) => setField('ctaUrl', event.target.value)} />
+            <input id="featured-cta-url" type="url" value={form.ctaUrl || ''} onChange={(event) => setField('ctaUrl', event.target.value)} />
           </label>
           <div className="decision-buttons">
             <button type="submit" disabled={submitting}>{submitting ? 'Working...' : 'Save draft'}</button>
@@ -1021,34 +1165,27 @@ export function FeaturedContentAdmin() {
       </section>
       <section className="featured-history-admin" aria-label="Feature history">
         <h2>Feature history</h2>
-        <div className="history-table-wrap">
-          <table className="featured-admin-table">
-            <thead>
-              <tr>
-                <th>Status</th>
-                <th>Published</th>
-                <th>Title</th>
-                <th>Subtitle</th>
-                <th>Exhibition ID</th>
-                <th>CTA</th>
-              </tr>
-            </thead>
-            <tbody>
-              {featuredHistory.map((entry) => (
-                <tr key={entry.id}>
-                  <td>{entry.status}</td>
-                  <td>{entry.publishedAt ? new Date(entry.publishedAt).toLocaleString() : 'n/a'}</td>
-                  <td>{entry.title}</td>
-                  <td>{entry.dek || 'n/a'}</td>
-                  <td>{entry.exhibitionId || 'n/a'}</td>
-                  <td>{entry.ctaUrl ? <a href={entry.ctaUrl} target="_blank" rel="noreferrer">source</a> : 'n/a'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="featured-history-list-admin">
+          {historyEntries.map(({ entry, revision }) => (
+            <button
+              key={entry.id}
+              type="button"
+              className={editingFrom?.id === entry.id ? 'featured-history-entry selected' : 'featured-history-entry'}
+              onClick={() => loadHistoryEntry(entry)}
+            >
+              <span className="feature-history-meta">
+                <strong>{revision === 1 ? 'Original' : `Modification ${revision - 1}`}</strong>
+                <span>{entry.status}</span>
+              </span>
+              <b>{entry.title}</b>
+              {entry.dek && <span>{entry.dek}</span>}
+              <small>{entry.publishedAt ? new Date(entry.publishedAt).toLocaleString() : 'Not published'}</small>
+            </button>
+          ))}
           {!featuredHistory.length && <p className="empty-review">No published or archived feature blocks yet.</p>}
         </div>
       </section>
+      </div>
     </main>
   );
 }
