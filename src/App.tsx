@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useMemo, useState } from 'react';
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { AdminDashboard, AdminHistory, AdminLogin, AdminReview, FeaturedContentAdmin } from './components/AdminReview';
 import { FeatureRichText } from './components/FeatureRichText';
 import { VenueMap } from './components/VenueMap';
@@ -135,6 +135,22 @@ function ResultRow({
   );
 }
 
+function MobileResultRow({ record, onSelect }: { record: Exhibition; onSelect: (record: Exhibition) => void }) {
+  const closingSoon = closesWithinDays(record, 14);
+
+  return (
+    <li className="mobile-result-row">
+      <button type="button" onClick={() => onSelect(record)}>
+        <span className="mobile-result-title">{record.title}</span>
+        <span className="mobile-result-venue">{record.venue}</span>
+        <span className={closingSoon ? 'mobile-result-date closing-soon-date' : 'mobile-result-date'}>
+          {record.listDateText}
+        </span>
+      </button>
+    </li>
+  );
+}
+
 function DetailPane({ record }: { record: Exhibition | null }) {
   const [showMore, setShowMore] = useState(false);
 
@@ -195,16 +211,39 @@ function DetailPane({ record }: { record: Exhibition | null }) {
   );
 }
 
+function FeaturedCard({ content }: { content: FeaturedContent }) {
+  return (
+    <section className="featured-content" aria-label="Featured exhibition">
+      <div>
+        <p className="featured-label">Featured</p>
+        <h2>{content.title}</h2>
+        {content.dek && <p className="featured-dek">{content.dek}</p>}
+        {content.bodyMarkdown && <FeatureRichText value={content.bodyMarkdown} />}
+        {content.ctaUrl && (
+          <a href={content.ctaUrl} target="_blank" rel="noreferrer">
+            More information
+          </a>
+        )}
+      </div>
+      {content.imageUrl && <img src={content.imageUrl} alt="" loading="lazy" />}
+    </section>
+  );
+}
+
 export default function App() {
   const [path, setPath] = useState(() => window.location.pathname);
   const [filters, setFilters] = useState<ExhibitionFilters>(() => parseFilters());
   const [selectedId, setSelectedId] = useState<string | null>(() => getInitialSelectedId());
   const [showMap, setShowMap] = useState(false);
+  const [mobileView, setMobileView] = useState<'list' | 'detail' | 'map'>(() =>
+    getInitialSelectedId() ? 'detail' : 'list'
+  );
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [locationStatus, setLocationStatus] = useState<string>('');
   const [catalogRecords, setCatalogRecords] = useState<Exhibition[]>(() => exhibitions);
   const [featuredContent, setFeaturedContent] = useState<FeaturedContent | null>(null);
   const [featuredHistory, setFeaturedHistory] = useState<FeaturedContent[]>([]);
+  const mobileListScroll = useRef(0);
   const venueOptions = useMemo(() => getVenueOptions(catalogRecords), [catalogRecords]);
   const areaOptions = useMemo(() => getAreaOptions(catalogRecords), [catalogRecords]);
   const filteredRecords = useMemo(() => {
@@ -280,6 +319,27 @@ export default function App() {
     setFilters((current) => ({ ...current, venues: [] }));
   };
 
+  const selectMobileRecord = (record: Exhibition) => {
+    mobileListScroll.current = window.scrollY;
+    setSelectedId(record.id);
+    setMobileView('detail');
+    window.scrollTo({ top: 0 });
+  };
+
+  const returnToMobileList = () => {
+    setMobileView('list');
+    window.requestAnimationFrame(() => window.scrollTo({ top: mobileListScroll.current }));
+  };
+
+  const clearMobileFilters = () => {
+    setFilters((current) => ({
+      ...current,
+      venues: [],
+      area: '',
+      sort: defaultFilters.sort
+    }));
+  };
+
   const useCurrentLocation = () => {
     if (!navigator.geolocation) {
       setLocationStatus('Location is not available in this browser.');
@@ -315,6 +375,8 @@ export default function App() {
       : filters.venues.length === 1
         ? filters.venues[0]
       : `${filters.venues.length} venues`;
+  const mobileFilterCount =
+    filters.venues.length + Number(Boolean(filters.area)) + Number(filters.sort !== defaultFilters.sort);
 
   useEffect(() => {
     const syncPath = () => setPath(window.location.pathname);
@@ -407,6 +469,189 @@ export default function App() {
           </div>
         </fieldset>
       </form>
+
+      <section className="mobile-catalog" aria-label="Mobile exhibition catalog">
+        {mobileView !== 'detail' && (
+          <form className="mobile-search" onSubmit={(event) => event.preventDefault()} aria-label="Catalog search controls">
+            <label className="visually-hidden" htmlFor="mobile-search-input">
+              Search exhibitions
+            </label>
+            <input
+              id="mobile-search-input"
+              type="search"
+              value={filters.query}
+              onChange={(event) => updateFilters({ query: event.target.value })}
+              placeholder="Search exhibitions"
+            />
+
+            <div className="mobile-status" aria-label="Exhibition status">
+              {statusOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  className={filters.status === option.value ? 'selected' : undefined}
+                  aria-pressed={filters.status === option.value}
+                  onClick={() => updateFilters({ status: option.value })}
+                >
+                  {option.value === 'now'
+                    ? 'Now'
+                    : option.value === 'closingSoon'
+                      ? 'Closing'
+                      : option.value === 'currentFuture'
+                        ? 'All'
+                        : option.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="mobile-search-actions">
+              <details className="mobile-filters">
+                <summary>Filters{mobileFilterCount ? ` (${mobileFilterCount})` : ''}</summary>
+                <div className="mobile-filter-panel">
+                  <details className="mobile-venue-filter">
+                    <summary>Venue: {venueSummary}</summary>
+                    <div className="mobile-venue-options">
+                      {venueOptions.map((venue) => (
+                        <label key={venue} className="checkline">
+                          <input
+                            type="checkbox"
+                            checked={filters.venues.includes(venue)}
+                            onChange={() => toggleVenue(venue)}
+                          />
+                          {venue}
+                        </label>
+                      ))}
+                    </div>
+                  </details>
+
+                  <label htmlFor="mobile-area">
+                    <span>Area</span>
+                    <select
+                      id="mobile-area"
+                      value={filters.area}
+                      onChange={(event) => updateFilters({ area: event.target.value })}
+                    >
+                      <option value="">Any area</option>
+                      {areaOptions.map((area) => (
+                        <option key={area} value={area}>
+                          {area}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  <label htmlFor="mobile-sort">
+                    <span>Sort</span>
+                    <select
+                      id="mobile-sort"
+                      value={filters.sort}
+                      onChange={(event) => updateFilters({ sort: event.target.value as SortMode })}
+                    >
+                      {sortOptions.map((option) => (
+                        <option
+                          key={option.value}
+                          value={option.value}
+                          disabled={option.value === 'distance' && !userLocation}
+                        >
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  {mobileFilterCount > 0 && (
+                    <button type="button" className="plain-button mobile-clear-filters" onClick={clearMobileFilters}>
+                      Clear filters
+                    </button>
+                  )}
+                </div>
+              </details>
+
+              <div className="mobile-view-switch" aria-label="Catalog view">
+                <button
+                  type="button"
+                  className={mobileView === 'list' ? 'selected' : undefined}
+                  aria-pressed={mobileView === 'list'}
+                  onClick={() => setMobileView('list')}
+                >
+                  List
+                </button>
+                <button
+                  type="button"
+                  className={mobileView === 'map' ? 'selected' : undefined}
+                  aria-pressed={mobileView === 'map'}
+                  onClick={() => setMobileView('map')}
+                >
+                  Map
+                </button>
+              </div>
+            </div>
+          </form>
+        )}
+
+        {mobileView === 'list' && (
+          <div className="mobile-list-view">
+            <div className="mobile-results-heading">
+              <strong>
+                {filteredRecords.length} exhibition{filteredRecords.length === 1 ? '' : 's'}
+              </strong>
+              <span>{sortOptions.find((option) => option.value === filters.sort)?.label}</span>
+            </div>
+            {filteredRecords.length > 0 ? (
+              <ol className="mobile-results">
+                {filteredRecords.map((record) => (
+                  <MobileResultRow key={record.id} record={record} onSelect={selectMobileRecord} />
+                ))}
+              </ol>
+            ) : (
+              <p className="mobile-empty-results">No matching exhibitions.</p>
+            )}
+
+            {featuredContent && (
+              <section className="mobile-featured" aria-label="Featured exhibitions">
+                <FeaturedCard content={featuredContent} />
+              </section>
+            )}
+          </div>
+        )}
+
+        {mobileView === 'detail' && (
+          <section className="mobile-detail-view">
+            <button type="button" className="mobile-back" onClick={returnToMobileList}>
+              &larr; {filteredRecords.length} exhibition{filteredRecords.length === 1 ? '' : 's'}
+            </button>
+            <DetailPane record={selectedRecord} />
+            <button type="button" className="plain-button mobile-detail-map" onClick={() => setMobileView('map')}>
+              Show on map
+            </button>
+          </section>
+        )}
+
+        {mobileView === 'map' && (
+          <section className="mobile-map-view" aria-label="Venue map and venue filter">
+            <div className="mobile-map-heading">
+              <h2>Venue map</h2>
+              <button type="button" className="plain-button" onClick={useCurrentLocation}>
+                Use my location
+              </button>
+            </div>
+            <VenueMap
+              entries={venueMapEntries}
+              selectedVenue={filters.venues.length === 1 ? filters.venues[0] : null}
+              userLocation={userLocation}
+              onSelectVenue={(venue) => {
+                selectVenue(venue);
+                setMobileView('list');
+              }}
+              onClearVenue={clearVenue}
+            />
+            <p className="map-note">
+              Select a venue pin to show its exhibitions in the list.
+              {locationStatus && <span className="location-status"> {locationStatus}</span>}
+            </p>
+          </section>
+        )}
+      </section>
 
       <div className="catalog-desk">
         <section className="catalog-left" aria-label="Exhibition catalog results">
@@ -505,20 +750,7 @@ export default function App() {
           {(featuredContent || featuredHistory.length > 0) && (
             <section className="featured-footer" aria-label="Featured exhibitions">
               {featuredContent && (
-                <section className="featured-content" aria-label="Featured exhibition">
-                  <div>
-                    <p className="featured-label">Featured</p>
-                    <h2>{featuredContent.title}</h2>
-                    {featuredContent.dek && <p className="featured-dek">{featuredContent.dek}</p>}
-                    {featuredContent.bodyMarkdown && <FeatureRichText value={featuredContent.bodyMarkdown} />}
-                    {featuredContent.ctaUrl && (
-                      <a href={featuredContent.ctaUrl} target="_blank" rel="noreferrer">
-                        More information
-                      </a>
-                    )}
-                  </div>
-                  {featuredContent.imageUrl && <img src={featuredContent.imageUrl} alt="" loading="lazy" />}
-                </section>
+                <FeaturedCard content={featuredContent} />
               )}
 
               {featuredHistory.length > 0 && (
@@ -547,6 +779,10 @@ export default function App() {
           )}
         </section>
       </div>
+
+      <footer className="mobile-footer">
+        <a href="/admin/login">Admin</a>
+      </footer>
     </main>
   );
 }
