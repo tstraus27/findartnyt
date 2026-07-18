@@ -179,49 +179,70 @@ function FieldRow({ label, value }: { label: string; value?: string | null }) {
   );
 }
 
-const proposalFields: Array<{ key: keyof StagedProposal; label: string; multiline?: boolean }> = [
+const proposalFields: Array<{ key: keyof StagedProposal; label: string; multiline?: boolean; type?: 'date' | 'url' }> = [
   { key: 'title', label: 'Title' },
   { key: 'venue', label: 'Venue' },
-  { key: 'startDate', label: 'Start date' },
-  { key: 'endDate', label: 'End date' },
+  { key: 'startDate', label: 'Start date', type: 'date' },
+  { key: 'endDate', label: 'End date', type: 'date' },
   { key: 'dateText', label: 'Date text' },
   { key: 'venueAddress', label: 'Address' },
   { key: 'neighborhood', label: 'Neighborhood' },
   { key: 'borough', label: 'Borough' },
   { key: 'city', label: 'City' },
-  { key: 'imageUrl', label: 'Image URL' },
-  { key: 'sourceUrl', label: 'Source URL' },
-  { key: 'exhibitionUrl', label: 'Exhibition URL' },
+  { key: 'imageUrl', label: 'Image URL', type: 'url' },
+  { key: 'sourceUrl', label: 'Source URL', type: 'url' },
+  { key: 'exhibitionUrl', label: 'Exhibition URL', type: 'url' },
   { key: 'description', label: 'Description', multiline: true }
 ];
 
 function ProposalEditor({
   item,
   canEdit,
-  onSave
+  onSave,
+  startEditing = false
 }: {
   item: StagedItem;
   canEdit: boolean;
   onSave: (proposed: StagedProposal) => Promise<void>;
+  startEditing?: boolean;
 }) {
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState(startEditing);
   const [draft, setDraft] = useState<StagedProposal>(item.proposed ?? {});
   const [message, setMessage] = useState('');
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     setDraft(item.proposed ?? {});
-    setEditing(false);
+    setEditing(startEditing);
     setMessage('');
-  }, [item.id]);
+    setSaving(false);
+  }, [item.id, startEditing]);
 
   const setField = (key: keyof StagedProposal, value: string) => {
     setDraft((current) => ({ ...current, [key]: value || null }));
   };
 
   const save = async () => {
-    await onSave(draft);
-    setEditing(false);
-    setMessage('Manual edits saved.');
+    setSaving(true);
+    setMessage('');
+    try {
+      if (!draft.title?.trim() || !draft.venue?.trim() || !draft.sourceUrl?.trim()) {
+        throw new Error('Title, venue, and source URL are required.');
+      }
+      for (const field of ['startDate', 'endDate'] as const) {
+        const value = draft[field];
+        if (value && !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+          throw new Error(`${field === 'startDate' ? 'Start' : 'End'} date must use YYYY-MM-DD.`);
+        }
+      }
+      await onSave(draft);
+      setEditing(false);
+      setMessage('Manual edits saved.');
+    } catch (saveError) {
+      setMessage(saveError instanceof Error ? saveError.message : 'Could not save staged edits.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   if (!editing) {
@@ -260,11 +281,16 @@ function ProposalEditor({
           {field.multiline ? (
             <textarea value={String(draft[field.key] ?? '')} onChange={(event) => setField(field.key, event.target.value)} />
           ) : (
-            <input value={String(draft[field.key] ?? '')} onChange={(event) => setField(field.key, event.target.value)} />
+            <input
+              type={field.type || 'text'}
+              value={String(draft[field.key] ?? '')}
+              onChange={(event) => setField(field.key, event.target.value)}
+            />
           )}
         </label>
       ))}
-      <button type="button" onClick={save}>Save staged data edits</button>
+      <button type="button" onClick={save} disabled={saving}>{saving ? 'Saving...' : 'Save staged data edits'}</button>
+      {message && <p className="form-error" role="alert">{message}</p>}
     </section>
   );
 }
@@ -528,6 +554,9 @@ export function AdminHistory() {
   const [sourceFilter, setSourceFilter] = useState('all');
   const [query, setQuery] = useState('');
   const [expandedRows, setExpandedRows] = useState<Set<string>>(() => new Set());
+  const [editingItem, setEditingItem] = useState<StagedItem | null>(null);
+  const [actingItemId, setActingItemId] = useState<string | null>(null);
+  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
   const refreshHistory = async () => {
@@ -619,10 +648,53 @@ export function AdminHistory() {
     <div className={`history-cell-text ${expanded ? 'expanded' : ''} ${extraClass}`.trim()}>{historyValue(value)}</div>
   );
 
+  const saveHistoryProposal = async (item: StagedItem, proposed: StagedProposal) => {
+    if (item.reviewStatus === 'promoted') {
+      await backend.updatePromotedStagingProposal(item, proposed, 'Manual correction from review history.');
+    } else {
+      await backend.updateStagingProposal(item.id, proposed, 'Manual correction from review history.');
+    }
+    setEditingItem(null);
+    setMessage(item.reviewStatus === 'promoted' ? 'Published exhibition updated.' : 'Staged record updated.');
+    await refreshHistory();
+  };
+
+  const undoApproval = async (item: StagedItem) => {
+    const title = item.proposed?.title || item.id;
+    if (!window.confirm(`Undo approval for “${title}”? This removes it from the public catalog and returns it to review.`)) return;
+
+    setActingItemId(item.id);
+    setMessage('');
+    try {
+      await backend.undoStagingPromotion(item, 'Approval undone from review history.');
+      setMessage(`Approval undone for “${title}”. It is back in the review queue.`);
+      await refreshHistory();
+    } catch (undoError) {
+      setError(undoError instanceof Error ? undoError.message : 'Could not undo approval.');
+    } finally {
+      setActingItemId(null);
+    }
+  };
+
   return (
     <main className="app admin-app">
       <AdminHeader auth={auth} route="history" />
       {error && <p className="form-error">{error}</p>}
+      {message && <p className="decision-saved">{message}</p>}
+      {editingItem && (
+        <section className="history-editor-panel" aria-label="Edit history record">
+          <div className="review-section-head">
+            <h2>Edit {editingItem.proposed?.title || 'history record'}</h2>
+            <button type="button" onClick={() => setEditingItem(null)}>Close</button>
+          </div>
+          <ProposalEditor
+            item={editingItem}
+            canEdit
+            startEditing
+            onSave={(proposed) => saveHistoryProposal(editingItem, proposed)}
+          />
+        </section>
+      )}
       <section className="history-panel" aria-label="Review history">
         <div className="history-toolbar">
           <label htmlFor="history-search">
@@ -672,6 +744,7 @@ export function AdminHistory() {
           <table className="history-table">
             <thead>
               <tr>
+                <th>Actions</th>
                 <th>Open</th>
                 <th>Status</th>
                 <th>Staging ID</th>
@@ -713,6 +786,14 @@ export function AdminHistory() {
                 const expanded = expandedRows.has(rowKey);
                 return (
                   <tr key={rowKey} className={expanded ? 'expanded' : ''}>
+                    <td className="history-actions">
+                      <button type="button" onClick={() => setEditingItem(item)}>Edit</button>
+                      {item.reviewStatus === 'promoted' && (
+                        <button type="button" onClick={() => undoApproval(item)} disabled={actingItemId === item.id}>
+                          {actingItemId === item.id ? 'Undoing...' : 'Undo approval'}
+                        </button>
+                      )}
+                    </td>
                     <td>
                       <button type="button" className="history-expand-button" onClick={() => toggleExpanded(rowKey)}>
                         {expanded ? 'Collapse' : 'Expand'}

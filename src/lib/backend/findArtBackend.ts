@@ -156,6 +156,19 @@ const sanitizePromotionProposal = (proposed: StagedItem['proposed']) => {
   return { proposed: next, changed };
 };
 
+const exhibitionUpdateFromProposal = (proposed: StagedItem['proposed']) => ({
+  title: proposed?.title,
+  venue_name: proposed?.venue,
+  start_date: proposed?.startDate || null,
+  end_date: proposed?.endDate || null,
+  date_text: proposed?.dateText || null,
+  description: proposed?.description || null,
+  image_url: proposed?.imageUrl || null,
+  source_url: proposed?.sourceUrl,
+  exhibition_url: proposed?.exhibitionUrl || null,
+  raw: proposed ?? {}
+});
+
 const localSources = (): StagingQueueSource[] => {
   const decisions = readLocalDecisions();
   const proposalEdits = readLocalProposalEdits();
@@ -366,7 +379,73 @@ export const backend = {
       proposed,
       notes
     });
-    if (error) throw error;
+    if (!error) return;
+
+    // Older deployments may not expose the editing RPC yet. Admin RLS still
+    // provides a safe path to save the proposal instead of leaving the UI inert.
+    const { data: current, error: readError } = await supabase
+      .from('staging_items')
+      .select('review_status')
+      .eq('id', itemId)
+      .single();
+    if (readError) throw new Error(`Could not save staged edits: ${readError.message}`);
+
+    const { error: updateError } = await supabase
+      .from('staging_items')
+      .update({
+        proposed,
+        review_status: current.review_status === 'promoted' ? 'promoted' : 'needs_revision'
+      })
+      .eq('id', itemId);
+    if (updateError) throw new Error(`Could not save staged edits: ${updateError.message}`);
+  },
+
+  async updatePromotedStagingProposal(item: StagedItem, proposed: StagedItem['proposed'], notes: string) {
+    const exhibitionId = item.canonicalId || proposed?.id || item.proposed?.id;
+    if (!exhibitionId) throw new Error('This history row has no published exhibition ID to update.');
+
+    await this.updateStagingProposal(item.id, proposed, notes);
+    if (!supabase) return;
+
+    const sanitized = sanitizePromotionProposal(proposed).proposed;
+    const { data, error } = await supabase
+      .from('exhibitions')
+      .update(exhibitionUpdateFromProposal(sanitized))
+      .eq('id', exhibitionId)
+      .eq('promoted_from_staging_item_id', item.id)
+      .select('id')
+      .maybeSingle();
+    if (error) throw new Error(`Staged edits saved, but the published record could not be updated: ${error.message}`);
+    if (!data) throw new Error('Staged edits saved, but the matching published record was not found.');
+  },
+
+  async undoStagingPromotion(item: StagedItem, notes: string) {
+    if (!supabase) {
+      writeLocalDecision(item.id, 'needs_revision', notes);
+      return;
+    }
+
+    const exhibitionId = item.canonicalId || item.proposed?.id;
+    if (!exhibitionId) throw new Error('This history row has no published exhibition ID to remove.');
+
+    const { data: archived, error: archiveError } = await supabase
+      .from('exhibitions')
+      .update({ publication_status: 'archived', review_status: 'needs_revision' })
+      .eq('id', exhibitionId)
+      .eq('promoted_from_staging_item_id', item.id)
+      .select('id')
+      .maybeSingle();
+    if (archiveError) throw new Error(`Could not remove the exhibition from the public catalog: ${archiveError.message}`);
+    if (!archived) throw new Error('The matching published exhibition was not found, so nothing was changed.');
+
+    const { error: stagingError } = await supabase
+      .from('staging_items')
+      .update({ review_status: 'needs_revision' })
+      .eq('id', item.id);
+    if (stagingError) {
+      await supabase.from('exhibitions').update({ publication_status: 'published', review_status: 'approved' }).eq('id', exhibitionId);
+      throw new Error(`Could not return the item to review: ${stagingError.message}`);
+    }
   },
 
   async saveFeaturedContent(input: Omit<FeaturedContent, 'id' | 'publishedAt'> & { id?: string | null; publish?: boolean }) {

@@ -952,8 +952,38 @@ textarea {
   margin: 10px 0;
 }
 
+.history-editor-panel {
+  border-bottom: 1px solid #222;
+  padding: 1rem;
+}
+
+.history-editor-panel .proposal-editor {
+  max-width: 54rem;
+}
+
+.history-actions {
+  display: flex;
+  gap: 0.35rem;
+  align-items: flex-start;
+}
+
+.history-actions button {
+  white-space: nowrap;
+}
+
 .proposal-editor label {
   margin-bottom: 7px;
+}
+
+.proposal-editor label span {
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 700;
+}
+
+.proposal-editor input {
+  width: 100%;
+  padding: 4px 5px;
 }
 
 .source-site-header {
