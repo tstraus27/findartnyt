@@ -27,20 +27,46 @@ const html = `
     <div class="excard-long__wrapper">
       <div class="excard-long__left">
         <div class="excard-long__details">
-          <span class="label">Current</span>
+          <span class="label">Upcoming</span>
           <span class="location"> Museum Lobby</span>
-          <span class="date">June 12 – July 12, 2026</span>
-          <h2>Pick Up the Pieces</h2>
+          <span class="date">July 22 – TBD, 2026</span>
+          <h2>IHG Hotels &amp; Resorts + Fashion Institute of Technology Tennis Ball Dress Contest 2026</h2>
         </div>
       </div>
       <div class="excard-long__right">
         <div class="excard-long__img">
-          <img src="/museum/images/illustration-mfa-2026-mfit.jpg" alt="">
+          <img src="/museum/images/mfit-ihg-tennis-2026.jpg" alt="">
         </div>
       </div>
       <div class="excard-long__description">
-        <span>The 2026 MFA Illustration Visual Thesis Exhibition,&nbsp;</span><i>Pick Up the Pieces</i><span>, represents the culmination of three years of graduate study.</span>
+        The Museum at FIT presents the winning designs from its tennis ball dress contest.
       </div>
+    </div>
+  </section>
+  <section class="section excard-long upcoming">
+    <div class="excard-long__wrapper">
+      <div class="excard-long__left"><div class="excard-long__details">
+        <span class="label">Upcoming</span>
+        <span class="date">February 17 – April 18, 2027</span>
+        <h2>Fashioning Desire: Willy Chavarria and Barbara Sanchez-Kane</h2>
+      </div></div>
+      <div class="excard-long__right"><div class="excard-long__img">
+        <img src="/museum/images/fashioning-desire-mfit-listing-image.jpeg" alt="">
+      </div></div>
+      <div class="excard-long__description">An exhibition exploring fashion and desire.</div>
+    </div>
+  </section>
+  <section class="section excard-long upcoming">
+    <div class="excard-long__wrapper">
+      <div class="excard-long__left"><div class="excard-long__details">
+        <span class="label">Proximamente</span>
+        <span class="date">17 de febrero – 18 de abril, 2027</span>
+        <h2>Fashioning Desire: Willy Chavarria y Barbara Sanchez-Kane</h2>
+      </div></div>
+      <div class="excard-long__right"><div class="excard-long__img">
+        <img src="/museum/images/fashioning-desire-mfit-listing-image.jpeg" alt="">
+      </div></div>
+      <div class="excard-long__description">La version en espanol de la misma exposicion.</div>
     </div>
   </section>
   <section class="section excard-long upcoming">
@@ -69,14 +95,18 @@ const html = `
   </section>
 `;
 
-test('parseFitExhibitionsPage keeps linked exhibition cards only', () => {
+test('parseFitExhibitionsPage keeps linked and listing-only exhibitions', () => {
   const records = parseFitExhibitionsPage({
     html,
     url: 'https://www.fitnyc.edu/museum/exhibitions/index.php'
   });
 
-  assert.equal(records.length, 1);
-  assert.deepEqual(records[0], {
+  assert.equal(records.length, 3);
+  const ihg = records.find((record) => record.title.startsWith('IHG Hotels'));
+  const dollDressing = records.find((record) => record.title === 'Doll Dressing');
+  const fashioningDesire = records.find((record) => record.title.startsWith('Fashioning Desire'));
+
+  assert.deepEqual(dollDressing, {
     id: 'exhibition:fit:doll-dressing',
     type: 'exhibition',
     source: 'fit',
@@ -101,8 +131,17 @@ test('parseFitExhibitionsPage keeps linked exhibition cards only', () => {
     reviewStatus: 'needs_review',
     lastCheckedAt: null,
     sourceNotes:
-      'Parsed from the Museum at FIT official current and upcoming long-card sections, but only for cards that expose an official exhibition detail link. Closure notices, lobby-only cards without official exhibition pages, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope for this first staging-only slice.'
+      'Parsed from the Museum at FIT official current and upcoming long-card sections. Listing-only exhibitions use a stable anchor on the official exhibitions page. Closure notices, translated duplicates, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope.'
   });
+
+  assert.equal(ihg.title, 'IHG Hotels & Resorts + Fashion Institute of Technology Tennis Ball Dress Contest 2026');
+  assert.equal(ihg.startDate, '2026-07-22');
+  assert.equal(ihg.endDate, null);
+  assert.equal(
+    ihg.exhibitionUrl,
+    'https://www.fitnyc.edu/museum/exhibitions/index.php#ihg-hotels-resorts-fashion-institute-of-technology-tennis-ball-dress-contest-2026'
+  );
+  assert.equal(fashioningDesire.title, 'Fashioning Desire: Willy Chavarria and Barbara Sanchez-Kane');
 });
 
 test('parseFitExhibitionsPage de-duplicates repeated sections', () => {
@@ -111,5 +150,5 @@ test('parseFitExhibitionsPage de-duplicates repeated sections', () => {
     url: 'https://www.fitnyc.edu/museum/exhibitions/index.php'
   });
 
-  assert.equal(records.length, 1);
+  assert.equal(records.length, 3);
 });

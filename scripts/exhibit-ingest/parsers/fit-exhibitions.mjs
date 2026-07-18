@@ -91,12 +91,29 @@ const toIsoDate = (monthName, day, year) => {
 
 const slugFromUrl = (url) => {
   try {
-    const segments = new URL(url).pathname.split('/').filter(Boolean);
+    const parsedUrl = new URL(url);
+    if (parsedUrl.hash) return decodeURIComponent(parsedUrl.hash.slice(1));
+
+    const segments = parsedUrl.pathname.split('/').filter(Boolean);
     const rawSlug = segments.at(-1) === 'index.php' ? segments.at(-2) : segments.at(-1);
     return decodeURIComponent(rawSlug || 'unknown');
   } catch {
     return 'unknown';
   }
+};
+
+const slugFromTitle = (value) =>
+  text(value)
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'unknown';
+
+const listingUrlFor = (baseUrl, title) => {
+  const listingUrl = new URL(baseUrl);
+  listingUrl.hash = slugFromTitle(title);
+  return listingUrl.toString();
 };
 
 const parseDateText = (value) => {
@@ -126,6 +143,15 @@ const parseDateText = (value) => {
     return {
       startDate: toIsoDate(explicitYearRange[1], explicitYearRange[2], explicitYearRange[3]),
       endDate: toIsoDate(explicitYearRange[4], explicitYearRange[5], explicitYearRange[6]),
+      dateText: normalized
+    };
+  }
+
+  const openEndedRange = normalized.match(/^([A-Za-z.]+)\s+(\d{1,2})\s*[–—-]\s*TBD,\s*(\d{4})$/i);
+  if (openEndedRange) {
+    return {
+      startDate: toIsoDate(openEndedRange[1], openEndedRange[2], openEndedRange[3]),
+      endDate: null,
       dateText: normalized
     };
   }
@@ -172,7 +198,7 @@ const buildRecord = ({ title, sourceUrl, exhibitionUrl, imageUrl, dateText, desc
     reviewStatus: 'needs_review',
     lastCheckedAt: null,
     sourceNotes:
-      'Parsed from the Museum at FIT official current and upcoming long-card sections, but only for cards that expose an official exhibition detail link. Closure notices, lobby-only cards without official exhibition pages, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope for this first staging-only slice.'
+      'Parsed from the Museum at FIT official current and upcoming long-card sections. Listing-only exhibitions use a stable anchor on the official exhibitions page. Closure notices, translated duplicates, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope.'
   };
 };
 
@@ -186,18 +212,19 @@ const parseSection = ({ sectionHtml, baseUrl, tag }) => {
     sectionHtml.match(/<div class="excard-long__description">\s*([\s\S]*?)\s*<\/div>/i)?.[1]
   );
 
-  if (!title || !detailUrl) {
+  if (!title || /^galleries?\s+closed$/i.test(title)) {
     return null;
   }
 
-  const sourceUrl = detailUrl;
+  const exhibitionUrl = detailUrl || listingUrlFor(baseUrl, title);
+  const sourceUrl = detailUrl || baseUrl;
   const imageUrl = absoluteUrl(sectionHtml.match(/<img[^>]+src="([^"]+)"/i)?.[1], baseUrl);
   const dateText = text(sectionHtml.match(/<span class="date">\s*([\s\S]*?)\s*<\/span>/i)?.[1]);
 
   return buildRecord({
     title,
     sourceUrl,
-    exhibitionUrl: detailUrl,
+    exhibitionUrl,
     imageUrl,
     dateText,
     description,
@@ -219,7 +246,7 @@ export const parseFitExhibitionsPage = ({ html, url }) => {
 
     if (!record) continue;
 
-    const dedupeKey = record.exhibitionUrl || record.id;
+    const dedupeKey = record.imageUrl ? `${tag}:${record.imageUrl}` : record.exhibitionUrl || record.id;
     if (!records.has(dedupeKey)) {
       records.set(dedupeKey, record);
     }

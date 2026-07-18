@@ -3,11 +3,11 @@
     "sourceId": "fit-exhibitions",
     "source": "fit",
     "parser": "fit-exhibitions",
-    "generatedAt": "2026-06-26T03:57:44.757Z",
-    "stagingNotes": "Official Museum at FIT current and upcoming long-card sections only, and only cards with official exhibition detail links. Closure notices, lobby-only cards without official exhibition pages, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope for this first slice.",
+    "generatedAt": "2026-07-18T13:27:15.389Z",
+    "stagingNotes": "Official Museum at FIT current and upcoming long-card sections. Listing-only exhibitions use a stable anchor on the official exhibitions page. Closure notices, translated duplicates, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope.",
     "verification": {
       "status": "verified_live",
-      "verifiedAt": "2026-06-26T03:58:00.000Z",
+      "verifiedAt": "2026-07-18T13:27:15.809Z",
       "notes": "Live staging artifact matched the fixture-backed review artifact for fit-exhibitions; verified against data/staging/fit-exhibitions.live.json."
     },
     "pagesFetched": 1,
@@ -19,49 +19,49 @@
         "fixtureFile": "scripts/exhibit-ingest/fixtures/fit-exhibitions.html"
       }
     ],
-    "incomingRecords": 1,
-    "creates": 1,
+    "incomingRecords": 3,
+    "creates": 3,
     "updates": 0,
     "possibleDuplicates": 0,
     "conflicts": 0,
     "unchanged": 0,
     "incomingByType": {
-      "exhibition": 1
+      "exhibition": 3
     }
   },
   "items": [
     {
-      "id": "stage:fit-exhibitions:exhibition:fit:doll-dressing:create",
+      "id": "stage:fit-exhibitions:exhibition:fit:ihg-hotels-resorts-fashion-institute-of-technology-tennis-ball-dress-contest-2026:create",
       "proposalType": "create",
       "reviewStatus": "pending",
       "source": {
-        "url": "https://www.fitnyc.edu/museum/exhibitions/doll-dressing/index.php",
+        "url": "https://www.fitnyc.edu/museum/exhibitions/index.php",
         "sourceType": "official_venue",
         "reliability": "high",
         "parser": "fit-exhibitions",
-        "notes": "Official Museum at FIT current and upcoming long-card sections only, and only cards with official exhibition detail links. Closure notices, lobby-only cards without official exhibition pages, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope for this first slice."
+        "notes": "Official Museum at FIT current and upcoming long-card sections. Listing-only exhibitions use a stable anchor on the official exhibitions page. Closure notices, translated duplicates, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope."
       },
       "canonicalId": null,
       "before": null,
       "proposed": {
-        "id": "exhibition:fit:doll-dressing",
+        "id": "exhibition:fit:ihg-hotels-resorts-fashion-institute-of-technology-tennis-ball-dress-contest-2026",
         "type": "exhibition",
         "source": "fit",
-        "title": "Doll Dressing",
+        "title": "IHG Hotels & Resorts + Fashion Institute of Technology Tennis Ball Dress Contest 2026",
         "venue": "The Museum at FIT",
-        "startDate": "2026-09-16",
-        "endDate": "2027-01-03",
-        "dateText": "September 16, 2026 – January 3, 2027",
-        "description": "Doll Dressing centers on the longstanding connections between dolls and high fashion. Historically, dolls operated as miniature fashion models—they were shipped around Europe and abroad, communicating the latest styles in three-dimensional detail. By the early twentieth century, dolls were not merely sharing the latest trends, but setting them. Curated by Dr. Colleen Hill, senior curator of costume, the exhibition explores the ways in which dolls have influenced fashion and dressed appearance. Doll dressing takes many forms, ranging from the appeal of youthful baby doll dresses, to the 2D quality of \"paper doll\" looks, to the influence of creepy dolls on fashion. It encompasses clothing and accessories, hair and makeup, and even movement and gestures that take their cue from dolls. Beginning with a brief history of fashion dolls from the eighteenth century to the present, Doll Dressing continues with designs from Marc Jacobs, Patrick Kelly, Lanvin, Jeremy Scott for Moschino, Martin Margiela, Anna Sui, and many others.",
+        "startDate": "2026-07-22",
+        "endDate": null,
+        "dateText": "July 22 – TBD, 2026",
+        "description": "IHG Hotels & Resorts, in partnership with The Fashion Institute of Technology, invited students to design one-of-a-kind dresses that embody the spirit of the US Open Tennis Championships. As part of this unique collaboration, students from FIT’s School of Art and Design were challenged to create wearable garments incorporating tennis balls or tennis ball materials. The final designs were intended not only to celebrate the energy and excitement of tennis, but also to be showcased at select events during the 2026 US Open Tournament. This exhibition highlights the innovative creations of five student finalists.",
         "artists": [],
         "curators": [],
         "venueAddress": "227 West 27th Street, New York, NY 10001-5992",
         "neighborhood": "Chelsea",
         "borough": "Manhattan",
         "city": "New York",
-        "imageUrl": "https://www.fitnyc.edu/museum/images/dolls-dressing-mfit-moschino.jpg",
-        "exhibitionUrl": "https://www.fitnyc.edu/museum/exhibitions/doll-dressing/index.php",
-        "sourceUrl": "https://www.fitnyc.edu/museum/exhibitions/doll-dressing/index.php",
+        "imageUrl": "https://www.fitnyc.edu/museum/images/mfit-ihg-tennis-2026.jpg",
+        "exhibitionUrl": "https://www.fitnyc.edu/museum/exhibitions/index.php#ihg-hotels-resorts-fashion-institute-of-technology-tennis-ball-dress-contest-2026",
+        "sourceUrl": "https://www.fitnyc.edu/museum/exhibitions/index.php",
         "openingReceptionDate": null,
         "tags": [
           "upcoming"
@@ -69,7 +69,7 @@
         "sourceConfidence": "high",
         "reviewStatus": "needs_review",
         "lastCheckedAt": null,
-        "sourceNotes": "Parsed from the Museum at FIT official current and upcoming long-card sections, but only for cards that expose an official exhibition detail link. Closure notices, lobby-only cards without official exhibition pages, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope for this first staging-only slice."
+        "sourceNotes": "Parsed from the Museum at FIT official current and upcoming long-card sections. Listing-only exhibitions use a stable anchor on the official exhibitions page. Closure notices, translated duplicates, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope."
       },
       "changedFields": [
         "artists",
@@ -104,11 +104,193 @@
         "notes": "Compared against existing canonical exhibition records; no likely match found."
       },
       "conflict": null,
-      "extractedAt": "2026-06-26T03:57:44.757Z",
+      "extractedAt": "2026-07-18T13:27:15.389Z",
+      "reviewerNotes": null
+    },
+    {
+      "id": "stage:fit-exhibitions:exhibition:fit:doll-dressing:create",
+      "proposalType": "create",
+      "reviewStatus": "pending",
+      "source": {
+        "url": "https://www.fitnyc.edu/museum/exhibitions/doll-dressing/index.php",
+        "sourceType": "official_venue",
+        "reliability": "high",
+        "parser": "fit-exhibitions",
+        "notes": "Official Museum at FIT current and upcoming long-card sections. Listing-only exhibitions use a stable anchor on the official exhibitions page. Closure notices, translated duplicates, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope."
+      },
+      "canonicalId": null,
+      "before": null,
+      "proposed": {
+        "id": "exhibition:fit:doll-dressing",
+        "type": "exhibition",
+        "source": "fit",
+        "title": "Doll Dressing",
+        "venue": "The Museum at FIT",
+        "startDate": "2026-09-16",
+        "endDate": "2027-01-03",
+        "dateText": "September 16, 2026 – January 3, 2027",
+        "description": "Doll Dressing centers on the longstanding connections between dolls and high fashion. Historically, dolls operated as miniature fashion models—they were shipped around Europe and abroad, communicating the latest styles in three-dimensional detail. By the early twentieth century, dolls were not merely sharing the latest trends, but setting them. Curated by Dr. Colleen Hill, senior curator of costume, the exhibition explores the ways in which dolls have influenced fashion and dressed appearance. Doll dressing takes many forms, ranging from the appeal of youthful baby doll dresses, to the 2D quality of \"paper doll\" looks, to the influence of creepy dolls on fashion. It encompasses clothing and accessories, hair and makeup, and even movement and gestures that take their cue from dolls. Beginning with a brief history of fashion dolls from the eighteenth century to the present, Doll Dressing continues with designs from Marc Jacobs, Patrick Kelly, Lanvin, Jeremy Scott for Moschino, Martin Margiela, Anna Sui, and many others.",
+        "artists": [],
+        "curators": [],
+        "venueAddress": "227 West 27th Street, New York, NY 10001-5992",
+        "neighborhood": "Chelsea",
+        "borough": "Manhattan",
+        "city": "New York",
+        "imageUrl": "https://www.fitnyc.edu/museum/images/dolls-dressing-mfit-moschino.jpg",
+        "exhibitionUrl": "https://www.fitnyc.edu/museum/exhibitions/doll-dressing/index.php",
+        "sourceUrl": "https://www.fitnyc.edu/museum/exhibitions/doll-dressing/index.php",
+        "openingReceptionDate": null,
+        "tags": [
+          "upcoming"
+        ],
+        "sourceConfidence": "high",
+        "reviewStatus": "needs_review",
+        "lastCheckedAt": null,
+        "sourceNotes": "Parsed from the Museum at FIT official current and upcoming long-card sections. Listing-only exhibitions use a stable anchor on the official exhibitions page. Closure notices, translated duplicates, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope."
+      },
+      "changedFields": [
+        "artists",
+        "borough",
+        "city",
+        "curators",
+        "dateText",
+        "description",
+        "endDate",
+        "exhibitionUrl",
+        "id",
+        "imageUrl",
+        "lastCheckedAt",
+        "neighborhood",
+        "openingReceptionDate",
+        "reviewStatus",
+        "source",
+        "sourceConfidence",
+        "sourceNotes",
+        "sourceUrl",
+        "startDate",
+        "tags",
+        "title",
+        "type",
+        "venue",
+        "venueAddress"
+      ],
+      "dedupe": {
+        "status": "no_match",
+        "confidence": 0,
+        "matchedRecordIds": [],
+        "notes": "Compared against existing canonical exhibition records; no likely match found."
+      },
+      "conflict": null,
+      "extractedAt": "2026-07-18T13:27:15.389Z",
+      "reviewerNotes": null
+    },
+    {
+      "id": "stage:fit-exhibitions:exhibition:fit:fashioning-desire-willy-chavarria-and-barbara-sanchez-kane:create",
+      "proposalType": "create",
+      "reviewStatus": "pending",
+      "source": {
+        "url": "https://www.fitnyc.edu/museum/exhibitions/index.php",
+        "sourceType": "official_venue",
+        "reliability": "high",
+        "parser": "fit-exhibitions",
+        "notes": "Official Museum at FIT current and upcoming long-card sections. Listing-only exhibitions use a stable anchor on the official exhibitions page. Closure notices, translated duplicates, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope."
+      },
+      "canonicalId": null,
+      "before": null,
+      "proposed": {
+        "id": "exhibition:fit:fashioning-desire-willy-chavarria-and-barbara-sanchez-kane",
+        "type": "exhibition",
+        "source": "fit",
+        "title": "Fashioning Desire: Willy Chavarria and Bárbara Sánchez-Kane",
+        "venue": "The Museum at FIT",
+        "startDate": "2027-02-17",
+        "endDate": "2027-04-18",
+        "dateText": "February 17 – April 18, 2027",
+        "description": "Fashioning Desire: Willy Chavarria and Bárbara Sánchez-Kane is an exhibition exploring the work of designer Willy Chavarria and designer and artist Bárbara Sánchez-Kane in dialogue with one another. These two queer designers of Mexican heritage are reshaping global fashion through their innovative collections. Organized by MFIT's senior curator of education and public programs, Tanya Meléndez-Escalante, the exhibition celebrates how the designers' identities inform their creative vision. The works of Chavarría and Sánchez-Kane are imbued with desire—libidinal, sensual desire, but also a desire for belonging, for resistance, and for visibility. The exhibition will be organized thematically, bringing together works by both designers that reveal shared aesthetics and ideas. With fluid boundaries and bilingual texts, these sections will allude to the binational origins of the creators.",
+        "artists": [],
+        "curators": [],
+        "venueAddress": "227 West 27th Street, New York, NY 10001-5992",
+        "neighborhood": "Chelsea",
+        "borough": "Manhattan",
+        "city": "New York",
+        "imageUrl": "https://www.fitnyc.edu/museum/images/fashioning-desire-mfit-listing-image.jpeg",
+        "exhibitionUrl": "https://www.fitnyc.edu/museum/exhibitions/index.php#fashioning-desire-willy-chavarria-and-barbara-sanchez-kane",
+        "sourceUrl": "https://www.fitnyc.edu/museum/exhibitions/index.php",
+        "openingReceptionDate": null,
+        "tags": [
+          "upcoming"
+        ],
+        "sourceConfidence": "high",
+        "reviewStatus": "needs_review",
+        "lastCheckedAt": null,
+        "sourceNotes": "Parsed from the Museum at FIT official current and upcoming long-card sections. Listing-only exhibitions use a stable anchor on the official exhibitions page. Closure notices, translated duplicates, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope."
+      },
+      "changedFields": [
+        "artists",
+        "borough",
+        "city",
+        "curators",
+        "dateText",
+        "description",
+        "endDate",
+        "exhibitionUrl",
+        "id",
+        "imageUrl",
+        "lastCheckedAt",
+        "neighborhood",
+        "openingReceptionDate",
+        "reviewStatus",
+        "source",
+        "sourceConfidence",
+        "sourceNotes",
+        "sourceUrl",
+        "startDate",
+        "tags",
+        "title",
+        "type",
+        "venue",
+        "venueAddress"
+      ],
+      "dedupe": {
+        "status": "no_match",
+        "confidence": 0,
+        "matchedRecordIds": [],
+        "notes": "Compared against existing canonical exhibition records; no likely match found."
+      },
+      "conflict": null,
+      "extractedAt": "2026-07-18T13:27:15.389Z",
       "reviewerNotes": null
     }
   ],
   "creates": [
+    {
+      "id": "exhibition:fit:ihg-hotels-resorts-fashion-institute-of-technology-tennis-ball-dress-contest-2026",
+      "type": "exhibition",
+      "source": "fit",
+      "title": "IHG Hotels & Resorts + Fashion Institute of Technology Tennis Ball Dress Contest 2026",
+      "venue": "The Museum at FIT",
+      "startDate": "2026-07-22",
+      "endDate": null,
+      "dateText": "July 22 – TBD, 2026",
+      "description": "IHG Hotels & Resorts, in partnership with The Fashion Institute of Technology, invited students to design one-of-a-kind dresses that embody the spirit of the US Open Tennis Championships. As part of this unique collaboration, students from FIT’s School of Art and Design were challenged to create wearable garments incorporating tennis balls or tennis ball materials. The final designs were intended not only to celebrate the energy and excitement of tennis, but also to be showcased at select events during the 2026 US Open Tournament. This exhibition highlights the innovative creations of five student finalists.",
+      "artists": [],
+      "curators": [],
+      "venueAddress": "227 West 27th Street, New York, NY 10001-5992",
+      "neighborhood": "Chelsea",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://www.fitnyc.edu/museum/images/mfit-ihg-tennis-2026.jpg",
+      "exhibitionUrl": "https://www.fitnyc.edu/museum/exhibitions/index.php#ihg-hotels-resorts-fashion-institute-of-technology-tennis-ball-dress-contest-2026",
+      "sourceUrl": "https://www.fitnyc.edu/museum/exhibitions/index.php",
+      "openingReceptionDate": null,
+      "tags": [
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "needs_review",
+      "lastCheckedAt": null,
+      "sourceNotes": "Parsed from the Museum at FIT official current and upcoming long-card sections. Listing-only exhibitions use a stable anchor on the official exhibitions page. Closure notices, translated duplicates, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope."
+    },
     {
       "id": "exhibition:fit:doll-dressing",
       "type": "exhibition",
@@ -135,7 +317,35 @@
       "sourceConfidence": "high",
       "reviewStatus": "needs_review",
       "lastCheckedAt": null,
-      "sourceNotes": "Parsed from the Museum at FIT official current and upcoming long-card sections, but only for cards that expose an official exhibition detail link. Closure notices, lobby-only cards without official exhibition pages, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope for this first staging-only slice."
+      "sourceNotes": "Parsed from the Museum at FIT official current and upcoming long-card sections. Listing-only exhibitions use a stable anchor on the official exhibitions page. Closure notices, translated duplicates, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope."
+    },
+    {
+      "id": "exhibition:fit:fashioning-desire-willy-chavarria-and-barbara-sanchez-kane",
+      "type": "exhibition",
+      "source": "fit",
+      "title": "Fashioning Desire: Willy Chavarria and Bárbara Sánchez-Kane",
+      "venue": "The Museum at FIT",
+      "startDate": "2027-02-17",
+      "endDate": "2027-04-18",
+      "dateText": "February 17 – April 18, 2027",
+      "description": "Fashioning Desire: Willy Chavarria and Bárbara Sánchez-Kane is an exhibition exploring the work of designer Willy Chavarria and designer and artist Bárbara Sánchez-Kane in dialogue with one another. These two queer designers of Mexican heritage are reshaping global fashion through their innovative collections. Organized by MFIT's senior curator of education and public programs, Tanya Meléndez-Escalante, the exhibition celebrates how the designers' identities inform their creative vision. The works of Chavarría and Sánchez-Kane are imbued with desire—libidinal, sensual desire, but also a desire for belonging, for resistance, and for visibility. The exhibition will be organized thematically, bringing together works by both designers that reveal shared aesthetics and ideas. With fluid boundaries and bilingual texts, these sections will allude to the binational origins of the creators.",
+      "artists": [],
+      "curators": [],
+      "venueAddress": "227 West 27th Street, New York, NY 10001-5992",
+      "neighborhood": "Chelsea",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://www.fitnyc.edu/museum/images/fashioning-desire-mfit-listing-image.jpeg",
+      "exhibitionUrl": "https://www.fitnyc.edu/museum/exhibitions/index.php#fashioning-desire-willy-chavarria-and-barbara-sanchez-kane",
+      "sourceUrl": "https://www.fitnyc.edu/museum/exhibitions/index.php",
+      "openingReceptionDate": null,
+      "tags": [
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "needs_review",
+      "lastCheckedAt": null,
+      "sourceNotes": "Parsed from the Museum at FIT official current and upcoming long-card sections. Listing-only exhibitions use a stable anchor on the official exhibitions page. Closure notices, translated duplicates, past exhibitions, MFIT on the Road, and any detail-page enrichment remain out of scope."
     }
   ],
   "updates": [],
