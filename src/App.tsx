@@ -71,6 +71,26 @@ const updateUrl = (filters: ExhibitionFilters, selectedId: string | null) => {
 
 const getInitialSelectedId = () => new URLSearchParams(window.location.search).get('selected');
 
+const toVenueSlug = (venue: string) =>
+  venue
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
+const venuePath = (venue: string) => `/venue/${toVenueSlug(venue)}`;
+
+const catalogRecordPath = (record: Exhibition, status: DateStatus) => {
+  const params = new URLSearchParams({
+    venue: record.venue,
+    status,
+    selected: record.id
+  });
+  return `/?${params.toString()}`;
+};
+
 const closesWithinDays = (record: Exhibition, days: number) => {
   if (!record.endDate) return false;
   const now = new Date();
@@ -124,7 +144,11 @@ function ResultRow({
           {record.title}
         </button>
       </td>
-      <td>{record.venue}</td>
+      <td>
+        <a className="venue-link" href={venuePath(record.venue)} onClick={(event) => event.stopPropagation()}>
+          {record.venue}
+        </a>
+      </td>
       <td className={closingSoon ? 'closing-soon-date' : undefined}>{record.listDateText}</td>
       <td>
         <a href={record.sourceUrl} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()}>
@@ -140,13 +164,15 @@ function MobileResultRow({ record, onSelect }: { record: Exhibition; onSelect: (
 
   return (
     <li className="mobile-result-row">
-      <button type="button" onClick={() => onSelect(record)}>
+      <button type="button" className="mobile-result-select" onClick={() => onSelect(record)}>
         <span className="mobile-result-title">{record.title}</span>
-        <span className="mobile-result-venue">{record.venue}</span>
-        <span className={closingSoon ? 'mobile-result-date closing-soon-date' : 'mobile-result-date'}>
-          {record.listDateText}
-        </span>
       </button>
+      <a className="mobile-result-venue venue-link" href={venuePath(record.venue)}>
+        {record.venue}
+      </a>
+      <span className={closingSoon ? 'mobile-result-date closing-soon-date' : 'mobile-result-date'}>
+        {record.listDateText}
+      </span>
     </li>
   );
 }
@@ -170,7 +196,9 @@ function DetailPane({ record }: { record: Exhibition | null }) {
     <section className="detail" aria-label="Selected exhibition">
       <h2>{record.title}</h2>
       <dl>
-        <DetailRow label="Venue">{record.venue}</DetailRow>
+        <DetailRow label="Venue">
+          <a className="venue-link" href={venuePath(record.venue)}>{record.venue}</a>
+        </DetailRow>
         <DetailRow label="Dates">{record.dateText}</DetailRow>
         {(record.neighborhood || record.borough || record.city) && (
           <DetailRow label="Place">
@@ -230,6 +258,113 @@ function FeaturedCard({ content }: { content: FeaturedContent }) {
   );
 }
 
+function PublicHeader({ linkedTitle = false }: { linkedTitle?: boolean }) {
+  return (
+    <header className="site-header">
+      <div>
+        <h1>
+          {linkedTitle ? <a className="site-title-link" href="/">FindArtNYC</a> : 'FindArtNYC'}
+        </h1>
+        <p>Public beta.</p>
+      </div>
+      <a className="admin-link" href="/admin/login">Admin sign-on</a>
+    </header>
+  );
+}
+
+function VenueExhibitionGroup({
+  title,
+  records,
+  status,
+  emptyText
+}: {
+  title: string;
+  records: Exhibition[];
+  status: DateStatus;
+  emptyText: string;
+}) {
+  return (
+    <section className="venue-exhibition-group">
+      <div className="venue-group-heading">
+        <h2>{title}</h2>
+        <span>{records.length}</span>
+      </div>
+      {records.length > 0 ? (
+        <ol>
+          {records.map((record) => (
+            <li key={record.id}>
+              <a href={catalogRecordPath(record, status)}>{record.title}</a>
+              <span>{record.listDateText}</span>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p>{emptyText}</p>
+      )}
+    </section>
+  );
+}
+
+function VenuePage({ venue, records, loading }: { venue: string | null; records: Exhibition[]; loading: boolean }) {
+  if (!venue) {
+    return (
+      <main className="app venue-page">
+        <PublicHeader linkedTitle />
+        <a className="venue-back-link" href="/">&larr; All exhibitions</a>
+        <h2>{loading ? 'Loading venue...' : 'Venue not found'}</h2>
+      </main>
+    );
+  }
+
+  const venueRecords = records.filter((record) => record.venue === venue);
+  const currentRecords = filterAndSortExhibitions(venueRecords, {
+    ...defaultFilters,
+    venues: [venue],
+    status: 'now'
+  });
+  const upcomingRecords = filterAndSortExhibitions(venueRecords, {
+    ...defaultFilters,
+    venues: [venue],
+    status: 'upcoming',
+    sort: 'startDate'
+  });
+  const address = venueRecords.find((record) => record.venueAddress)?.venueAddress;
+  const placeRecord = venueRecords.find((record) => record.neighborhood || record.borough || record.city);
+  const place = placeRecord
+    ? [placeRecord.neighborhood, placeRecord.borough, placeRecord.city].filter(Boolean).join(', ')
+    : null;
+
+  return (
+    <main className="app venue-page">
+      <PublicHeader linkedTitle />
+      <a className="venue-back-link" href="/">&larr; All exhibitions</a>
+      <header className="venue-page-header">
+        <p className="venue-page-label">Venue</p>
+        <h2>{venue}</h2>
+        {address && <p>{address}</p>}
+        {place && <p>{place}</p>}
+      </header>
+      <div className="venue-page-groups">
+        <VenueExhibitionGroup
+          title="On view now"
+          records={currentRecords}
+          status="now"
+          emptyText="No exhibitions currently on view."
+        />
+        <VenueExhibitionGroup
+          title="Upcoming"
+          records={upcomingRecords}
+          status="upcoming"
+          emptyText="No upcoming exhibitions."
+        />
+      </div>
+      <footer className="mobile-footer">
+        <a href="/admin/login">Admin</a>
+      </footer>
+    </main>
+  );
+}
+
 export default function App() {
   const [path, setPath] = useState(() => window.location.pathname);
   const [filters, setFilters] = useState<ExhibitionFilters>(() => parseFilters());
@@ -238,14 +373,33 @@ export default function App() {
   const [mobileView, setMobileView] = useState<'list' | 'detail' | 'map'>(() =>
     getInitialSelectedId() ? 'detail' : 'list'
   );
+  const [mobileMenu, setMobileMenu] = useState<'venues' | 'filters' | null>(null);
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [locationStatus, setLocationStatus] = useState<string>('');
   const [catalogRecords, setCatalogRecords] = useState<Exhibition[]>(() => exhibitions);
+  const [catalogReady, setCatalogReady] = useState(false);
   const [featuredContent, setFeaturedContent] = useState<FeaturedContent | null>(null);
   const [featuredHistory, setFeaturedHistory] = useState<FeaturedContent[]>([]);
   const mobileListScroll = useRef(0);
   const venueOptions = useMemo(() => getVenueOptions(catalogRecords), [catalogRecords]);
   const areaOptions = useMemo(() => getAreaOptions(catalogRecords), [catalogRecords]);
+  const venueDirectory = useMemo(
+    () =>
+      venueOptions.map((venue) => ({
+        venue,
+        currentCount: filterAndSortExhibitions(catalogRecords, {
+          ...defaultFilters,
+          venues: [venue],
+          status: 'now'
+        }).length,
+        upcomingCount: filterAndSortExhibitions(catalogRecords, {
+          ...defaultFilters,
+          venues: [venue],
+          status: 'upcoming'
+        }).length
+      })),
+    [catalogRecords, venueOptions]
+  );
   const filteredRecords = useMemo(() => {
     const records = filterAndSortExhibitions(catalogRecords, filters);
     if (filters.sort !== 'distance' || !userLocation) return records;
@@ -275,9 +429,11 @@ export default function App() {
         setCatalogRecords(records);
         setFeaturedContent(featured);
         setFeaturedHistory(history.filter((entry) => entry.id !== featured?.id));
+        setCatalogReady(true);
       })
       .catch((error) => {
         console.warn('Using local catalog fallback.', error);
+        if (active) setCatalogReady(true);
       });
     return () => {
       active = false;
@@ -292,7 +448,7 @@ export default function App() {
   }, [filteredRecords, selectedId]);
 
   useEffect(() => {
-    if (path.startsWith('/admin')) return;
+    if (path.startsWith('/admin') || path.startsWith('/venue/')) return;
     updateUrl(filters, selectedRecord?.id ?? null);
   }, [filters, path, selectedRecord?.id]);
 
@@ -310,9 +466,7 @@ export default function App() {
   };
 
   const selectVenue = (venue: string) => {
-    const matching = mapRecords.filter((record) => record.venue === venue);
-    setFilters((current) => ({ ...current, venues: [venue] }));
-    setSelectedId(matching[0]?.id ?? null);
+    window.location.assign(venuePath(venue));
   };
 
   const clearVenue = () => {
@@ -376,7 +530,11 @@ export default function App() {
         ? filters.venues[0]
       : `${filters.venues.length} venues`;
   const mobileFilterCount =
-    filters.venues.length + Number(Boolean(filters.area)) + Number(filters.sort !== defaultFilters.sort);
+    Number(Boolean(filters.area)) + Number(filters.sort !== defaultFilters.sort);
+  const venueRouteMatch = path.match(/^\/venue\/([^/]+)\/?$/);
+  const routeVenue = venueRouteMatch
+    ? venueOptions.find((venue) => toVenueSlug(venue) === venueRouteMatch[1]) ?? null
+    : null;
 
   useEffect(() => {
     const syncPath = () => setPath(window.location.pathname);
@@ -389,6 +547,7 @@ export default function App() {
   if (path.startsWith('/admin/review')) return <AdminReview />;
   if (path.startsWith('/admin/history')) return <AdminHistory />;
   if (path.startsWith('/admin/featured')) return <FeaturedContentAdmin />;
+  if (venueRouteMatch) return <VenuePage venue={routeVenue} records={catalogRecords} loading={!catalogReady} />;
 
   return (
     <main className="app">
@@ -396,13 +555,7 @@ export default function App() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(toEventJsonLd(catalogRecords)) }}
       />
-      <header className="site-header">
-        <div>
-          <h1>FindArtNYC</h1>
-          <p>Public beta.</p>
-        </div>
-        <a className="admin-link" href="/admin/login">Admin sign-on</a>
-      </header>
+      <PublicHeader />
 
       <form className="search-strip" onSubmit={(event) => event.preventDefault()} aria-label="Catalog search controls">
         <fieldset>
@@ -423,14 +576,17 @@ export default function App() {
               <summary>Venue: {venueSummary}</summary>
               <div className="menu-panel">
                 {venueOptions.map((venue) => (
-                  <label key={venue} className="checkline">
-                    <input
-                      type="checkbox"
-                      checked={filters.venues.includes(venue)}
-                      onChange={() => toggleVenue(venue)}
-                    />
-                    {venue}
-                  </label>
+                  <div key={venue} className="venue-filter-option">
+                    <label className="checkline">
+                      <input
+                        type="checkbox"
+                        checked={filters.venues.includes(venue)}
+                        onChange={() => toggleVenue(venue)}
+                      />
+                      {venue}
+                    </label>
+                    <a href={venuePath(venue)}>view</a>
+                  </div>
                 ))}
               </div>
             </details>
@@ -504,26 +660,42 @@ export default function App() {
               ))}
             </div>
 
-            <div className="mobile-search-actions">
-              <details className="mobile-filters">
-                <summary>Filters{mobileFilterCount ? ` (${mobileFilterCount})` : ''}</summary>
-                <div className="mobile-filter-panel">
-                  <details className="mobile-venue-filter">
-                    <summary>Venue: {venueSummary}</summary>
-                    <div className="mobile-venue-options">
-                      {venueOptions.map((venue) => (
-                        <label key={venue} className="checkline">
-                          <input
-                            type="checkbox"
-                            checked={filters.venues.includes(venue)}
-                            onChange={() => toggleVenue(venue)}
-                          />
-                          {venue}
-                        </label>
-                      ))}
-                    </div>
-                  </details>
+            <div className="mobile-primary-menus">
+              <button
+                type="button"
+                className={mobileMenu === 'venues' ? 'selected' : undefined}
+                aria-expanded={mobileMenu === 'venues'}
+                aria-controls="mobile-venue-browser"
+                onClick={() => setMobileMenu((current) => current === 'venues' ? null : 'venues')}
+              >
+                Venues
+              </button>
+              <button
+                type="button"
+                className={mobileMenu === 'filters' ? 'selected' : undefined}
+                aria-expanded={mobileMenu === 'filters'}
+                aria-controls="mobile-filter-panel"
+                onClick={() => setMobileMenu((current) => current === 'filters' ? null : 'filters')}
+              >
+                Filters{mobileFilterCount ? ` (${mobileFilterCount})` : ''}
+              </button>
+            </div>
 
+            {mobileMenu === 'venues' && (
+              <nav id="mobile-venue-browser" className="mobile-venue-browser" aria-label="Browse venues">
+                {venueDirectory.map(({ venue, currentCount, upcomingCount }) => (
+                  <a key={venue} href={venuePath(venue)}>
+                    <strong>{venue}</strong>
+                    <span>
+                      {currentCount} on view{upcomingCount > 0 ? ` · ${upcomingCount} upcoming` : ''}
+                    </span>
+                  </a>
+                ))}
+              </nav>
+            )}
+
+            {mobileMenu === 'filters' && (
+              <div id="mobile-filter-panel" className="mobile-filter-panel">
                   <label htmlFor="mobile-area">
                     <span>Area</span>
                     <select
@@ -564,10 +736,10 @@ export default function App() {
                       Clear filters
                     </button>
                   )}
-                </div>
-              </details>
+              </div>
+            )}
 
-              <div className="mobile-view-switch" aria-label="Catalog view">
+            <div className="mobile-view-switch" aria-label="Catalog view">
                 <button
                   type="button"
                   className={mobileView === 'list' ? 'selected' : undefined}
@@ -584,7 +756,6 @@ export default function App() {
                 >
                   Map
                 </button>
-              </div>
             </div>
           </form>
         )}

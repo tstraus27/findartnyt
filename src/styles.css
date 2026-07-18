@@ -101,6 +101,12 @@ a:focus-visible {
   margin: 0;
 }
 
+.site-title-link,
+.site-title-link:visited {
+  color: #000;
+  text-decoration: none;
+}
+
 .admin-link {
   white-space: nowrap;
 }
@@ -255,6 +261,17 @@ a:focus-visible {
   padding: 7px 8px 5px;
 }
 
+.venue-filter-option {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.venue-filter-option .checkline {
+  min-width: 0;
+}
+
 .picks {
   min-height: 28px;
   align-items: center;
@@ -352,6 +369,90 @@ textarea {
 
 .result-count {
   margin: 0;
+}
+
+.venue-link,
+.venue-link:visited {
+  color: #000;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.venue-page {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.venue-back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+}
+
+.venue-page-header {
+  border-top: 1px solid #999;
+  border-bottom: 2px solid #000;
+  padding: 14px 0 12px;
+}
+
+.venue-page-label {
+  margin: 0 0 2px;
+  font-weight: bold;
+}
+
+.venue-page-header h2 {
+  margin: 0 0 8px;
+  font-size: 36px;
+  line-height: 1.05;
+  font-weight: normal;
+}
+
+.venue-page-header p:not(.venue-page-label) {
+  margin: 2px 0;
+}
+
+.venue-page-groups {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 18px;
+}
+
+.venue-group-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  border-bottom: 2px solid #000;
+  padding-bottom: 5px;
+}
+
+.venue-group-heading h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.venue-exhibition-group ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.venue-exhibition-group li {
+  border-bottom: 1px solid #999;
+  padding: 10px 3px;
+}
+
+.venue-exhibition-group li a {
+  display: block;
+  font-size: 19px;
+  line-height: 1.2;
+}
+
+.venue-exhibition-group li span {
+  display: block;
+  margin-top: 3px;
+  color: #444;
 }
 
 .venue-map {
@@ -1541,37 +1642,64 @@ textarea {
     font-weight: bold;
   }
 
-  .mobile-search-actions {
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
+  .mobile-primary-menus {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
     margin-top: 8px;
   }
 
-  .mobile-filters {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-
-  .mobile-filters > summary,
-  .mobile-venue-filter > summary {
-    display: flex;
-    align-items: center;
+  .mobile-primary-menus button {
     min-height: 42px;
     padding: 7px 9px;
     cursor: pointer;
   }
 
-  .mobile-filters > summary {
-    width: 100%;
+  .mobile-primary-menus button.selected {
+    background: #ffffcc;
+    font-weight: bold;
   }
 
-  .mobile-filter-panel {
-    width: calc(100vw - 24px);
+  .mobile-filter-panel,
+  .mobile-venue-browser {
     border: 1px solid #777;
     border-top: 0;
     padding: 9px;
+  }
+
+  .mobile-venue-browser {
+    max-height: 52vh;
+    overflow: auto;
+    padding: 0 9px;
+  }
+
+  .mobile-venue-browser a {
+    display: block;
+    min-height: 58px;
+    border-bottom: 1px solid #ccc;
+    padding: 8px 2px;
+    color: #000;
+    text-decoration: none;
+  }
+
+  .mobile-venue-browser a:last-child {
+    border-bottom: 0;
+  }
+
+  .mobile-venue-browser strong,
+  .mobile-venue-browser span {
+    display: block;
+  }
+
+  .mobile-venue-browser strong {
+    text-decoration: underline;
+  }
+
+  .mobile-venue-browser span {
+    margin-top: 2px;
+    color: #444;
+    font-size: 14px;
+    text-decoration: none;
   }
 
   .mobile-filter-panel > label {
@@ -1583,25 +1711,6 @@ textarea {
     padding: 6px;
   }
 
-  .mobile-venue-filter > summary {
-    min-height: 40px;
-  }
-
-  .mobile-venue-options {
-    max-height: 38vh;
-    overflow: auto;
-    border: 1px solid #aaa;
-    border-top: 0;
-    padding: 7px;
-  }
-
-  .mobile-venue-options .checkline {
-    min-height: 36px;
-    align-items: center;
-    margin: 0;
-    border-bottom: 1px solid #eee;
-  }
-
   .mobile-clear-filters {
     min-height: 38px;
     margin-top: 8px;
@@ -1610,7 +1719,7 @@ textarea {
   .mobile-view-switch {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    flex: 0 0 124px;
+    margin-top: 8px;
   }
 
   .mobile-results-heading {
@@ -1636,14 +1745,15 @@ textarea {
 
   .mobile-result-row {
     border-bottom: 1px solid #999;
+    padding: 8px 4px 10px;
   }
 
-  .mobile-result-row button {
+  .mobile-result-row .mobile-result-select {
     display: block;
     width: 100%;
-    min-height: 88px;
+    min-height: 40px;
     border: 0;
-    padding: 10px 4px;
+    padding: 0;
     background: #fff;
     text-align: left;
     cursor: pointer;
@@ -1668,7 +1778,10 @@ textarea {
   }
 
   .mobile-result-venue {
-    margin-top: 3px;
+    width: fit-content;
+    min-height: 30px;
+    margin-top: 1px;
+    padding-top: 3px;
   }
 
   .mobile-result-date {
@@ -1789,6 +1902,28 @@ textarea {
     margin-top: 28px;
     padding-top: 12px;
     font-size: 13px;
+  }
+
+  .venue-page-header {
+    padding-top: 10px;
+  }
+
+  .venue-page-header h2 {
+    font-size: 30px;
+  }
+
+  .venue-page-groups {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 14px;
+  }
+
+  .venue-group-heading h2 {
+    font-size: 22px;
+  }
+
+  .venue-exhibition-group li {
+    padding: 11px 3px;
   }
 }
 
