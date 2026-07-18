@@ -161,18 +161,34 @@ function ResultRow({
 
 function MobileResultRow({ record, onSelect }: { record: Exhibition; onSelect: (record: Exhibition) => void }) {
   const closingSoon = closesWithinDays(record, 14);
+  const [imageFailed, setImageFailed] = useState(false);
+  const showThumbnail = Boolean(record.imageUrl && !imageFailed);
 
   return (
     <li className="mobile-result-row">
-      <button type="button" className="mobile-result-select" onClick={() => onSelect(record)}>
-        <span className="mobile-result-title">{record.title}</span>
-      </button>
-      <a className="mobile-result-venue venue-link" href={venuePath(record.venue)}>
-        {record.venue}
-      </a>
-      <span className={closingSoon ? 'mobile-result-date closing-soon-date' : 'mobile-result-date'}>
-        {record.listDateText}
-      </span>
+      <div className={showThumbnail ? 'mobile-result-layout with-thumbnail' : 'mobile-result-layout'}>
+        <div className="mobile-result-copy">
+          <button type="button" className="mobile-result-select" onClick={() => onSelect(record)}>
+            <span className="mobile-result-title">{record.title}</span>
+          </button>
+          <span className="mobile-result-venue-line">
+            at <a className="venue-link" href={venuePath(record.venue)}>{record.venue}</a>
+          </span>
+          <span className={closingSoon ? 'mobile-result-date closing-soon-date' : 'mobile-result-date'}>
+            {record.listDateText}
+          </span>
+        </div>
+        {showThumbnail && (
+          <img
+            className="mobile-result-thumbnail"
+            src={record.imageUrl ?? undefined}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            onError={() => setImageFailed(true)}
+          />
+        )}
+      </div>
     </li>
   );
 }
@@ -490,6 +506,7 @@ export default function App() {
       ...current,
       venues: [],
       area: '',
+      status: defaultFilters.status,
       sort: defaultFilters.sort
     }));
   };
@@ -530,7 +547,9 @@ export default function App() {
         ? filters.venues[0]
       : `${filters.venues.length} venues`;
   const mobileFilterCount =
-    Number(Boolean(filters.area)) + Number(filters.sort !== defaultFilters.sort);
+    Number(Boolean(filters.area)) +
+    Number(filters.status !== defaultFilters.status) +
+    Number(filters.sort !== defaultFilters.sort);
   const venueRouteMatch = path.match(/^\/venue\/([^/]+)\/?$/);
   const routeVenue = venueRouteMatch
     ? venueOptions.find((venue) => toVenueSlug(venue) === venueRouteMatch[1]) ?? null
@@ -640,26 +659,6 @@ export default function App() {
               placeholder="Search exhibitions"
             />
 
-            <div className="mobile-status" aria-label="Exhibition status">
-              {statusOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  className={filters.status === option.value ? 'selected' : undefined}
-                  aria-pressed={filters.status === option.value}
-                  onClick={() => updateFilters({ status: option.value })}
-                >
-                  {option.value === 'now'
-                    ? 'Now'
-                    : option.value === 'closingSoon'
-                      ? 'Closing'
-                      : option.value === 'currentFuture'
-                        ? 'All'
-                        : option.label}
-                </button>
-              ))}
-            </div>
-
             <div className="mobile-primary-menus">
               <button
                 type="button"
@@ -696,6 +695,21 @@ export default function App() {
 
             {mobileMenu === 'filters' && (
               <div id="mobile-filter-panel" className="mobile-filter-panel">
+                  <label htmlFor="mobile-status">
+                    <span>Status</span>
+                    <select
+                      id="mobile-status"
+                      value={filters.status}
+                      onChange={(event) => updateFilters({ status: event.target.value as DateStatus })}
+                    >
+                      {statusOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
                   <label htmlFor="mobile-area">
                     <span>Area</span>
                     <select
@@ -739,35 +753,42 @@ export default function App() {
               </div>
             )}
 
-            <div className="mobile-view-switch" aria-label="Catalog view">
-                <button
-                  type="button"
-                  className={mobileView === 'list' ? 'selected' : undefined}
-                  aria-pressed={mobileView === 'list'}
-                  onClick={() => setMobileView('list')}
-                >
-                  List
-                </button>
-                <button
-                  type="button"
-                  className={mobileView === 'map' ? 'selected' : undefined}
-                  aria-pressed={mobileView === 'map'}
-                  onClick={() => setMobileView('map')}
-                >
-                  Map
-                </button>
-            </div>
           </form>
+        )}
+
+        {mobileView !== 'detail' && (
+          <div className="mobile-results-heading">
+            <div className="mobile-results-context">
+              <strong>
+                {mobileView === 'list'
+                  ? `${filteredRecords.length} exhibition${filteredRecords.length === 1 ? '' : 's'}`
+                  : 'Venue map'}
+              </strong>
+              <span>{statusOptions.find((option) => option.value === filters.status)?.label}</span>
+            </div>
+            <div className="mobile-view-switch" aria-label="Catalog view">
+              <button
+                type="button"
+                className={mobileView === 'list' ? 'selected' : undefined}
+                aria-pressed={mobileView === 'list'}
+                onClick={() => setMobileView('list')}
+              >
+                List
+              </button>
+              <button
+                type="button"
+                className={mobileView === 'map' ? 'selected' : undefined}
+                aria-pressed={mobileView === 'map'}
+                onClick={() => setMobileView('map')}
+              >
+                Map
+              </button>
+            </div>
+          </div>
         )}
 
         {mobileView === 'list' && (
           <div className="mobile-list-view">
-            <div className="mobile-results-heading">
-              <strong>
-                {filteredRecords.length} exhibition{filteredRecords.length === 1 ? '' : 's'}
-              </strong>
-              <span>{sortOptions.find((option) => option.value === filters.sort)?.label}</span>
-            </div>
             {filteredRecords.length > 0 ? (
               <ol className="mobile-results">
                 {filteredRecords.map((record) => (
@@ -800,8 +821,7 @@ export default function App() {
 
         {mobileView === 'map' && (
           <section className="mobile-map-view" aria-label="Venue map and venue filter">
-            <div className="mobile-map-heading">
-              <h2>Venue map</h2>
+            <div className="mobile-map-heading mobile-map-actions-only">
               <button type="button" className="plain-button" onClick={useCurrentLocation}>
                 Use my location
               </button>

@@ -1618,25 +1618,16 @@ textarea {
     font-size: 16px;
   }
 
-  .mobile-status {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    margin-top: 7px;
-  }
-
-  .mobile-status button,
   .mobile-view-switch button {
-    min-height: 42px;
-    padding: 6px 3px;
+    min-height: 36px;
+    padding: 4px 7px;
     cursor: pointer;
   }
 
-  .mobile-status button + button,
   .mobile-view-switch button + button {
     border-left: 0;
   }
 
-  .mobile-status button.selected,
   .mobile-view-switch button.selected {
     background: #ffffcc;
     font-weight: bold;
@@ -1706,6 +1697,10 @@ textarea {
     margin-top: 9px;
   }
 
+  .mobile-filter-panel > label:first-child {
+    margin-top: 0;
+  }
+
   .mobile-filter-panel select {
     min-height: 42px;
     padding: 6px;
@@ -1719,22 +1714,31 @@ textarea {
   .mobile-view-switch {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin-top: 8px;
+    flex: 0 0 116px;
   }
 
   .mobile-results-heading {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    align-items: baseline;
+    align-items: center;
     border-bottom: 2px solid #000;
-    padding-bottom: 7px;
+    margin-top: 9px;
+    padding-bottom: 6px;
   }
 
-  .mobile-results-heading span {
+  .mobile-results-context {
+    min-width: 0;
+  }
+
+  .mobile-results-context strong,
+  .mobile-results-context span {
+    display: block;
+  }
+
+  .mobile-results-context span {
     color: #444;
     font-size: 14px;
-    text-align: right;
   }
 
   .mobile-results {
@@ -1746,6 +1750,17 @@ textarea {
   .mobile-result-row {
     border-bottom: 1px solid #999;
     padding: 8px 4px 10px;
+  }
+
+  .mobile-result-layout.with-thumbnail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 76px;
+    gap: 10px;
+    align-items: start;
+  }
+
+  .mobile-result-copy {
+    min-width: 0;
   }
 
   .mobile-result-row .mobile-result-select {
@@ -1764,7 +1779,7 @@ textarea {
   }
 
   .mobile-result-title,
-  .mobile-result-venue,
+  .mobile-result-venue-line,
   .mobile-result-date {
     display: block;
     overflow-wrap: anywhere;
@@ -1777,11 +1792,15 @@ textarea {
     text-decoration: underline;
   }
 
-  .mobile-result-venue {
+  .mobile-result-venue-line {
     width: fit-content;
-    min-height: 30px;
     margin-top: 1px;
     padding-top: 3px;
+    font-size: 15px;
+  }
+
+  .mobile-result-venue-line .venue-link {
+    font-weight: normal;
   }
 
   .mobile-result-date {
@@ -1793,6 +1812,15 @@ textarea {
 
   .mobile-result-date.closing-soon-date {
     background: #fff0f2;
+  }
+
+  .mobile-result-thumbnail {
+    display: block;
+    width: 76px;
+    height: 76px;
+    border: 1px solid #aaa;
+    background: #f7f7f7;
+    object-fit: contain;
   }
 
   .mobile-empty-results {
@@ -1886,6 +1914,13 @@ textarea {
   .mobile-map-heading h2 {
     margin: 0;
     font-size: 22px;
+  }
+
+  .mobile-map-heading.mobile-map-actions-only {
+    justify-content: flex-end;
+    border-bottom: 0;
+    margin-bottom: 4px;
+    padding-bottom: 0;
   }
 
   .mobile-map-heading button {
