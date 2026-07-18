@@ -5,7 +5,7 @@ import {
   type FeaturedContent,
   type StagingQueueSource
 } from '../lib/backend/findArtBackend';
-import type { Exhibition } from '../lib/exhibitions';
+import { publicListingCutoff, type Exhibition } from '../lib/exhibitions';
 import { formatStagedDates, itemUrl, normalizeReviewStatus, type StagedItem, type StagedProposal } from '../lib/stagingReview';
 
 type AdminRoute = 'dashboard' | 'review' | 'featured' | 'history';
@@ -251,6 +251,16 @@ function ProposalEditor({
         <dl className="review-fields">
           <FieldRow label="Venue" value={item.proposed?.venue} />
           <FieldRow label="Dates" value={formatStagedDates(item.proposed ?? {})} />
+          {!item.proposed?.endDate && item.proposed?.startDate && (
+            <FieldRow
+              label="Public auto-hide"
+              value={`${publicListingCutoff({
+                startDate: item.proposed.startDate,
+                endDate: null,
+                dateText: item.proposed.dateText || ''
+              })} unless a closing date is added`}
+            />
+          )}
           <FieldRow label="Address" value={item.proposed?.venueAddress} />
           <FieldRow
             label="Place"

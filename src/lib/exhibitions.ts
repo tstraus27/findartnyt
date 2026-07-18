@@ -67,6 +67,15 @@ const canonicalById = new Map(
 );
 
 const today = () => new Date().toISOString().slice(0, 10);
+const tbdPublicListingDays = 120;
+const openEndedPublicListingDays = 365;
+
+const addDays = (isoDate: string, days: number) => {
+  const date = new Date(`${isoDate}T00:00:00Z`);
+  if (Number.isNaN(date.getTime())) return null;
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+};
 
 const clean = (value: unknown) => {
   if (typeof value !== 'string') return null;
@@ -209,15 +218,24 @@ export const getAreaOptions = (records: Exhibition[] = exhibitions) =>
     a.localeCompare(b)
   );
 
+export const publicListingCutoff = (record: Pick<Exhibition, 'startDate' | 'endDate' | 'dateText'>) => {
+  if (record.endDate) return record.endDate;
+  if (!record.startDate) return null;
+  return addDays(record.startDate, /\bTBD\b/i.test(record.dateText) ? tbdPublicListingDays : openEndedPublicListingDays);
+};
+
 export const isOnViewNow = (record: Exhibition, asOf = today()) => {
   const startsBeforeOrToday = !record.startDate || record.startDate <= asOf;
-  const endsAfterOrOpen = !record.endDate || record.endDate >= asOf;
-  return startsBeforeOrToday && endsAfterOrOpen;
+  const listingCutoff = publicListingCutoff(record);
+  return startsBeforeOrToday && Boolean(listingCutoff && listingCutoff >= asOf);
 };
 
 export const isUpcoming = (record: Exhibition, asOf = today()) => Boolean(record.startDate && record.startDate > asOf);
 
-export const isCurrentOrFuture = (record: Exhibition, asOf = today()) => !record.endDate || record.endDate >= asOf;
+export const isCurrentOrFuture = (record: Exhibition, asOf = today()) => {
+  const listingCutoff = publicListingCutoff(record);
+  return Boolean(listingCutoff && listingCutoff >= asOf);
+};
 
 export const isClosingSoon = (record: Exhibition, asOf = today()) => {
   if (!isOnViewNow(record, asOf) || !record.endDate) return false;
