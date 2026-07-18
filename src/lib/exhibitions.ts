@@ -42,6 +42,7 @@ export type Exhibition = {
   startDate: string | null;
   endDate: string | null;
   dateText: string;
+  listDateText: string;
   description: string | null;
   venueAddress: string | null;
   neighborhood: string | null;
@@ -83,6 +84,38 @@ const clean = (value: unknown) => {
   return trimmed.length ? trimmed : null;
 };
 
+const shortMonths = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
+
+const dateParts = (value: string | null) => {
+  const match = value?.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return null;
+  return { year: match[1], month: Number(match[2]), day: Number(match[3]) };
+};
+
+const shortDate = (parts: NonNullable<ReturnType<typeof dateParts>>, includeYear = true) =>
+  `${shortMonths[parts.month - 1]} ${parts.day}${includeYear ? `, ${parts.year}` : ''}`;
+
+export const formatListDateRange = (record: {
+  startDate: string | null;
+  endDate: string | null;
+  dateText?: string | null;
+}) => {
+  const start = dateParts(record.startDate);
+  const end = dateParts(record.endDate);
+
+  if (start && end) {
+    const sameYear = start.year === end.year;
+    return `${shortDate(start, !sameYear)} — ${shortDate(end)}`;
+  }
+  if (end) return `Through ${shortDate(end)}`;
+  if (start) {
+    if (/\bTBD\b/i.test(record.dateText || '')) return `${shortDate(start)} — TBD`;
+    if (/\bongoing\b/i.test(record.dateText || '')) return `${shortDate(start)} — Ongoing`;
+    return `Opens ${shortDate(start)}`;
+  }
+  return clean(record.dateText) || 'Dates listed at source';
+};
+
 export const formatDateRange = (record: { startDate: string | null; endDate: string | null; dateText?: string | null }) => {
   const explicit = clean(record.dateText);
   if (explicit) return explicit;
@@ -109,6 +142,7 @@ export const normalizeExhibitionRecords = (records: CanonicalRecord[]): Exhibiti
         endDate,
         dateText: clean(record.dateText)
       });
+      const listDateText = formatListDateRange({ startDate, endDate, dateText });
       const neighborhood = clean(record.neighborhood);
       const borough = clean(record.borough);
       const city = clean(record.city);
@@ -131,6 +165,7 @@ export const normalizeExhibitionRecords = (records: CanonicalRecord[]): Exhibiti
         startDate,
         endDate,
         dateText,
+        listDateText,
         description,
         venueAddress,
         neighborhood,
@@ -162,6 +197,7 @@ export const normalizeLaunchRecords = (): Exhibition[] => {
         endDate,
         dateText: clean(launchRecord.dateText) ?? clean(canonical.dateText)
       });
+      const listDateText = formatListDateRange({ startDate, endDate, dateText });
       const neighborhood = clean(canonical.neighborhood);
       const borough = clean(canonical.borough);
       const city = clean(canonical.city);
@@ -194,6 +230,7 @@ export const normalizeLaunchRecords = (): Exhibition[] => {
         startDate,
         endDate,
         dateText,
+        listDateText,
         description,
         venueAddress,
         neighborhood,

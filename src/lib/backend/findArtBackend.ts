@@ -1,4 +1,10 @@
-import { exhibitions as localExhibitions, formatDateRange, normalizeExhibitionRecords, type Exhibition } from '../exhibitions';
+import {
+  exhibitions as localExhibitions,
+  formatDateRange,
+  formatListDateRange,
+  normalizeExhibitionRecords,
+  type Exhibition
+} from '../exhibitions';
 import {
   countStatuses,
   formatStagedDates,
@@ -69,6 +75,7 @@ const toCamelExhibition = (row: Record<string, unknown>): Exhibition | null => {
   const startDate = stringOrNull(row.start_date);
   const endDate = stringOrNull(row.end_date);
   const dateText = formatDateRange({ startDate, endDate, dateText: stringOrNull(row.date_text) });
+  const listDateText = formatListDateRange({ startDate, endDate, dateText });
   const source = stringOrNull(row.source) || venue;
   const searchText = [title, venue, source, neighborhood, borough, city, description, venueAddress, dateText]
     .filter(Boolean)
@@ -83,6 +90,7 @@ const toCamelExhibition = (row: Record<string, unknown>): Exhibition | null => {
     startDate,
     endDate,
     dateText,
+    listDateText,
     description,
     venueAddress,
     neighborhood,

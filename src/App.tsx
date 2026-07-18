@@ -124,7 +124,7 @@ function ResultRow({
         </button>
       </td>
       <td>{record.venue}</td>
-      <td className={closingSoon ? 'closing-soon-date' : undefined}>{record.dateText}</td>
+      <td className={closingSoon ? 'closing-soon-date' : undefined}>{record.listDateText}</td>
       <td>
         <a href={record.sourceUrl} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()}>
           source
