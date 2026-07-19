@@ -36,7 +36,7 @@ const defaultFilters: ExhibitionFilters = {
   venues: [],
   area: '',
   status: 'now',
-  sort: 'closingSoon'
+  sort: 'venue'
 };
 
 const validStatus = (value: string | null): DateStatus =>
@@ -117,6 +117,8 @@ function ResultRow({
   onSelect: (record: Exhibition) => void;
 }) {
   const closingSoon = closesWithinDays(record, 14);
+  const [imageFailed, setImageFailed] = useState(false);
+  const showThumbnail = Boolean(record.imageUrl && !imageFailed);
 
   return (
     <tr
@@ -131,6 +133,18 @@ function ResultRow({
       }}
       aria-selected={selected}
     >
+      <td className="desktop-thumbnail-cell">
+        {showThumbnail && (
+          <img
+            className="desktop-result-thumbnail"
+            src={record.imageUrl ?? undefined}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            onError={() => setImageFailed(true)}
+          />
+        )}
+      </td>
       <td>
         <button
           type="button"
@@ -150,11 +164,6 @@ function ResultRow({
         </a>
       </td>
       <td className={closingSoon ? 'closing-soon-date' : undefined}>{record.listDateText}</td>
-      <td>
-        <a href={record.sourceUrl} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()}>
-          source
-        </a>
-      </td>
     </tr>
   );
 }
@@ -591,24 +600,27 @@ export default function App() {
               />
             </label>
 
-            <details className="menu-filter">
-              <summary>Venue: {venueSummary}</summary>
-              <div className="menu-panel">
-                {venueOptions.map((venue) => (
-                  <div key={venue} className="venue-filter-option">
-                    <label className="checkline">
-                      <input
-                        type="checkbox"
-                        checked={filters.venues.includes(venue)}
-                        onChange={() => toggleVenue(venue)}
-                      />
-                      {venue}
-                    </label>
-                    <a href={venuePath(venue)}>view</a>
-                  </div>
-                ))}
-              </div>
-            </details>
+            <div className="venue-filter-control">
+              <span>Venue</span>
+              <details className="menu-filter">
+                <summary>{venueSummary}</summary>
+                <div className="menu-panel">
+                  {venueOptions.map((venue) => (
+                    <div key={venue} className="venue-filter-option">
+                      <label className="checkline">
+                        <input
+                          type="checkbox"
+                          checked={filters.venues.includes(venue)}
+                          onChange={() => toggleVenue(venue)}
+                        />
+                        {venue}
+                      </label>
+                      <a href={venuePath(venue)}>view</a>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            </div>
 
             <label htmlFor="area">
               <span>Area</span>
@@ -874,10 +886,12 @@ export default function App() {
               <caption>Exhibition results</caption>
               <thead>
                 <tr>
+                  <th scope="col" className="desktop-thumbnail-heading">
+                    <span className="visually-hidden">Image</span>
+                  </th>
                   <th scope="col">Exhibition</th>
                   <th scope="col">Venue</th>
                   <th scope="col">Dates</th>
-                  <th scope="col">Link</th>
                 </tr>
               </thead>
               <tbody>
