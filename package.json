@@ -134,6 +134,8 @@
     "review:staging:whitney:json": "node scripts/exhibit-ingest/review-staging.mjs --staging data/staging/whitney-exhibitions.json --json",
     "sync:staging-to-db": "node scripts/backend/sync-staging-to-db.mjs",
     "sync:staging-to-db:dry": "node scripts/backend/sync-staging-to-db.mjs --dry-run",
+    "intake:auto": "node scripts/backend/run-automatic-intake.mjs",
+    "intake:auto:dry": "node scripts/backend/run-automatic-intake.mjs --dry-run --skip-ingest",
     "test": "node --test \"scripts/**/*.test.mjs\"",
     "preview": "vite preview"
   },

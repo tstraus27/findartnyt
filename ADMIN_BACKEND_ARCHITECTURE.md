@@ -75,6 +75,7 @@ SUPABASE_SERVICE_ROLE_KEY=
 - `/admin`: workflow dashboard.
 - `/admin/review`: reviewer/admin staging queue.
 - `/admin/history`: admin review history/status browser for approved, rejected, revision, and promoted items.
+- `/admin/intake`: admin-only automatic intake health monitor with latest run status, refresh overdue signals, diagnostic tags, and recent intake log events.
 - `/admin/featured`: admin-only featured content editor.
 
 When Supabase env vars are absent, `/admin/login` clearly enters a local JSON fallback for development. This is not the remote security path.
@@ -94,6 +95,27 @@ Without that value, the review page tries to embed the official source URL direc
 ## Manual Staging Edits
 
 Admins can edit staged proposal fields before promotion. The backend function `admin_update_staging_proposed` updates `staging_items.proposed`, marks the item for revision unless it was already promoted, and writes an `admin_actions` audit row.
+
+## Automatic Intake Health
+
+Apply `supabase/migrations/20260720120000_intake_health.sql` after the base backend migration. It creates `intake_runs`, `intake_log_events`, and `intake_source_health`.
+
+The scheduled workflow template is `docs/github-workflows/automatic-intake.yml`. Copy it to `.github/workflows/automatic-intake.yml` with a GitHub token that has `workflow` scope. It runs weekly on Monday at 11:15 UTC and can also be started manually from GitHub Actions. Configure these repository secrets before enabling it:
+
+```bash
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+```
+
+The workflow calls:
+
+```bash
+npm run intake:auto
+```
+
+That command attempts each live-capable source independently, upserts successful staging rows into Supabase, and records both successes and failures to the intake health tables. A failed source does not stop later sources from being attempted, but the workflow exits non-zero when any source fails so GitHub Actions still surfaces the run as needing attention.
+
+Met, MoMA, and Brooklyn Museum currently rely on browser-assisted or fixture refresh workflows and are not part of the live source-config sweep until their direct automated fetch path is resolved.
 
 ## Future Path
 

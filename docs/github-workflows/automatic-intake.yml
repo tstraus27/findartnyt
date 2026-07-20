@@ -1,0 +1,51 @@
+name: Automatic intake
+
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: Optional source id, such as whitney-exhibitions
+        required: false
+        type: string
+  schedule:
+    - cron: '15 11 * * 1'
+
+concurrency:
+  group: automatic-intake
+  cancel-in-progress: false
+
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run automatic intake
+        run: |
+          if [ -n "${{ inputs.source }}" ]; then
+            npm run intake:auto -- --source "${{ inputs.source }}"
+          else
+            npm run intake:auto
+          fi
+
+      - name: Upload staging artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: staging-artifacts
+          path: data/staging/*.json
+          if-no-files-found: ignore
