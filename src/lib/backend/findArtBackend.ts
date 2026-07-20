@@ -56,6 +56,52 @@ export type StagingQueueSource = {
   items: StagedItem[];
 };
 
+export type IntakeHealthStatus = 'healthy' | 'stale' | 'verification_pending' | 'review_backlog' | 'warning' | 'error' | 'unknown';
+
+export type IntakeHealthSource = {
+  sourceId: string;
+  label: string;
+  status: IntakeHealthStatus;
+  lastRunAt: string | null;
+  lastSuccessAt: string | null;
+  lastErrorAt: string | null;
+  lastError: string | null;
+  runCount: number;
+  successCount: number;
+  failureCount: number;
+  warningCount: number;
+  incomingRecords: number;
+  creates: number;
+  updates: number;
+  possibleDuplicates: number;
+  conflicts: number;
+  unchanged: number;
+  pagesFetched: number;
+  pendingReview: number;
+  needsRevision: number;
+  promoted: number;
+  verificationStatus: string | null;
+  verificationNotes: string | null;
+  sourceNotes: string | null;
+};
+
+export type IntakeLogEvent = {
+  id: string;
+  sourceId: string;
+  sourceLabel: string;
+  status: IntakeHealthStatus;
+  message: string;
+  details: Record<string, unknown> | null;
+  createdAt: string;
+  runId: string | null;
+};
+
+export type IntakeHealthSnapshot = {
+  generatedAt: string;
+  sources: IntakeHealthSource[];
+  logs: IntakeLogEvent[];
+};
+
 const localDecisionStorageKey = 'find-art-nyc-review-decisions';
 const localProposalStorageKey = 'find-art-nyc-proposal-edits';
 const sourcePreviewBaseUrl = import.meta.env.VITE_SOURCE_PREVIEW_URL || '';
@@ -194,6 +240,111 @@ const localSources = (): StagingQueueSource[] => {
   }));
 };
 
+const numberFrom = (value: unknown) => (typeof value === 'number' && Number.isFinite(value) ? value : 0);
+
+const daysSince = (isoDate: string | null) => {
+  if (!isoDate) return Number.POSITIVE_INFINITY;
+  const timestamp = Date.parse(isoDate);
+  if (!Number.isFinite(timestamp)) return Number.POSITIVE_INFINITY;
+  return (Date.now() - timestamp) / 86400000;
+};
+
+const labelForSourceId = (sourceId: string) =>
+  reviewSources.find((source) => source.id === sourceId)?.label ??
+  sourceId.replace(/-exhibitions$/, '').replace(/-/g, ' ');
+
+const statusFromLocalReport = (generatedAt: string | null, conflicts: number, verificationStatus: string | null): IntakeHealthStatus => {
+  if (!generatedAt) return 'unknown';
+  if (conflicts > 0) return 'review_backlog';
+  if (verificationStatus && !['verified_live', 'verified_fixture'].includes(verificationStatus)) return 'verification_pending';
+  return daysSince(generatedAt) > 14 ? 'stale' : 'healthy';
+};
+
+const localIntakeHealth = (): IntakeHealthSnapshot => {
+  const sources = localSources();
+  const healthSources = reviewSources.map((source) => {
+    const summary = source.report.summary ?? {};
+    const counts = sources.find((queue) => queue.id === source.id)?.counts ?? {};
+    const conflicts = numberFrom(summary.conflicts);
+    const lastRunAt = summary.generatedAt ?? null;
+    const status = statusFromLocalReport(lastRunAt, conflicts, summary.verification?.status ?? null);
+
+    return {
+      sourceId: source.id,
+      label: source.label,
+      status,
+      lastRunAt,
+      lastSuccessAt: lastRunAt,
+      lastErrorAt: null,
+      lastError: null,
+      runCount: lastRunAt ? 1 : 0,
+      successCount: lastRunAt ? 1 : 0,
+      failureCount: 0,
+      warningCount: ['stale', 'verification_pending', 'review_backlog', 'warning'].includes(status) ? 1 : 0,
+      incomingRecords: numberFrom(summary.incomingRecords),
+      creates: numberFrom(summary.creates),
+      updates: numberFrom(summary.updates),
+      possibleDuplicates: numberFrom(summary.possibleDuplicates),
+      conflicts,
+      unchanged: numberFrom(summary.unchanged),
+      pagesFetched: numberFrom(summary.pagesFetched),
+      pendingReview: numberFrom(counts.pending) + numberFrom(counts.reviewer_approved) + numberFrom(counts.admin_approved),
+      needsRevision: numberFrom(counts.needs_revision),
+      promoted: numberFrom(counts.promoted),
+      verificationStatus: summary.verification?.status ?? null,
+      verificationNotes: summary.verification?.notes ?? null,
+      sourceNotes: summary.stagingNotes ?? null
+    };
+  });
+
+  const logs = healthSources.flatMap((source) => {
+    const events: IntakeLogEvent[] = [];
+    if (source.lastRunAt) {
+      events.push({
+        id: `local:${source.sourceId}:run`,
+        sourceId: source.sourceId,
+        sourceLabel: source.label,
+        status: source.status,
+        message: `${source.label} staged ${source.incomingRecords} incoming records.`,
+        details: {
+          creates: source.creates,
+          updates: source.updates,
+          possibleDuplicates: source.possibleDuplicates,
+          conflicts: source.conflicts,
+          unchanged: source.unchanged,
+          pagesFetched: source.pagesFetched
+        },
+        createdAt: source.lastRunAt,
+        runId: null
+      });
+    }
+    if (['stale', 'verification_pending', 'review_backlog', 'warning'].includes(source.status)) {
+      events.push({
+        id: `local:${source.sourceId}:warning`,
+        sourceId: source.sourceId,
+        sourceLabel: source.label,
+        status: source.status,
+        message:
+          source.status === 'review_backlog'
+            ? `${source.label} has conflict proposals waiting.`
+            : source.status === 'verification_pending'
+              ? `${source.label} is waiting on live verification.`
+              : `${source.label} has not refreshed recently.`,
+        details: { verificationStatus: source.verificationStatus, generatedAt: source.lastRunAt },
+        createdAt: source.lastRunAt ?? new Date().toISOString(),
+        runId: null
+      });
+    }
+    return events;
+  });
+
+  return {
+    generatedAt: new Date().toISOString(),
+    sources: healthSources.sort((left, right) => left.label.localeCompare(right.label)),
+    logs: logs.sort((left, right) => right.createdAt.localeCompare(left.createdAt)).slice(0, 80)
+  };
+};
+
 const dbItemToStagedItem = (row: Record<string, unknown>): StagedItem => ({
   id: String(row.id),
   proposalType: stringOrNull(row.proposal_type),
@@ -206,6 +357,53 @@ const dbItemToStagedItem = (row: Record<string, unknown>): StagedItem => ({
   conflict: row.conflict,
   reviewerNotes: null
 });
+
+const dbRunToHealthSource = (run: Record<string, unknown>, rollup: Record<string, unknown>): IntakeHealthSource => {
+  const sourceId = String(run.source_id || rollup.source_id || 'unknown-source');
+  const status = String(run.status || 'unknown') as IntakeHealthStatus;
+  const summary = (run.summary as Record<string, unknown> | null) ?? {};
+
+  return {
+    sourceId,
+    label: labelForSourceId(sourceId),
+    status,
+    lastRunAt: stringOrNull(run.finished_at) || stringOrNull(run.started_at),
+    lastSuccessAt: stringOrNull(rollup.last_success_at),
+    lastErrorAt: stringOrNull(rollup.last_error_at),
+    lastError: stringOrNull(rollup.last_error_message),
+    runCount: numberFrom(rollup.run_count),
+    successCount: numberFrom(rollup.success_count),
+    failureCount: numberFrom(rollup.failure_count),
+    warningCount: numberFrom(rollup.warning_count),
+    incomingRecords: numberFrom(run.incoming_records),
+    creates: numberFrom(run.creates),
+    updates: numberFrom(run.updates),
+    possibleDuplicates: numberFrom(run.possible_duplicates),
+    conflicts: numberFrom(run.conflicts),
+    unchanged: numberFrom(run.unchanged),
+    pagesFetched: numberFrom(run.pages_fetched),
+    pendingReview: numberFrom(rollup.pending_review),
+    needsRevision: numberFrom(rollup.needs_revision),
+    promoted: numberFrom(rollup.promoted),
+    verificationStatus: stringOrNull(summary.verificationStatus),
+    verificationNotes: stringOrNull(summary.verificationNotes),
+    sourceNotes: stringOrNull(summary.stagingNotes)
+  };
+};
+
+const dbLogEvent = (row: Record<string, unknown>): IntakeLogEvent => {
+  const sourceId = String(row.source_id || 'unknown-source');
+  return {
+    id: String(row.id),
+    sourceId,
+    sourceLabel: labelForSourceId(sourceId),
+    status: (String(row.status || 'unknown') as IntakeHealthStatus),
+    message: String(row.message || ''),
+    details: (row.details as Record<string, unknown> | null) ?? null,
+    createdAt: stringOrNull(row.created_at) ?? '',
+    runId: stringOrNull(row.run_id)
+  };
+};
 
 export const backend = {
   configured: isSupabaseConfigured,
@@ -323,6 +521,36 @@ export const backend = {
       counts: countStatuses(items),
       items
     }));
+  },
+
+  async getIntakeHealth(): Promise<IntakeHealthSnapshot> {
+    if (!supabase) return localIntakeHealth();
+
+    try {
+      const { data: latestRuns, error: latestRunsError } = await supabase
+        .from('intake_source_health')
+        .select('*')
+        .order('source_id');
+      if (latestRunsError) throw latestRunsError;
+
+      const { data: logs, error: logsError } = await supabase
+        .from('intake_log_events')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(100);
+      if (logsError) throw logsError;
+
+      return {
+        generatedAt: new Date().toISOString(),
+        sources: (latestRuns ?? [])
+          .map((row) => dbRunToHealthSource(row.latest_run as Record<string, unknown>, row as Record<string, unknown>))
+          .sort((left, right) => left.label.localeCompare(right.label)),
+        logs: (logs ?? []).map((row) => dbLogEvent(row as Record<string, unknown>))
+      };
+    } catch (error) {
+      console.warn('Falling back to local intake health after Supabase read failed.', error);
+      return localIntakeHealth();
+    }
   },
 
   async submitReviewDecision(itemId: string, decision: ReviewDecisionType, notes: string) {

@@ -3,13 +3,15 @@ import {
   backend,
   type AuthState,
   type FeaturedContent,
+  type IntakeHealthSource,
+  type IntakeHealthStatus,
   type StagingQueueSource
 } from '../lib/backend/findArtBackend';
 import { publicListingCutoff, type Exhibition } from '../lib/exhibitions';
 import { formatStagedDates, itemUrl, normalizeReviewStatus, type StagedItem, type StagedProposal } from '../lib/stagingReview';
 import { FeatureRichText } from './FeatureRichText';
 
-type AdminRoute = 'dashboard' | 'review' | 'featured' | 'history';
+type AdminRoute = 'dashboard' | 'review' | 'featured' | 'history' | 'intake';
 type HistoryStatusFilter =
   | 'all'
   | 'reviewer_approved'
@@ -150,7 +152,7 @@ function AdminHeader({ auth, route }: { auth: AuthState; route: AdminRoute }) {
   return (
     <header className="site-header split-header">
       <div>
-        <h1>{route === 'featured' ? 'Featured content' : route === 'dashboard' ? 'Admin dashboard' : route === 'history' ? 'Review history' : 'Data review'}</h1>
+        <h1>{route === 'featured' ? 'Featured content' : route === 'dashboard' ? 'Admin dashboard' : route === 'history' ? 'Review history' : route === 'intake' ? 'Intake health' : 'Data review'}</h1>
         <p>
           {auth.displayName || auth.email || 'Local development'} {auth.role ? `(${auth.role})` : ''}
         </p>
@@ -160,6 +162,7 @@ function AdminHeader({ auth, route }: { auth: AuthState; route: AdminRoute }) {
         <button type="button" onClick={() => go('/admin')}>Dashboard</button>
         <button type="button" onClick={() => go('/admin/review')}>Review</button>
         {canPromote(auth) && <button type="button" onClick={() => go('/admin/history')}>History</button>}
+        {canPromote(auth) && <button type="button" onClick={() => go('/admin/intake')}>Intake health</button>}
         {canPromote(auth) && <button type="button" onClick={() => go('/admin/featured')}>Featured</button>}
         {backend.configured && <button type="button" onClick={signOut}>Sign out</button>}
       </nav>
@@ -168,7 +171,8 @@ function AdminHeader({ auth, route }: { auth: AuthState; route: AdminRoute }) {
 }
 
 function StatusPill({ status }: { status: string }) {
-  return <span className={`status-pill ${status}`}>{status.replace(/_/g, ' ')}</span>;
+  const statusClassName = status.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+  return <span className={`status-pill ${statusClassName}`}>{status.replace(/_/g, ' ')}</span>;
 }
 
 function FieldRow({ label, value }: { label: string; value?: string | null }) {
@@ -438,6 +442,7 @@ export function AdminDashboard() {
         <p>Reviewers can recommend decisions on staged source data. Admins can promote approved records and publish featured content.</p>
         <button type="button" onClick={() => go('/admin/review')}>Open review queue</button>
         {canPromote(auth) && <button type="button" onClick={() => go('/admin/history')}>Review history</button>}
+        {canPromote(auth) && <button type="button" onClick={() => go('/admin/intake')}>Intake health</button>}
         {canPromote(auth) && <button type="button" onClick={() => go('/admin/featured')}>Manage featured content</button>}
       </section>
     </main>
@@ -855,6 +860,334 @@ export function AdminHistory() {
             </tbody>
           </table>
           {!visibleRows.length && <p className="empty-review">No history rows match the current filters.</p>}
+        </div>
+      </section>
+    </main>
+  );
+}
+
+const formatDateTime = (value: string | null) => {
+  if (!value) return 'n/a';
+  const timestamp = Date.parse(value);
+  if (!Number.isFinite(timestamp)) return value;
+  return new Date(timestamp).toLocaleString();
+};
+
+const healthStatusRank: Record<IntakeHealthStatus, number> = {
+  error: 0,
+  stale: 1,
+  review_backlog: 2,
+  verification_pending: 3,
+  warning: 4,
+  unknown: 5,
+  healthy: 6
+};
+
+const statusLabels: Record<IntakeHealthStatus, string> = {
+  healthy: 'Healthy',
+  stale: 'Refresh overdue',
+  verification_pending: 'Verification pending',
+  review_backlog: 'Review backlog',
+  warning: 'Watch',
+  error: 'Error',
+  unknown: 'Unknown'
+};
+
+const statusClass = (status: IntakeHealthStatus) => status;
+
+const operationalStatusFor = (source: IntakeHealthSource): IntakeHealthStatus => {
+  if (source.status === 'error') return 'error';
+  if (source.status === 'healthy' && source.pendingReview > 0) return 'review_backlog';
+  if (source.status !== 'warning') return source.status;
+  if (source.lastError) return 'error';
+  if (source.conflicts > 0 || source.needsRevision > 0 || source.pendingReview > 0) return 'review_backlog';
+  if (source.verificationStatus && !['verified_live', 'verified_fixture'].includes(source.verificationStatus)) return 'verification_pending';
+  return 'stale';
+};
+
+const isAfter = (left: string | null, right: string | null) => {
+  if (!left) return false;
+  if (!right) return true;
+  const leftTime = Date.parse(left);
+  const rightTime = Date.parse(right);
+  if (!Number.isFinite(leftTime)) return false;
+  if (!Number.isFinite(rightTime)) return true;
+  return leftTime > rightTime;
+};
+
+const daysSinceDate = (value: string | null) => {
+  if (!value) return Number.POSITIVE_INFINITY;
+  const timestamp = Date.parse(value);
+  if (!Number.isFinite(timestamp)) return Number.POSITIVE_INFINITY;
+  return (Date.now() - timestamp) / 86400000;
+};
+
+const diagnosticTagsFor = (source: IntakeHealthSource) => {
+  const status = operationalStatusFor(source);
+  const tags: string[] = [];
+
+  if (!source.lastRunAt) tags.push('Not refreshed');
+  else if (daysSinceDate(source.lastRunAt) > 14) tags.push('Refresh missed');
+
+  if (status === 'error' || isAfter(source.lastErrorAt, source.lastSuccessAt)) tags.push('Last attempt failed');
+  else if (status === 'stale') tags.push('No recent attempt');
+  else if (source.lastRunAt) tags.push('Automation running');
+  if (source.runCount > 0 && source.incomingRecords === 0 && source.status === 'healthy') tags.push('Quiet but OK');
+  if (source.pendingReview > 0) tags.push('Needs review');
+  if (source.conflicts > 0) tags.push('Conflicts');
+  if (source.verificationStatus && !['verified_live', 'verified_fixture'].includes(source.verificationStatus)) {
+    tags.push('Verify live source');
+  }
+  if (source.verificationStatus && ['verified_live', 'verified_fixture'].includes(source.verificationStatus)) {
+    tags.push('Verified');
+  }
+
+  return tags;
+};
+
+const healthValue = (source: IntakeHealthSource) => {
+  const status = operationalStatusFor(source);
+  if (status === 'error') return source.lastError || 'Last intake run failed.';
+  if (status === 'review_backlog') {
+    if (source.conflicts > 0) return `${source.conflicts} conflicts need review.`;
+    if (source.needsRevision > 0) return `${source.needsRevision} records need revision.`;
+    return `${source.pendingReview} records are waiting in review.`;
+  }
+  if (status === 'verification_pending') return 'Live verification is pending.';
+  if (status === 'stale') return 'Automatic refresh is overdue.';
+  if (status === 'healthy') return `${source.incomingRecords} records in the last successful run.`;
+  return 'No run data yet.';
+};
+
+export function AdminIntakeHealth() {
+  const { auth, loading } = useAuth();
+  const [snapshot, setSnapshot] = useState<Awaited<ReturnType<typeof backend.getIntakeHealth>> | null>(null);
+  const [query, setQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<IntakeHealthStatus | 'all'>('all');
+  const [error, setError] = useState('');
+
+  const refreshHealth = async () => {
+    try {
+      setSnapshot(await backend.getIntakeHealth());
+      setError('');
+    } catch (healthError) {
+      setError(healthError instanceof Error ? healthError.message : 'Could not load intake health.');
+    }
+  };
+
+  useEffect(() => {
+    if (!loading && auth.signedIn && canPromote(auth)) refreshHealth();
+  }, [auth.signedIn, auth.role, loading]);
+
+  const sources = snapshot?.sources ?? [];
+  const visibleSources = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+    return sources
+      .filter((source) => statusFilter === 'all' || operationalStatusFor(source) === statusFilter)
+      .filter((source) => {
+        if (!normalizedQuery) return true;
+        return [
+          source.label,
+          source.sourceId,
+          operationalStatusFor(source),
+          diagnosticTagsFor(source).join(' '),
+          source.lastError,
+          source.verificationStatus,
+          source.verificationNotes,
+          source.sourceNotes
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase()
+          .includes(normalizedQuery);
+      })
+      .sort((left, right) => healthStatusRank[operationalStatusFor(left)] - healthStatusRank[operationalStatusFor(right)] || left.label.localeCompare(right.label));
+  }, [query, sources, statusFilter]);
+
+  const visibleLogs = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+    return (snapshot?.logs ?? []).filter((log) => {
+      if (statusFilter !== 'all' && log.status !== statusFilter) return false;
+      if (!normalizedQuery) return true;
+      return [log.sourceLabel, log.sourceId, log.status, log.message, JSON.stringify(log.details ?? {})]
+        .join(' ')
+        .toLowerCase()
+        .includes(normalizedQuery);
+    });
+  }, [query, snapshot?.logs, statusFilter]);
+
+  const totals = sources.reduce(
+    (counts, source) => {
+      counts[operationalStatusFor(source)] += 1;
+      counts.pendingReview += source.pendingReview;
+      counts.failures += source.failureCount;
+      counts.conflicts += source.conflicts;
+      return counts;
+    },
+    { healthy: 0, stale: 0, verification_pending: 0, review_backlog: 0, warning: 0, error: 0, unknown: 0, pendingReview: 0, failures: 0, conflicts: 0 }
+  );
+
+  if (loading) return <main className="app admin-app">Loading...</main>;
+  if (!auth.signedIn || !canPromote(auth)) return <AdminLogin />;
+
+  return (
+    <main className="app admin-app">
+      <AdminHeader auth={auth} route="intake" />
+      {error && <p className="form-error">{error}</p>}
+      <section className="intake-health-summary" aria-label="Intake health summary">
+        <article>
+          <span>Healthy</span>
+          <strong>{totals.healthy}</strong>
+        </article>
+        <article>
+          <span>Refresh overdue</span>
+          <strong>{totals.stale}</strong>
+        </article>
+        <article>
+          <span>Verification</span>
+          <strong>{totals.verification_pending}</strong>
+        </article>
+        <article>
+          <span>Review backlog</span>
+          <strong>{totals.review_backlog}</strong>
+        </article>
+        <article>
+          <span>Errors</span>
+          <strong>{totals.error}</strong>
+        </article>
+        <article>
+          <span>Pending review</span>
+          <strong>{totals.pendingReview}</strong>
+        </article>
+        <article>
+          <span>Conflicts</span>
+          <strong>{totals.conflicts}</strong>
+        </article>
+      </section>
+
+      <section className="history-panel intake-health-panel" aria-label="Institution intake health">
+        <div className="intake-panel-head">
+          <h2>Automatic update monitor</h2>
+          <p>Refresh overdue and failed attempts are the main automation signals; review and verification labels describe what happened after intake ran.</p>
+        </div>
+        <div className="history-toolbar intake-toolbar">
+          <label htmlFor="intake-search">
+            <span>Search</span>
+            <input
+              id="intake-search"
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="institution, parser, error"
+            />
+          </label>
+          <label htmlFor="intake-status">
+            <span>Status</span>
+            <select id="intake-status" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as IntakeHealthStatus | 'all')}>
+              <option value="all">All statuses</option>
+              <option value="error">Errors</option>
+              <option value="review_backlog">Review backlog</option>
+              <option value="verification_pending">Verification pending</option>
+              <option value="stale">Refresh overdue</option>
+              <option value="warning">Watch</option>
+              <option value="unknown">Unknown</option>
+              <option value="healthy">Healthy</option>
+            </select>
+          </label>
+          <button type="button" onClick={refreshHealth}>Refresh</button>
+          <span className="history-total">Updated {formatDateTime(snapshot?.generatedAt ?? null)}</span>
+        </div>
+
+        <div className="intake-health-grid">
+          {visibleSources.map((source) => {
+            const displayStatus = operationalStatusFor(source);
+            return (
+            <article key={source.sourceId} className={`intake-source-card ${statusClass(displayStatus)}`}>
+              <div className="review-section-head">
+                <h2>{source.label}</h2>
+                <StatusPill status={statusLabels[displayStatus]} />
+              </div>
+              <p className="intake-health-message">{healthValue(source)}</p>
+              <div className="intake-diagnostic-tags" aria-label={`${source.label} diagnostics`}>
+                {diagnosticTagsFor(source).map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+              <dl className="intake-source-metrics">
+                <div>
+                  <dt>Last attempt</dt>
+                  <dd>{formatDateTime(source.lastRunAt)}</dd>
+                </div>
+                <div>
+                  <dt>Last success</dt>
+                  <dd>{formatDateTime(source.lastSuccessAt)}</dd>
+                </div>
+                <div>
+                  <dt>Runs</dt>
+                  <dd>{source.successCount}/{source.runCount} ok</dd>
+                </div>
+                <div>
+                  <dt>Incoming</dt>
+                  <dd>{source.incomingRecords}</dd>
+                </div>
+                <div>
+                  <dt>New / updates</dt>
+                  <dd>{source.creates} / {source.updates}</dd>
+                </div>
+                <div>
+                  <dt>Needs review</dt>
+                  <dd>{source.pendingReview}</dd>
+                </div>
+                <div>
+                  <dt>Pages fetched</dt>
+                  <dd>{source.pagesFetched}</dd>
+                </div>
+                <div>
+                  <dt>Verification</dt>
+                  <dd>{source.verificationStatus || 'n/a'}</dd>
+                </div>
+              </dl>
+              {(source.lastError || source.verificationNotes || source.sourceNotes) && (
+                <p className="intake-source-notes">{source.lastError || source.verificationNotes || source.sourceNotes}</p>
+              )}
+            </article>
+            );
+          })}
+          {!visibleSources.length && <p className="empty-review">No institutions match the current filters.</p>}
+        </div>
+      </section>
+
+      <section className="history-panel intake-log-panel" aria-label="Intake update log">
+        <div className="review-section-head">
+          <h2>Update log</h2>
+          <span>{visibleLogs.length} events</span>
+        </div>
+        <div className="history-table-wrap">
+          <table className="intake-log-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Institution</th>
+                <th>Message</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {visibleLogs.map((log) => (
+                <tr key={log.id}>
+                  <td>{formatDateTime(log.createdAt)}</td>
+                  <td><StatusPill status={log.status} /></td>
+                  <td>{log.sourceLabel}</td>
+                  <td>{log.message}</td>
+                  <td className="history-json-cell">
+                    <div className="history-cell-text json expanded">{log.details ? JSON.stringify(log.details) : 'n/a'}</div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {!visibleLogs.length && <p className="empty-review">No log events match the current filters.</p>}
         </div>
       </section>
     </main>

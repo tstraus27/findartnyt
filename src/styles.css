@@ -1154,6 +1154,41 @@ textarea {
   border-color: #777;
 }
 
+.status-pill.healthy {
+  background: #e8f5ec;
+  border-color: #217a4b;
+}
+
+.status-pill.warning {
+  background: #fff8d6;
+  border-color: #9f7a00;
+}
+
+.status-pill.stale {
+  background: #eef3ff;
+  border-color: #5674b9;
+}
+
+.status-pill.verification_pending {
+  background: #f2ecff;
+  border-color: #7759b8;
+}
+
+.status-pill.review_backlog {
+  background: #fff8d6;
+  border-color: #9f7a00;
+}
+
+.status-pill.error {
+  background: #fff0f2;
+  border-color: #b3261e;
+}
+
+.status-pill.unknown {
+  background: #f4f4f4;
+  border-color: #777;
+}
+
 .review-fields {
   margin: 10px 0;
   border-top: 1px solid #aaa;
@@ -1484,6 +1519,193 @@ textarea {
   white-space: nowrap;
 }
 
+.intake-health-summary {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(110px, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.intake-health-summary article {
+  border: 1px solid #b9b9b9;
+  border-top: 3px solid #222;
+  padding: 9px 10px;
+  background: #fff;
+}
+
+.intake-health-summary span,
+.intake-source-metrics dt {
+  display: block;
+  color: #555;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.intake-health-summary strong {
+  display: block;
+  margin-top: 3px;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.intake-health-panel {
+  margin-bottom: 12px;
+  background: #fafafa;
+}
+
+.intake-panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #d7d7d7;
+  margin: -2px 0 10px;
+  padding-bottom: 8px;
+}
+
+.intake-panel-head h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.intake-panel-head p {
+  max-width: 760px;
+  margin: 0;
+  color: #444;
+  font-size: 13px;
+  text-align: right;
+}
+
+.intake-toolbar {
+  grid-template-columns: minmax(220px, 1.4fr) minmax(180px, 0.7fr) auto auto;
+}
+
+.intake-health-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 10px;
+}
+
+.intake-source-card {
+  position: relative;
+  border: 1px solid #cfcfcf;
+  border-left: 5px solid #777;
+  padding: 11px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+}
+
+.intake-source-card.error {
+  border-color: #b3261e;
+}
+
+.intake-source-card.review_backlog,
+.intake-source-card.warning {
+  border-color: #d2a319;
+}
+
+.intake-source-card.stale {
+  border-color: #7690cf;
+}
+
+.intake-source-card.verification_pending {
+  border-color: #8b70c9;
+}
+
+.intake-source-card.healthy {
+  border-color: #217a4b;
+}
+
+.intake-source-card .review-section-head h2 {
+  font-size: 19px;
+}
+
+.intake-health-message {
+  margin: 0 0 10px;
+  font-weight: 700;
+  color: #222;
+}
+
+.intake-diagnostic-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: -3px 0 10px;
+}
+
+.intake-diagnostic-tags span {
+  border: 1px solid #cfcfcf;
+  background: #f7f7f7;
+  color: #333;
+  padding: 2px 6px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.intake-source-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 0;
+}
+
+.intake-source-metrics div {
+  min-width: 0;
+  border: 1px solid #e0e0e0;
+  background: #fbfbfb;
+  padding: 6px 7px;
+}
+
+.intake-source-metrics dd {
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 15px;
+}
+
+.intake-source-notes {
+  max-height: 74px;
+  overflow: auto;
+  border: 1px solid #e0e0e0;
+  margin: 10px 0 0;
+  padding: 7px;
+  background: #fcfcfc;
+  color: #444;
+  font-size: 13px;
+}
+
+.intake-log-panel {
+  margin-top: 0;
+}
+
+.intake-log-table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.intake-log-table th,
+.intake-log-table td {
+  border: 1px solid #ccc;
+  padding: 5px 7px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.intake-log-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f2f2f2;
+}
+
+.intake-log-table td:nth-child(1),
+.intake-log-table td:nth-child(2),
+.intake-log-table td:nth-child(3) {
+  white-space: nowrap;
+}
+
 @media (max-width: 920px) {
   .app {
     padding: 10px;
@@ -1531,6 +1753,10 @@ textarea {
 
   .history-toolbar {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .intake-health-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .featured-admin-workspace {

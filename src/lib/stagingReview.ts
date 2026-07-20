@@ -76,6 +76,19 @@ export type StagingReport = {
     parser?: string | null;
     generatedAt?: string | null;
     stagingNotes?: string | null;
+    pagesFetched?: number | null;
+    incomingRecords?: number | null;
+    creates?: number | null;
+    updates?: number | null;
+    possibleDuplicates?: number | null;
+    conflicts?: number | null;
+    unchanged?: number | null;
+    sourcePages?: Array<{
+      url?: string | null;
+      pageRole?: string | null;
+      fetchMode?: string | null;
+      fixtureFile?: string | null;
+    }> | null;
     verification?: {
       status?: string | null;
       verifiedAt?: string | null;

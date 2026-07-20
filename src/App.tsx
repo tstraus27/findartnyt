@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import { AdminDashboard, AdminHistory, AdminLogin, AdminReview, FeaturedContentAdmin } from './components/AdminReview';
+import { AdminDashboard, AdminHistory, AdminIntakeHealth, AdminLogin, AdminReview, FeaturedContentAdmin } from './components/AdminReview';
 import { FeatureRichText } from './components/FeatureRichText';
 import { VenueMap } from './components/VenueMap';
 import { backend, type FeaturedContent } from './lib/backend/findArtBackend';
@@ -574,6 +574,7 @@ export default function App() {
   if (path === '/admin') return <AdminDashboard />;
   if (path.startsWith('/admin/review')) return <AdminReview />;
   if (path.startsWith('/admin/history')) return <AdminHistory />;
+  if (path.startsWith('/admin/intake')) return <AdminIntakeHealth />;
   if (path.startsWith('/admin/featured')) return <FeaturedContentAdmin />;
   if (venueRouteMatch) return <VenuePage venue={routeVenue} records={catalogRecords} loading={!catalogReady} />;
 
