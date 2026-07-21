@@ -1,0 +1,603 @@
+{
+  "summary": {
+    "sourceId": "gagosian-exhibitions",
+    "source": "gagosian",
+    "parser": "gagosian-exhibitions",
+    "generatedAt": "2026-07-21T14:55:10.027Z",
+    "stagingNotes": "Official Gagosian current and upcoming exhibitions pages. Parser stages New York exhibitions only, keeps Gagosian as one source, and uses exact Gagosian location labels plus street addresses from official Gagosian location pages.",
+    "verification": {
+      "status": "verified_live",
+      "verifiedAt": "2026-07-21T14:55:16.795Z",
+      "notes": "Live staging artifact matched the fixture-backed review artifact for gagosian-exhibitions; verified against data/staging/gagosian-exhibitions.live.json."
+    },
+    "pagesFetched": 2,
+    "sourcePages": [
+      {
+        "url": "https://gagosian.com/exhibitions/",
+        "pageRole": "configured",
+        "fetchMode": "fixture",
+        "fixtureFile": "scripts/exhibit-ingest/fixtures/gagosian-exhibitions-current.html"
+      },
+      {
+        "url": "https://gagosian.com/exhibitions/upcoming/",
+        "pageRole": "configured",
+        "fetchMode": "fixture",
+        "fixtureFile": "scripts/exhibit-ingest/fixtures/gagosian-exhibitions-upcoming.html"
+      }
+    ],
+    "incomingRecords": 5,
+    "creates": 5,
+    "updates": 0,
+    "possibleDuplicates": 0,
+    "conflicts": 0,
+    "unchanged": 0,
+    "incomingByType": {
+      "exhibition": 5
+    }
+  },
+  "items": [
+    {
+      "id": "stage:gagosian-exhibitions:exhibition:gagosian:marcel-duchamp:create",
+      "proposalType": "create",
+      "reviewStatus": "pending",
+      "source": {
+        "url": "https://gagosian.com/exhibitions/2026/marcel-duchamp/",
+        "sourceType": "official_venue",
+        "reliability": "high",
+        "parser": "gagosian-exhibitions",
+        "notes": "Official Gagosian current and upcoming exhibitions pages. Parser stages New York exhibitions only, keeps Gagosian as one source, and uses exact Gagosian location labels plus street addresses from official Gagosian location pages."
+      },
+      "canonicalId": null,
+      "before": null,
+      "proposed": {
+        "id": "exhibition:gagosian:marcel-duchamp",
+        "type": "exhibition",
+        "source": "gagosian",
+        "title": "Marcel Duchamp",
+        "venue": "Gagosian, 980 Madison at 76th Street",
+        "startDate": "2026-04-25",
+        "endDate": "2026-07-31",
+        "dateText": "April 25–July 31, 2026",
+        "description": "Find out more about the exhibition Marcel Duchamp at 980 Madison at 76th Street, New York. Installation views, works, editorial content, press, and more.",
+        "artists": [
+          "Marcel Duchamp"
+        ],
+        "curators": [],
+        "venueAddress": "974 Madison Avenue, New York, NY 10075",
+        "neighborhood": "Upper East Side",
+        "borough": "Manhattan",
+        "city": "New York",
+        "imageUrl": "https://gagosian.com/media/images/exhibitions/2026/marcel-duchamp/dQe0c454CFez_1200x1200.jpg",
+        "exhibitionUrl": "https://gagosian.com/exhibitions/2026/marcel-duchamp/",
+        "sourceUrl": "https://gagosian.com/exhibitions/2026/marcel-duchamp/",
+        "openingReceptionDate": null,
+        "tags": [
+          "gallery",
+          "current"
+        ],
+        "sourceConfidence": "high",
+        "reviewStatus": "needs_review",
+        "lastCheckedAt": null,
+        "sourceNotes": "Parsed from Gagosian official exhibitions page. Location label \"980 Madison at 76th Street, New York\" mapped to 974 Madison Avenue, New York, NY 10075 using https://gagosian.com/locations/974-madison-avenue-new-york/."
+      },
+      "changedFields": [
+        "artists",
+        "borough",
+        "city",
+        "curators",
+        "dateText",
+        "description",
+        "endDate",
+        "exhibitionUrl",
+        "id",
+        "imageUrl",
+        "lastCheckedAt",
+        "neighborhood",
+        "openingReceptionDate",
+        "reviewStatus",
+        "source",
+        "sourceConfidence",
+        "sourceNotes",
+        "sourceUrl",
+        "startDate",
+        "tags",
+        "title",
+        "type",
+        "venue",
+        "venueAddress"
+      ],
+      "dedupe": {
+        "status": "no_match",
+        "confidence": 0,
+        "matchedRecordIds": [],
+        "notes": "Compared against existing canonical exhibition records; no likely match found."
+      },
+      "conflict": null,
+      "extractedAt": "2026-07-21T14:55:10.027Z",
+      "reviewerNotes": null
+    },
+    {
+      "id": "stage:gagosian-exhibitions:exhibition:gagosian:robert-rauschenberg-important-early-works-from-the-cy-twombly-foundation:create",
+      "proposalType": "create",
+      "reviewStatus": "pending",
+      "source": {
+        "url": "https://gagosian.com/exhibitions/2026/robert-rauschenberg-important-early-works-from-the-cy-twombly-foundation/",
+        "sourceType": "official_venue",
+        "reliability": "high",
+        "parser": "gagosian-exhibitions",
+        "notes": "Official Gagosian current and upcoming exhibitions pages. Parser stages New York exhibitions only, keeps Gagosian as one source, and uses exact Gagosian location labels plus street addresses from official Gagosian location pages."
+      },
+      "canonicalId": null,
+      "before": null,
+      "proposed": {
+        "id": "exhibition:gagosian:robert-rauschenberg-important-early-works-from-the-cy-twombly-foundation",
+        "type": "exhibition",
+        "source": "gagosian",
+        "title": "Robert Rauschenberg: Important Early Works from the Cy Twombly Foundation",
+        "venue": "Gagosian, 980 Madison at 76th Street",
+        "startDate": "2026-04-25",
+        "endDate": "2026-07-31",
+        "dateText": "April 25–July 31, 2026",
+        "description": "Find out more about the exhibition Robert Rauschenberg: Important Early Works from the Cy Twombly Foundation at 980 Madison at 76th Street, New York. Installation views, works, editorial content, press, and more.",
+        "artists": [
+          "Robert Rauschenberg"
+        ],
+        "curators": [],
+        "venueAddress": "974 Madison Avenue, New York, NY 10075",
+        "neighborhood": "Upper East Side",
+        "borough": "Manhattan",
+        "city": "New York",
+        "imageUrl": "https://gagosian.com/media/images/exhibitions/2026/robert-rauschenberg-important-early-works-from-the-cy-twombly-foundation/dXBnku1b9sUN_1200x1200.jpg",
+        "exhibitionUrl": "https://gagosian.com/exhibitions/2026/robert-rauschenberg-important-early-works-from-the-cy-twombly-foundation/",
+        "sourceUrl": "https://gagosian.com/exhibitions/2026/robert-rauschenberg-important-early-works-from-the-cy-twombly-foundation/",
+        "openingReceptionDate": null,
+        "tags": [
+          "gallery",
+          "current"
+        ],
+        "sourceConfidence": "high",
+        "reviewStatus": "needs_review",
+        "lastCheckedAt": null,
+        "sourceNotes": "Parsed from Gagosian official exhibitions page. Location label \"980 Madison at 76th Street, New York\" mapped to 974 Madison Avenue, New York, NY 10075 using https://gagosian.com/locations/974-madison-avenue-new-york/."
+      },
+      "changedFields": [
+        "artists",
+        "borough",
+        "city",
+        "curators",
+        "dateText",
+        "description",
+        "endDate",
+        "exhibitionUrl",
+        "id",
+        "imageUrl",
+        "lastCheckedAt",
+        "neighborhood",
+        "openingReceptionDate",
+        "reviewStatus",
+        "source",
+        "sourceConfidence",
+        "sourceNotes",
+        "sourceUrl",
+        "startDate",
+        "tags",
+        "title",
+        "type",
+        "venue",
+        "venueAddress"
+      ],
+      "dedupe": {
+        "status": "no_match",
+        "confidence": 0,
+        "matchedRecordIds": [],
+        "notes": "Compared against existing canonical exhibition records; no likely match found."
+      },
+      "conflict": null,
+      "extractedAt": "2026-07-21T14:55:10.027Z",
+      "reviewerNotes": null
+    },
+    {
+      "id": "stage:gagosian-exhibitions:exhibition:gagosian:eliza-douglas-ghosts-curated-by-francesco-bonami:create",
+      "proposalType": "create",
+      "reviewStatus": "pending",
+      "source": {
+        "url": "https://gagosian.com/exhibitions/2026/eliza-douglas-ghosts-curated-by-francesco-bonami/",
+        "sourceType": "official_venue",
+        "reliability": "high",
+        "parser": "gagosian-exhibitions",
+        "notes": "Official Gagosian current and upcoming exhibitions pages. Parser stages New York exhibitions only, keeps Gagosian as one source, and uses exact Gagosian location labels plus street addresses from official Gagosian location pages."
+      },
+      "canonicalId": null,
+      "before": null,
+      "proposed": {
+        "id": "exhibition:gagosian:eliza-douglas-ghosts-curated-by-francesco-bonami",
+        "type": "exhibition",
+        "source": "gagosian",
+        "title": "Eliza Douglas: GHOSTS",
+        "venue": "Gagosian, Park & 75",
+        "startDate": "2026-05-12",
+        "endDate": "2026-07-31",
+        "dateText": "May 12–July 31, 2026",
+        "description": "Find out more about the current exhibition Eliza Douglas: GHOSTS at Park & 75, New York. Installation views, works, editorial content, press, and more.",
+        "artists": [
+          "Eliza Douglas"
+        ],
+        "curators": [
+          "Francesco Bonami"
+        ],
+        "venueAddress": "821 Park Avenue, New York, NY 10021",
+        "neighborhood": "Upper East Side",
+        "borough": "Manhattan",
+        "city": "New York",
+        "imageUrl": "https://gagosian.com/media/images/exhibitions/2026/eliza-douglas-ghosts/AoAJzRLxv0UH_1200x1200.jpg",
+        "exhibitionUrl": "https://gagosian.com/exhibitions/2026/eliza-douglas-ghosts-curated-by-francesco-bonami/",
+        "sourceUrl": "https://gagosian.com/exhibitions/2026/eliza-douglas-ghosts-curated-by-francesco-bonami/",
+        "openingReceptionDate": null,
+        "tags": [
+          "gallery",
+          "current"
+        ],
+        "sourceConfidence": "high",
+        "reviewStatus": "needs_review",
+        "lastCheckedAt": null,
+        "sourceNotes": "Parsed from Gagosian official exhibitions page. Location label \"Park & 75, New York\" mapped to 821 Park Avenue, New York, NY 10021 using https://gagosian.com/locations/park-and-75-new-york/."
+      },
+      "changedFields": [
+        "artists",
+        "borough",
+        "city",
+        "curators",
+        "dateText",
+        "description",
+        "endDate",
+        "exhibitionUrl",
+        "id",
+        "imageUrl",
+        "lastCheckedAt",
+        "neighborhood",
+        "openingReceptionDate",
+        "reviewStatus",
+        "source",
+        "sourceConfidence",
+        "sourceNotes",
+        "sourceUrl",
+        "startDate",
+        "tags",
+        "title",
+        "type",
+        "venue",
+        "venueAddress"
+      ],
+      "dedupe": {
+        "status": "no_match",
+        "confidence": 0,
+        "matchedRecordIds": [],
+        "notes": "Compared against existing canonical exhibition records; no likely match found."
+      },
+      "conflict": null,
+      "extractedAt": "2026-07-21T14:55:10.027Z",
+      "reviewerNotes": null
+    },
+    {
+      "id": "stage:gagosian-exhibitions:exhibition:gagosian:helen-marden-interlude-of-joy:create",
+      "proposalType": "create",
+      "reviewStatus": "pending",
+      "source": {
+        "url": "https://gagosian.com/exhibitions/2026/helen-marden-interlude-of-joy/",
+        "sourceType": "official_venue",
+        "reliability": "high",
+        "parser": "gagosian-exhibitions",
+        "notes": "Official Gagosian current and upcoming exhibitions pages. Parser stages New York exhibitions only, keeps Gagosian as one source, and uses exact Gagosian location labels plus street addresses from official Gagosian location pages."
+      },
+      "canonicalId": null,
+      "before": null,
+      "proposed": {
+        "id": "exhibition:gagosian:helen-marden-interlude-of-joy",
+        "type": "exhibition",
+        "source": "gagosian",
+        "title": "Helen Marden: Interlude of Joy",
+        "venue": "Gagosian, 541 West 24th Street",
+        "startDate": "2026-07-14",
+        "endDate": "2026-08-21",
+        "dateText": "July 14–August 21, 2026",
+        "description": "Find out more about the current exhibition Helen Marden: Interlude of Joy at 541 West 24th Street, New York. Installation views, works, editorial content, press, and more.",
+        "artists": [
+          "Helen Marden"
+        ],
+        "curators": [],
+        "venueAddress": "541 West 24th Street, New York, NY 10011",
+        "neighborhood": "Chelsea",
+        "borough": "Manhattan",
+        "city": "New York",
+        "imageUrl": "https://gagosian.com/media/images/exhibitions/2026/helen-marden-interlude-of-joy/iEeSKsVjuPwk_1200x1200.jpg",
+        "exhibitionUrl": "https://gagosian.com/exhibitions/2026/helen-marden-interlude-of-joy/",
+        "sourceUrl": "https://gagosian.com/exhibitions/2026/helen-marden-interlude-of-joy/",
+        "openingReceptionDate": null,
+        "tags": [
+          "gallery",
+          "current"
+        ],
+        "sourceConfidence": "high",
+        "reviewStatus": "needs_review",
+        "lastCheckedAt": null,
+        "sourceNotes": "Parsed from Gagosian official exhibitions page. Location label \"541 West 24th Street, New York\" mapped to 541 West 24th Street, New York, NY 10011 using https://gagosian.com/locations/541-west-24th-street-new-york/."
+      },
+      "changedFields": [
+        "artists",
+        "borough",
+        "city",
+        "curators",
+        "dateText",
+        "description",
+        "endDate",
+        "exhibitionUrl",
+        "id",
+        "imageUrl",
+        "lastCheckedAt",
+        "neighborhood",
+        "openingReceptionDate",
+        "reviewStatus",
+        "source",
+        "sourceConfidence",
+        "sourceNotes",
+        "sourceUrl",
+        "startDate",
+        "tags",
+        "title",
+        "type",
+        "venue",
+        "venueAddress"
+      ],
+      "dedupe": {
+        "status": "no_match",
+        "confidence": 0,
+        "matchedRecordIds": [],
+        "notes": "Compared against existing canonical exhibition records; no likely match found."
+      },
+      "conflict": null,
+      "extractedAt": "2026-07-21T14:55:10.027Z",
+      "reviewerNotes": null
+    },
+    {
+      "id": "stage:gagosian-exhibitions:exhibition:gagosian:brice-marden-i-am-plane-image:create",
+      "proposalType": "create",
+      "reviewStatus": "pending",
+      "source": {
+        "url": "https://gagosian.com/exhibitions/2026/brice-marden-i-am-plane-image/",
+        "sourceType": "official_venue",
+        "reliability": "high",
+        "parser": "gagosian-exhibitions",
+        "notes": "Official Gagosian current and upcoming exhibitions pages. Parser stages New York exhibitions only, keeps Gagosian as one source, and uses exact Gagosian location labels plus street addresses from official Gagosian location pages."
+      },
+      "canonicalId": null,
+      "before": null,
+      "proposed": {
+        "id": "exhibition:gagosian:brice-marden-i-am-plane-image",
+        "type": "exhibition",
+        "source": "gagosian",
+        "title": "Brice Marden: I Am Plane Image",
+        "venue": "Gagosian, 522 West 21st Street",
+        "startDate": "2026-09-15",
+        "endDate": "2026-12-12",
+        "dateText": "September 15–December 12, 2026",
+        "description": "Find out more about the upcoming exhibition Brice Marden: I Am Plane Image at West 21st Street, New York.",
+        "artists": [
+          "Brice Marden"
+        ],
+        "curators": [],
+        "venueAddress": "522 West 21st Street, New York, NY 10011",
+        "neighborhood": "Chelsea",
+        "borough": "Manhattan",
+        "city": "New York",
+        "imageUrl": "https://gagosian.com/media/images/exhibitions/2026/brice-marden-i-am-plane-image/cjgYVrPuazpg_1200x1200.jpg",
+        "exhibitionUrl": "https://gagosian.com/exhibitions/2026/brice-marden-i-am-plane-image/",
+        "sourceUrl": "https://gagosian.com/exhibitions/2026/brice-marden-i-am-plane-image/",
+        "openingReceptionDate": null,
+        "tags": [
+          "gallery",
+          "upcoming"
+        ],
+        "sourceConfidence": "high",
+        "reviewStatus": "needs_review",
+        "lastCheckedAt": null,
+        "sourceNotes": "Parsed from Gagosian official exhibitions page. Location label \"West 21st Street, New York\" mapped to 522 West 21st Street, New York, NY 10011 using https://gagosian.com/locations/west-21st-street-new-york/."
+      },
+      "changedFields": [
+        "artists",
+        "borough",
+        "city",
+        "curators",
+        "dateText",
+        "description",
+        "endDate",
+        "exhibitionUrl",
+        "id",
+        "imageUrl",
+        "lastCheckedAt",
+        "neighborhood",
+        "openingReceptionDate",
+        "reviewStatus",
+        "source",
+        "sourceConfidence",
+        "sourceNotes",
+        "sourceUrl",
+        "startDate",
+        "tags",
+        "title",
+        "type",
+        "venue",
+        "venueAddress"
+      ],
+      "dedupe": {
+        "status": "no_match",
+        "confidence": 0,
+        "matchedRecordIds": [],
+        "notes": "Compared against existing canonical exhibition records; no likely match found."
+      },
+      "conflict": null,
+      "extractedAt": "2026-07-21T14:55:10.027Z",
+      "reviewerNotes": null
+    }
+  ],
+  "creates": [
+    {
+      "id": "exhibition:gagosian:marcel-duchamp",
+      "type": "exhibition",
+      "source": "gagosian",
+      "title": "Marcel Duchamp",
+      "venue": "Gagosian, 980 Madison at 76th Street",
+      "startDate": "2026-04-25",
+      "endDate": "2026-07-31",
+      "dateText": "April 25–July 31, 2026",
+      "description": "Find out more about the exhibition Marcel Duchamp at 980 Madison at 76th Street, New York. Installation views, works, editorial content, press, and more.",
+      "artists": [
+        "Marcel Duchamp"
+      ],
+      "curators": [],
+      "venueAddress": "974 Madison Avenue, New York, NY 10075",
+      "neighborhood": "Upper East Side",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://gagosian.com/media/images/exhibitions/2026/marcel-duchamp/dQe0c454CFez_1200x1200.jpg",
+      "exhibitionUrl": "https://gagosian.com/exhibitions/2026/marcel-duchamp/",
+      "sourceUrl": "https://gagosian.com/exhibitions/2026/marcel-duchamp/",
+      "openingReceptionDate": null,
+      "tags": [
+        "gallery",
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "needs_review",
+      "lastCheckedAt": null,
+      "sourceNotes": "Parsed from Gagosian official exhibitions page. Location label \"980 Madison at 76th Street, New York\" mapped to 974 Madison Avenue, New York, NY 10075 using https://gagosian.com/locations/974-madison-avenue-new-york/."
+    },
+    {
+      "id": "exhibition:gagosian:robert-rauschenberg-important-early-works-from-the-cy-twombly-foundation",
+      "type": "exhibition",
+      "source": "gagosian",
+      "title": "Robert Rauschenberg: Important Early Works from the Cy Twombly Foundation",
+      "venue": "Gagosian, 980 Madison at 76th Street",
+      "startDate": "2026-04-25",
+      "endDate": "2026-07-31",
+      "dateText": "April 25–July 31, 2026",
+      "description": "Find out more about the exhibition Robert Rauschenberg: Important Early Works from the Cy Twombly Foundation at 980 Madison at 76th Street, New York. Installation views, works, editorial content, press, and more.",
+      "artists": [
+        "Robert Rauschenberg"
+      ],
+      "curators": [],
+      "venueAddress": "974 Madison Avenue, New York, NY 10075",
+      "neighborhood": "Upper East Side",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://gagosian.com/media/images/exhibitions/2026/robert-rauschenberg-important-early-works-from-the-cy-twombly-foundation/dXBnku1b9sUN_1200x1200.jpg",
+      "exhibitionUrl": "https://gagosian.com/exhibitions/2026/robert-rauschenberg-important-early-works-from-the-cy-twombly-foundation/",
+      "sourceUrl": "https://gagosian.com/exhibitions/2026/robert-rauschenberg-important-early-works-from-the-cy-twombly-foundation/",
+      "openingReceptionDate": null,
+      "tags": [
+        "gallery",
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "needs_review",
+      "lastCheckedAt": null,
+      "sourceNotes": "Parsed from Gagosian official exhibitions page. Location label \"980 Madison at 76th Street, New York\" mapped to 974 Madison Avenue, New York, NY 10075 using https://gagosian.com/locations/974-madison-avenue-new-york/."
+    },
+    {
+      "id": "exhibition:gagosian:eliza-douglas-ghosts-curated-by-francesco-bonami",
+      "type": "exhibition",
+      "source": "gagosian",
+      "title": "Eliza Douglas: GHOSTS",
+      "venue": "Gagosian, Park & 75",
+      "startDate": "2026-05-12",
+      "endDate": "2026-07-31",
+      "dateText": "May 12–July 31, 2026",
+      "description": "Find out more about the current exhibition Eliza Douglas: GHOSTS at Park & 75, New York. Installation views, works, editorial content, press, and more.",
+      "artists": [
+        "Eliza Douglas"
+      ],
+      "curators": [
+        "Francesco Bonami"
+      ],
+      "venueAddress": "821 Park Avenue, New York, NY 10021",
+      "neighborhood": "Upper East Side",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://gagosian.com/media/images/exhibitions/2026/eliza-douglas-ghosts/AoAJzRLxv0UH_1200x1200.jpg",
+      "exhibitionUrl": "https://gagosian.com/exhibitions/2026/eliza-douglas-ghosts-curated-by-francesco-bonami/",
+      "sourceUrl": "https://gagosian.com/exhibitions/2026/eliza-douglas-ghosts-curated-by-francesco-bonami/",
+      "openingReceptionDate": null,
+      "tags": [
+        "gallery",
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "needs_review",
+      "lastCheckedAt": null,
+      "sourceNotes": "Parsed from Gagosian official exhibitions page. Location label \"Park & 75, New York\" mapped to 821 Park Avenue, New York, NY 10021 using https://gagosian.com/locations/park-and-75-new-york/."
+    },
+    {
+      "id": "exhibition:gagosian:helen-marden-interlude-of-joy",
+      "type": "exhibition",
+      "source": "gagosian",
+      "title": "Helen Marden: Interlude of Joy",
+      "venue": "Gagosian, 541 West 24th Street",
+      "startDate": "2026-07-14",
+      "endDate": "2026-08-21",
+      "dateText": "July 14–August 21, 2026",
+      "description": "Find out more about the current exhibition Helen Marden: Interlude of Joy at 541 West 24th Street, New York. Installation views, works, editorial content, press, and more.",
+      "artists": [
+        "Helen Marden"
+      ],
+      "curators": [],
+      "venueAddress": "541 West 24th Street, New York, NY 10011",
+      "neighborhood": "Chelsea",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://gagosian.com/media/images/exhibitions/2026/helen-marden-interlude-of-joy/iEeSKsVjuPwk_1200x1200.jpg",
+      "exhibitionUrl": "https://gagosian.com/exhibitions/2026/helen-marden-interlude-of-joy/",
+      "sourceUrl": "https://gagosian.com/exhibitions/2026/helen-marden-interlude-of-joy/",
+      "openingReceptionDate": null,
+      "tags": [
+        "gallery",
+        "current"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "needs_review",
+      "lastCheckedAt": null,
+      "sourceNotes": "Parsed from Gagosian official exhibitions page. Location label \"541 West 24th Street, New York\" mapped to 541 West 24th Street, New York, NY 10011 using https://gagosian.com/locations/541-west-24th-street-new-york/."
+    },
+    {
+      "id": "exhibition:gagosian:brice-marden-i-am-plane-image",
+      "type": "exhibition",
+      "source": "gagosian",
+      "title": "Brice Marden: I Am Plane Image",
+      "venue": "Gagosian, 522 West 21st Street",
+      "startDate": "2026-09-15",
+      "endDate": "2026-12-12",
+      "dateText": "September 15–December 12, 2026",
+      "description": "Find out more about the upcoming exhibition Brice Marden: I Am Plane Image at West 21st Street, New York.",
+      "artists": [
+        "Brice Marden"
+      ],
+      "curators": [],
+      "venueAddress": "522 West 21st Street, New York, NY 10011",
+      "neighborhood": "Chelsea",
+      "borough": "Manhattan",
+      "city": "New York",
+      "imageUrl": "https://gagosian.com/media/images/exhibitions/2026/brice-marden-i-am-plane-image/cjgYVrPuazpg_1200x1200.jpg",
+      "exhibitionUrl": "https://gagosian.com/exhibitions/2026/brice-marden-i-am-plane-image/",
+      "sourceUrl": "https://gagosian.com/exhibitions/2026/brice-marden-i-am-plane-image/",
+      "openingReceptionDate": null,
+      "tags": [
+        "gallery",
+        "upcoming"
+      ],
+      "sourceConfidence": "high",
+      "reviewStatus": "needs_review",
+      "lastCheckedAt": null,
+      "sourceNotes": "Parsed from Gagosian official exhibitions page. Location label \"West 21st Street, New York\" mapped to 522 West 21st Street, New York, NY 10011 using https://gagosian.com/locations/west-21st-street-new-york/."
+    }
+  ],
+  "updates": [],
+  "unchangedIds": []
+}

@@ -5,6 +5,7 @@ import davidZwirner from '../../data/staging/david-zwirner-exhibitions.json';
 import drawingCenter from '../../data/staging/drawing-center-exhibitions.json';
 import fit from '../../data/staging/fit-exhibitions.json';
 import frick from '../../data/staging/frick-exhibitions.json';
+import gagosian from '../../data/staging/gagosian-exhibitions.json';
 import guggenheim from '../../data/staging/guggenheim-exhibitions.json';
 import icp from '../../data/staging/icp-exhibitions.json';
 import jewishMuseum from '../../data/staging/jewish-museum-exhibitions.json';
@@ -118,6 +119,7 @@ const reports = [
   drawingCenter,
   fit,
   frick,
+  gagosian,
   guggenheim,
   icp,
   jewishMuseum,

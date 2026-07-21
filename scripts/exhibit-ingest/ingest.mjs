@@ -9,6 +9,7 @@ import { parseDavidZwirnerExhibitionsPage } from './parsers/david-zwirner-exhibi
 import { parseDrawingCenterExhibitionsPage } from './parsers/drawing-center-exhibitions.mjs';
 import { parseFitExhibitionsPage } from './parsers/fit-exhibitions.mjs';
 import { parseFrickExhibitionsPage } from './parsers/frick-exhibitions.mjs';
+import { parseGagosianExhibitionsPage } from './parsers/gagosian-exhibitions.mjs';
 import { parseGuggenheimExhibitionsPage } from './parsers/guggenheim-exhibitions.mjs';
 import { parseIcpExhibitionsPage } from './parsers/icp-exhibitions.mjs';
 import { parseJewishMuseumExhibitionsPage } from './parsers/jewish-museum-exhibitions.mjs';
@@ -38,6 +39,7 @@ const parsers = {
   'drawing-center-exhibitions': parseDrawingCenterExhibitionsPage,
   'fit-exhibitions': parseFitExhibitionsPage,
   'frick-exhibitions': parseFrickExhibitionsPage,
+  'gagosian-exhibitions': parseGagosianExhibitionsPage,
   'guggenheim-exhibitions': parseGuggenheimExhibitionsPage,
   'icp-exhibitions': parseIcpExhibitionsPage,
   'jewish-museum-exhibitions': parseJewishMuseumExhibitionsPage,

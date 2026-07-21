@@ -62,6 +62,7 @@ npm run ingest:exhibits:david-zwirner:stage
 npm run ingest:exhibits:drawing-center:stage
 npm run ingest:exhibits:fit:stage
 npm run ingest:exhibits:frick:stage
+npm run ingest:exhibits:gagosian:stage
 npm run ingest:exhibits:guggenheim:stage
 npm run ingest:exhibits:icp:stage
 npm run ingest:exhibits:jewish-museum:stage
@@ -110,6 +111,7 @@ npm run verify:source:cooper-hewitt:live
 npm run verify:source:drawing-center:live
 npm run verify:source:fit:live
 npm run verify:source:frick:live
+npm run verify:source:gagosian:live
 npm run verify:source:guggenheim:live
 npm run verify:source:icp:live
 npm run verify:source:jewish-museum:live
@@ -134,6 +136,8 @@ npm run verify:source:whitney:live
 `npm run ingest:exhibits:fit:stage` stages Museum at FIT exhibition candidates from the official exhibitions page using a checked-in fixture. The current slice stages only the visible `Current` and `Upcoming` long-card sections when an official exhibition detail link is present, and intentionally excludes closure notices like `Galleries Closed`, lobby-only cards without official exhibition pages, `MFIT on the Road`, `Past Exhibitions`, and any detail-page enrichment.
 
 `npm run ingest:exhibits:frick:stage` stages The Frick Collection exhibition candidates from the official exhibitions page using a checked-in fixture. The current slice stages only the visible `Current` and `Upcoming` card blocks, keeps `Past` plus `Virtual Exhibitions` out of scope, and uses only listing-page data so the source remains staging-only.
+
+`npm run ingest:exhibits:gagosian:stage` stages Gagosian exhibition candidates from the official current and upcoming exhibitions pages using checked-in fixtures. The current slice stages New York listings only, keeps `gagosian` as one source, and carries the exact Gagosian branch in `venue` plus official street addresses for 974 Madison Avenue, Park & 75, 541 West 24th Street, and 522 West 21st Street.
 
 `npm run ingest:exhibits:icp:stage` stages ICP exhibition candidates from the official exhibitions index page plus linked official exhibition detail pages using checked-in fixtures. The current slice stages the `current` and `upcoming` card sections on the main page and intentionally excludes `past` plus the separate `future-exhibitions` landing page until that route exposes stable reviewer-relevant listings.
 
@@ -196,6 +200,8 @@ npm run verify:source:whitney:live
 `npm run verify:source:fit:live` dry-runs the same live-verification decision for Museum at FIT after a separate live staging artifact exists. The current Museum at FIT fixture-backed and live artifacts matched on 2026-06-26 for the linked-card-only long-card slice, so both FIT source configs are now marked `verified_live` while the reviewer inbox stays staging-only and keeps the exclusion of unlinked lobby cards explicit.
 
 `npm run verify:source:frick:live` dry-runs the same live-verification decision for The Frick Collection after a separate live staging artifact exists. The current Frick fixture-backed and live artifacts matched on 2026-06-25, so both Frick source configs are now marked `verified_live`.
+
+`npm run verify:source:gagosian:live` dry-runs the same live-verification decision for Gagosian after a separate live staging artifact exists. The current Gagosian fixture-backed and live artifacts matched on 2026-07-21 for the New York current/upcoming listing slice, so both Gagosian source configs are now marked `verified_live` while preserving branch-level venue names and addresses.
 
 `npm run verify:source:icp:live` dry-runs the same live-verification decision for ICP after a separate live staging artifact exists. The current ICP fixture-backed and live artifacts already matched on 2026-06-24, so both ICP source configs are now marked `verified_live`.
 

@@ -1,0 +1,21 @@
+{
+  "id": "gagosian-exhibitions",
+  "source": "gagosian",
+  "sourceType": "official_venue",
+  "reliability": "high",
+  "parser": "gagosian-exhibitions",
+  "verification": {
+    "status": "verified_live",
+    "verifiedAt": "2026-07-21T14:55:16.795Z",
+    "notes": "Live staging artifact matched the fixture-backed review artifact for gagosian-exhibitions; verified against data/staging/gagosian-exhibitions.live.json."
+  },
+  "stagingNotes": "Official Gagosian current and upcoming exhibitions pages. Parser stages New York exhibitions only, keeps Gagosian as one source, and uses exact Gagosian location labels plus street addresses from official Gagosian location pages.",
+  "pages": [
+    {
+      "url": "https://gagosian.com/exhibitions/"
+    },
+    {
+      "url": "https://gagosian.com/exhibitions/upcoming/"
+    }
+  ]
+}
