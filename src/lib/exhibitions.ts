@@ -117,9 +117,9 @@ export const formatListDateRange = (record: {
 };
 
 export const formatDateRange = (record: { startDate: string | null; endDate: string | null; dateText?: string | null }) => {
+  if (record.startDate && record.endDate) return `${record.startDate} - ${record.endDate}`;
   const explicit = clean(record.dateText);
   if (explicit) return explicit;
-  if (record.startDate && record.endDate) return `${record.startDate} - ${record.endDate}`;
   if (record.startDate) return `${record.startDate} - Ongoing`;
   if (record.endDate) return `Through ${record.endDate}`;
   return 'Dates listed at source';

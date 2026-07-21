@@ -9,6 +9,11 @@ export const assertCanPromote = (role) => {
   if (!canRolePromote(role)) throw new Error('Only admins can promote staging items.');
 };
 
+const promotedDateText = (proposed) => {
+  if (proposed.startDate && proposed.endDate) return `${proposed.startDate} - ${proposed.endDate}`;
+  return proposed.dateText || null;
+};
+
 export const stagedItemToExhibitionRow = (item) => {
   const proposed = item.proposed || {};
   const id = proposed.id;
@@ -26,7 +31,7 @@ export const stagedItemToExhibitionRow = (item) => {
     venue_name: venueName,
     start_date: proposed.startDate || null,
     end_date: proposed.endDate || null,
-    date_text: proposed.dateText || null,
+    date_text: promotedDateText(proposed),
     description: proposed.description || null,
     image_url: proposed.imageUrl || null,
     source_url: sourceUrl,

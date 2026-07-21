@@ -38,3 +38,21 @@ test('staged item maps to published exhibition row', () => {
   assert.equal(row.promoted_from_staging_item_id, 'stage:example');
   assert.equal(row.source_url, 'https://example.com/show');
 });
+
+test('staged item promotion does not keep stale ongoing date text when an end date exists', () => {
+  const row = stagedItemToExhibitionRow({
+    id: 'stage:example',
+    source: { url: 'https://example.com/fallback' },
+    proposed: {
+      id: 'exhibition:test',
+      title: 'Test Show',
+      venue: 'Test Museum',
+      startDate: '2026-03-21',
+      endDate: '2026-08-09',
+      dateText: 'March 21, 2026-Ongoing',
+      sourceUrl: 'https://example.com/show'
+    }
+  });
+
+  assert.equal(row.date_text, '2026-03-21 - 2026-08-09');
+});

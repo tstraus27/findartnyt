@@ -183,10 +183,16 @@ export const countStatuses = (items: StagedItem[], decisions: Record<string, Rev
 export const itemUrl = (item: StagedItem) =>
   item.proposed?.sourceUrl || item.proposed?.exhibitionUrl || item.source?.url || '';
 
-export const formatStagedDates = (proposal: StagedProposal = {}) => {
-  if (proposal.dateText) return proposal.dateText;
+export const normalizedStagedDateText = (proposal: StagedProposal = {}) => {
   if (proposal.startDate && proposal.endDate) return `${proposal.startDate} to ${proposal.endDate}`;
-  if (proposal.startDate) return `Starts ${proposal.startDate}`;
+  if (proposal.startDate) {
+    if (proposal.dateText && /\bTBD\b/i.test(proposal.dateText)) return `${proposal.startDate} to TBD`;
+    return `Starts ${proposal.startDate}`;
+  }
   if (proposal.endDate) return `Ends ${proposal.endDate}`;
-  return 'Dates need review';
+  return proposal.dateText || null;
+};
+
+export const formatStagedDates = (proposal: StagedProposal = {}) => {
+  return normalizedStagedDateText(proposal) || 'Dates need review';
 };
