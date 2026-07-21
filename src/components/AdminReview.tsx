@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { type Dispatch, type FormEvent, type SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import {
   backend,
   type AuthState,
@@ -48,6 +48,28 @@ const reviewCompleteText = (status: string) => {
   if (normalized === 'promoted') return 'This record has already been promoted.';
   if (normalized === 'rejected') return 'This record was rejected.';
   return 'This record is not in the active review queue.';
+};
+
+const patchSourcesWithSavedProposal = (
+  setSources: Dispatch<SetStateAction<StagingQueueSource[]>>,
+  itemId: string,
+  saved: { proposed?: StagedProposal | null; reviewStatus?: string | null } | null | undefined
+) => {
+  if (!saved) return;
+  setSources((currentSources) =>
+    currentSources.map((source) => ({
+      ...source,
+      items: source.items.map((item) =>
+        item.id === itemId
+          ? {
+              ...item,
+              proposed: saved.proposed ?? item.proposed,
+              reviewStatus: normalizeReviewStatus(saved.reviewStatus ?? item.reviewStatus)
+            }
+          : item
+      )
+    }))
+  );
 };
 
 function useAuth() {
@@ -498,8 +520,9 @@ function ReviewWorkspace() {
   if (!auth.signedIn || !canReview(auth)) return <AdminLogin />;
 
   const saveProposal = async (item: StagedItem, proposed: StagedProposal) => {
-    await backend.updateStagingProposal(item.id, proposed, 'Manual staged-data edit from admin review screen.');
+    const saved = await backend.updateStagingProposal(item.id, proposed, 'Manual staged-data edit from admin review screen.');
     await refreshQueues();
+    patchSourcesWithSavedProposal(setSources, item.id, saved);
   };
 
   return (
@@ -682,14 +705,16 @@ export function AdminHistory() {
   );
 
   const saveHistoryProposal = async (item: StagedItem, proposed: StagedProposal) => {
+    let saved: { proposed?: StagedProposal | null; reviewStatus?: string | null } | null | undefined;
     if (item.reviewStatus === 'promoted') {
-      await backend.updatePromotedStagingProposal(item, proposed, 'Manual correction from review history.');
+      saved = await backend.updatePromotedStagingProposal(item, proposed, 'Manual correction from review history.');
     } else {
-      await backend.updateStagingProposal(item.id, proposed, 'Manual correction from review history.');
+      saved = await backend.updateStagingProposal(item.id, proposed, 'Manual correction from review history.');
     }
     setEditingItem(null);
     setMessage(item.reviewStatus === 'promoted' ? 'Published exhibition updated.' : 'Staged record updated.');
     await refreshHistory();
+    patchSourcesWithSavedProposal(setSources, item.id, saved);
   };
 
   const undoApproval = async (item: StagedItem) => {

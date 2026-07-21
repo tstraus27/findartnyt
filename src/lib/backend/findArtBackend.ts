@@ -225,6 +225,23 @@ const exhibitionUpdateFromProposal = (proposed: StagedItem['proposed']) => ({
   raw: proposed ?? {}
 });
 
+const readSavedStagingProposal = async (itemId: string) => {
+  if (!supabase) throw new Error('Supabase is not configured.');
+
+  const { data, error } = await supabase
+    .from('staging_items')
+    .select('id, proposed, review_status')
+    .eq('id', itemId)
+    .maybeSingle();
+  if (error) throw new Error(`Could not confirm staged edits: ${error.message}`);
+  if (!data) throw new Error('Could not confirm staged edits: the staging row was not found.');
+
+  return {
+    proposed: (data.proposed as StagedItem['proposed']) ?? {},
+    reviewStatus: normalizeReviewStatus(String(data.review_status || 'pending'))
+  };
+};
+
 const localSources = (): StagingQueueSource[] => {
   const decisions = readLocalDecisions();
   const proposalEdits = readLocalProposalEdits();
@@ -610,14 +627,17 @@ export const backend = {
   async updateStagingProposal(itemId: string, proposed: StagedItem['proposed'], notes: string) {
     if (!supabase) {
       writeLocalProposalEdit(itemId, proposed);
-      return;
+      return {
+        proposed,
+        reviewStatus: 'needs_revision' as ReviewStatus
+      };
     }
     const { error } = await supabase.rpc('admin_update_staging_proposed', {
       staging_item_id: itemId,
       proposed,
       notes
     });
-    if (!error) return;
+    if (!error) return readSavedStagingProposal(itemId);
 
     // Older deployments may not expose the editing RPC yet. Admin RLS still
     // provides a safe path to save the proposal instead of leaving the UI inert.
@@ -628,22 +648,30 @@ export const backend = {
       .single();
     if (readError) throw new Error(`Could not save staged edits: ${readError.message}`);
 
-    const { error: updateError } = await supabase
+    const { data: updated, error: updateError } = await supabase
       .from('staging_items')
       .update({
         proposed,
         review_status: current.review_status === 'promoted' ? 'promoted' : 'needs_revision'
       })
-      .eq('id', itemId);
+      .eq('id', itemId)
+      .select('id, proposed, review_status')
+      .maybeSingle();
     if (updateError) throw new Error(`Could not save staged edits: ${updateError.message}`);
+    if (!updated) throw new Error('Could not save staged edits: the staging row was not updated.');
+
+    return {
+      proposed: (updated.proposed as StagedItem['proposed']) ?? {},
+      reviewStatus: normalizeReviewStatus(String(updated.review_status || 'pending'))
+    };
   },
 
   async updatePromotedStagingProposal(item: StagedItem, proposed: StagedItem['proposed'], notes: string) {
     const exhibitionId = item.canonicalId || proposed?.id || item.proposed?.id;
     if (!exhibitionId) throw new Error('This history row has no published exhibition ID to update.');
 
-    await this.updateStagingProposal(item.id, proposed, notes);
-    if (!supabase) return;
+    const saved = await this.updateStagingProposal(item.id, proposed, notes);
+    if (!supabase) return saved;
 
     const sanitized = sanitizePromotionProposal(proposed).proposed;
     const { data, error } = await supabase
@@ -655,6 +683,8 @@ export const backend = {
       .maybeSingle();
     if (error) throw new Error(`Staged edits saved, but the published record could not be updated: ${error.message}`);
     if (!data) throw new Error('Staged edits saved, but the matching published record was not found.');
+
+    return saved;
   },
 
   async undoStagingPromotion(item: StagedItem, notes: string) {
