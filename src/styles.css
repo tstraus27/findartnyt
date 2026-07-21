@@ -1234,6 +1234,18 @@ textarea {
   margin-top: 12px;
 }
 
+.review-actions-complete {
+  background: #f8faf7;
+  border: 1px solid rgba(42, 92, 74, 0.18);
+  border-radius: 8px;
+  color: var(--muted);
+  padding: 12px;
+}
+
+.review-actions-complete p {
+  margin: 8px 0 0;
+}
+
 .decision-buttons {
   justify-content: center;
 }

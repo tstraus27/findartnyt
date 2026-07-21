@@ -38,9 +38,16 @@ const emptyAuth: AuthState = {
 
 const canPromote = (auth: AuthState) => auth.role === 'admin' || auth.role === 'owner';
 const canReview = (auth: AuthState) => auth.role === 'reviewer' || canPromote(auth);
-const needsReview = (item: StagedItem, auth: AuthState) => {
-  if (canPromote(auth)) return !['approved', 'rejected', 'promoted'].includes(item.reviewStatus);
-  return item.reviewStatus === 'pending' || item.reviewStatus === 'needs_revision';
+const activeReviewStatuses = new Set(['pending', 'needs_revision']);
+const needsReview = (item: StagedItem) => activeReviewStatuses.has(normalizeReviewStatus(item.reviewStatus));
+const reviewCompleteText = (status: string) => {
+  const normalized = normalizeReviewStatus(status);
+  if (normalized === 'reviewer_approved') return 'This record already has a reviewer approval.';
+  if (normalized === 'admin_approved') return 'This record already has an admin approval.';
+  if (normalized === 'approved') return 'This record is already approved.';
+  if (normalized === 'promoted') return 'This record has already been promoted.';
+  if (normalized === 'rejected') return 'This record was rejected.';
+  return 'This record is not in the active review queue.';
 };
 
 function useAuth() {
@@ -360,12 +367,22 @@ function ReviewActions({
   const [notes, setNotes] = useState('');
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const actionable = needsReview(item);
 
   useEffect(() => {
     setNotes('');
     setMessage('');
     setSubmitting(false);
   }, [item.id]);
+
+  if (!actionable) {
+    return (
+      <section className="review-actions review-actions-complete" aria-label="Review decision">
+        <StatusPill status={item.reviewStatus} />
+        <p>{reviewCompleteText(item.reviewStatus)}</p>
+      </section>
+    );
+  }
 
   const submitApproval = async () => {
     setMessage('');
@@ -471,7 +488,7 @@ function ReviewWorkspace() {
   }, [auth.signedIn, auth.role, loading]);
 
   const activeSources = sources
-    .map((source) => ({ ...source, items: source.items.filter((item) => needsReview(item, auth)) }))
+    .map((source) => ({ ...source, items: source.items.filter((item) => needsReview(item)) }))
     .filter((source) => source.items.length > 0);
   const selectedSource = activeSources.find((source) => source.id === sourceId) ?? activeSources[0];
   const queueItems = selectedSource?.items ?? [];

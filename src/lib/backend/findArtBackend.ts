@@ -288,7 +288,7 @@ const localIntakeHealth = (): IntakeHealthSnapshot => {
       conflicts,
       unchanged: numberFrom(summary.unchanged),
       pagesFetched: numberFrom(summary.pagesFetched),
-      pendingReview: numberFrom(counts.pending) + numberFrom(counts.reviewer_approved) + numberFrom(counts.admin_approved),
+      pendingReview: numberFrom(counts.pending) + numberFrom(counts.needs_revision),
       needsRevision: numberFrom(counts.needs_revision),
       promoted: numberFrom(counts.promoted),
       verificationStatus: summary.verification?.status ?? null,
